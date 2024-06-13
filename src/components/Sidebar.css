@@ -1,0 +1,11 @@
+.sidebar{
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	background: #2188b1;
+	width: 300px;
+	height:100%;
+	color: aliceblue;
+}
+
+

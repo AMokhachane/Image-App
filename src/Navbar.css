@@ -1,0 +1,25 @@
+.navbar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between; /* This aligns the content to the space between */
+	padding: 0 20px;
+	
+  }
+  
+  .navbar h1 {
+	margin: 0;
+  }
+  
+  .links {
+	display: flex;
+	gap: 20px; /* Add space between the links */
+  }
+  
+  .links a {
+	text-decoration: none;
+	color: #007bff; /* Example link color */
+  }
+  
+  .links a:hover {
+	text-decoration: underline;
+  }

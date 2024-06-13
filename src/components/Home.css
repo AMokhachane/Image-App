@@ -1,0 +1,45 @@
+.home-page{
+	margin-left: 300px;
+
+	
+}
+.search-bar {
+	margin-bottom: 20px;
+	padding: 5px 30px 5px 10px; /* Add padding on the left to accommodate the icon */
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	width: 100%;
+	
+	background-size: 10px; /* Set the size of the icon */
+	background-repeat: no-repeat; /* Prevent the icon from repeating */
+	background-position: 95% center; /* Position the icon to the right side */
+  }
+.image-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Responsive grid layout */
+	gap: 20px; /* Gap between grid items */
+
+  }
+  
+  .image-item {
+	border: 1px solid #ddd; /* Add a border around each image item */
+	border-radius: 5px; /* Add some border radius for rounded corners */
+	padding: 10px; /* Add padding inside each image item */
+	background-color: #fafafa;
+  }
+  
+  .image-item img {
+	max-width: 100%; /* Ensure images don't exceed their container width */
+	display: block; /* Remove any default inline styling */
+	margin-bottom: 10px; /* Add space between image and text */
+  }
+  
+  .name {
+	font-size: 1.2em; /* Larger font size for the name */
+	margin-bottom: 5px; /* Add space between name and description */
+  }
+  
+  .description {
+	font-size: 1em; /* Normal font size for the description */
+	color: #666; /* Lighter color for the description text */
+  }
