@@ -12,9 +12,6 @@ namespace api.Models
     public string ImageDescription { get; set; } = string.Empty;
     public string Url { get; set; } = string.Empty;
     public DateTime UploadDate { get; set; } = DateTime.Now;
-
-    public User? User { get; set; }
-    
     public List<Genre> Genres { get; set; } = new List<Genre>(); 
     }
 }
