@@ -220,32 +220,6 @@ namespace api.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("api.Models.Genre", b =>
-                {
-                    b.Property<int>("GenreId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GenreId"));
-
-                    b.Property<string>("GenreDescription")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("GenreName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("ImageId")
-                        .HasColumnType("int");
-
-                    b.HasKey("GenreId");
-
-                    b.HasIndex("ImageId");
-
-                    b.ToTable("Genres");
-                });
-
             modelBuilder.Entity("api.Models.Image", b =>
                 {
                     b.Property<int>("ImageId")
@@ -272,6 +246,32 @@ namespace api.Migrations
                     b.HasKey("ImageId");
 
                     b.ToTable("Images");
+                });
+
+            modelBuilder.Entity("api.Models.Tag", b =>
+                {
+                    b.Property<int>("TagId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TagId"));
+
+                    b.Property<int?>("ImageId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TagDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TagName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TagId");
+
+                    b.HasIndex("ImageId");
+
+                    b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -325,10 +325,10 @@ namespace api.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("api.Models.Genre", b =>
+            modelBuilder.Entity("api.Models.Tag", b =>
                 {
                     b.HasOne("api.Models.Image", "Image")
-                        .WithMany("Genres")
+                        .WithMany("Tags")
                         .HasForeignKey("ImageId");
 
                     b.Navigation("Image");
@@ -336,7 +336,7 @@ namespace api.Migrations
 
             modelBuilder.Entity("api.Models.Image", b =>
                 {
-                    b.Navigation("Genres");
+                    b.Navigation("Tags");
                 });
 #pragma warning restore 612, 618
         }

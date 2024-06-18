@@ -12,5 +12,10 @@ namespace api.Dtos.Image
     public string ImageDescription { get; set; } = string.Empty;
     public string Url { get; set; } = string.Empty;
     public DateTime UploadDate { get; set; } = DateTime.Now;
+
+        internal static object ToImageFromCreateDTO()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

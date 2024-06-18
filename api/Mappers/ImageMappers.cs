@@ -21,5 +21,17 @@ namespace api.Mappers
 
             };
         }
+
+        public static Image ToImageFromCreateDTO(this CreateImageRequestDto imageDto)
+        {
+            return new Image
+            {
+                // Symbol = imageDto.Symbol,
+                Title = imageDto.Title,
+                ImageDescription = imageDto.ImageDescription,
+                Url = imageDto.Url,
+                UploadDate = imageDto.UploadDate
+            };
+        }
     }
 }

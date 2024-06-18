@@ -28,28 +28,28 @@ namespace api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Genres",
+                name: "Tags",
                 columns: table => new
                 {
-                    GenreId = table.Column<int>(type: "int", nullable: false)
+                    TagId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    GenreName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    GenreDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TagName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TagDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ImageId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Genres", x => x.GenreId);
+                    table.PrimaryKey("PK_Tags", x => x.TagId);
                     table.ForeignKey(
-                        name: "FK_Genres_Images_ImageId",
+                        name: "FK_Tags_Images_ImageId",
                         column: x => x.ImageId,
                         principalTable: "Images",
                         principalColumn: "ImageId");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Genres_ImageId",
-                table: "Genres",
+                name: "IX_Tags_ImageId",
+                table: "Tags",
                 column: "ImageId");
         }
 
@@ -57,7 +57,7 @@ namespace api.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Genres");
+                name: "Tags");
 
             migrationBuilder.DropTable(
                 name: "Images");

@@ -25,30 +25,30 @@ namespace api.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("api.Models.Genre", b =>
+            modelBuilder.Entity("api.Models.Tag", b =>
                 {
-                    b.Property<int>("GenreId")
+                    b.Property<int>("TagId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GenreId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TagId"));
 
-                    b.Property<string>("GenreDescription")
+                    b.Property<string>("TagDescription")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("GenreName")
+                    b.Property<string>("TagName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("ImageId")
                         .HasColumnType("int");
 
-                    b.HasKey("GenreId");
+                    b.HasKey("TagId");
 
                     b.HasIndex("ImageId");
 
-                    b.ToTable("Genres");
+                    b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("api.Models.Image", b =>
@@ -79,10 +79,10 @@ namespace api.Migrations
                     b.ToTable("Images");
                 });
 
-            modelBuilder.Entity("api.Models.Genre", b =>
+            modelBuilder.Entity("api.Models.Tag", b =>
                 {
                     b.HasOne("api.Models.Image", "Image")
-                        .WithMany("Genres")
+                        .WithMany("Tags")
                         .HasForeignKey("ImageId");
 
                     b.Navigation("Image");
@@ -90,7 +90,7 @@ namespace api.Migrations
 
             modelBuilder.Entity("api.Models.Image", b =>
                 {
-                    b.Navigation("Genres");
+                    b.Navigation("Tags");
                 });
 #pragma warning restore 612, 618
         }

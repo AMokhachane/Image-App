@@ -2,16 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
-namespace api.Models
+namespace api.Dtos.Image
 {
-    public class Image
+    public class UpdateImageRequestDto
     {
-    public int ImageId { get; set; }
+
     public string Title { get; set; } = string.Empty;
     public string ImageDescription { get; set; } = string.Empty;
     public string Url { get; set; } = string.Empty;
     public DateTime UploadDate { get; set; } = DateTime.Now;
-    public List<Tag> Tags { get; set; } = new List<Tag>();
     }
 }

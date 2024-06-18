@@ -16,7 +16,7 @@ namespace api.Data
         
        }
      public DbSet<Image> Images { get; set;}
-       public DbSet<Genre> Genres { get; set;}
+       public DbSet<Tag> Tags { get; set;}
 
     }
 }
