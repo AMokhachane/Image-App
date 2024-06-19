@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using api.Dtos.Image;
 using api.Data;
+using api.Helpers;
 
 namespace api.Controllers
 {
@@ -26,18 +27,24 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] QueryObject query)
         {
-            var images = await _imageRepo.GetAllAsync();
+            if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+            var images = await _imageRepo.GetAllAsync(query: query);
             var ImageDto = images.Select(s => s.ToImageDto());
 
             return Ok(images);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
        public async Task<IActionResult> GetById([FromRoute] int id)
        {
-           var image = await _context.Images.FindAsync(id);
+            if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+           var image = await _imageRepo.GetByIdAsync(id);
 
            if(image == null)
            {
@@ -50,49 +57,45 @@ namespace api.Controllers
        [HttpPost]
        public async Task<IActionResult> Create([FromBody] CreateImageRequestDto imageDto)
        {
+            if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
             var imageModel = imageDto.ToImageFromCreateDTO();
-            await _context.AddAsync(imageModel);
-            
-            await _context.SaveChangesAsync();
+            await _imageRepo.CreateAsync(imageModel);
             return CreatedAtAction(nameof(GetById), new {id = imageModel.ImageId }, imageModel.ToImageDto());
        }
 
        [HttpPut]
-       [Route("{id}")]
+       [Route("{id:int}")]
        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateImageRequestDto updateDto)
        {
-         var imageModel = await _context.Images.FirstOrDefaultAsync(x => x.ImageId == id);
+            if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+         var imageModel = await _imageRepo.UpdateAsync(id, updateDto);
 
          if(imageModel == null)
          {
             return NotFound();
          }
-
-        //  imageModel.Symbol = updateDto.Symbol;
-         imageModel.Title = updateDto.Title;
-         imageModel.ImageDescription = updateDto.ImageDescription;
-         imageModel.Url = updateDto.Url;
-
-         await _context.SaveChangesAsync();
 
          return Ok(imageModel.ToImageDto());
 
        }
 
        [HttpDelete]
-       [Route("{id}")]
+       [Route("{id:int}")]
        public async Task<IActionResult> Delete([FromRoute] int id)
        {
-         var imageModel = await _context.Images.FirstOrDefaultAsync(x => x.ImageId == id);
+            if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+         var imageModel = await _imageRepo.DeleteAsync(id);
 
          if(imageModel == null)
          {
             return NotFound();
          }
-
-         _context.Images.Remove(imageModel);
-
-         await _context.SaveChangesAsync();
 
          return NoContent();
 

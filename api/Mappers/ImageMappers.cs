@@ -17,7 +17,8 @@ namespace api.Mappers
                 Title = imageModel.Title,
                 ImageDescription = imageModel.ImageDescription,
                 Url = imageModel.Url,
-                UploadDate = imageModel.UploadDate
+                UploadDate = imageModel.UploadDate,
+                Tags = imageModel.Tags.Select(c => c.ToTagDto()).ToList()
 
             };
         }

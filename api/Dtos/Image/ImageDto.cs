@@ -12,10 +12,8 @@ namespace api.Dtos.Image
     public string ImageDescription { get; set; } = string.Empty;
     public string Url { get; set; } = string.Empty;
     public DateTime UploadDate { get; set; } = DateTime.Now;
+    public List<TagDto> Tags { get; set; }
 
-        internal static object ToImageFromCreateDTO()
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }
