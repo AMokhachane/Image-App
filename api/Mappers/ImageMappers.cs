@@ -18,7 +18,8 @@ namespace api.Mappers
                 ImageDescription = imageModel.ImageDescription,
                 Url = imageModel.Url,
                 UploadDate = imageModel.UploadDate,
-                Tags = imageModel.Tags.Select(c => c.ToTagDto()).ToList()
+                Tags = imageModel.Tags.Select(c => c.ToTagDto()).ToList(),
+                Comments = imageModel.Comments.Select(c => c.ToCommentDto()).ToList()
 
             };
         }
@@ -27,7 +28,6 @@ namespace api.Mappers
         {
             return new Image
             {
-                // Symbol = imageDto.Symbol,
                 Title = imageDto.Title,
                 ImageDescription = imageDto.ImageDescription,
                 Url = imageDto.Url,

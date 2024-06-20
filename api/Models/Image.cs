@@ -13,5 +13,6 @@ namespace api.Models
     public string Url { get; set; } = string.Empty;
     public DateTime UploadDate { get; set; } = DateTime.Now;
     public List<Tag> Tags { get; set; } = new List<Tag>();
+    public List<Comment> Comments {get; set; } = new List<Comment>();
     }
 }

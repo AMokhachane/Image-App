@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using api.Dtos.Comment;
 
 namespace api.Dtos.Image
 {
@@ -13,6 +14,7 @@ namespace api.Dtos.Image
     public string Url { get; set; } = string.Empty;
     public DateTime UploadDate { get; set; } = DateTime.Now;
     public List<TagDto> Tags { get; set; }
+    public List<CommentDto> Comments { get; set; }
 
         
     }
