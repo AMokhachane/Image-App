@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api.Dtos.Comment;
+using api.Extensions;
 using api.Interfaces;
 using api.Mappers;
 using api.Models;
@@ -62,8 +63,7 @@ namespace api.Controllers
              return BadRequest("Image does not exist");
           }
 
-          
-         
+          var username = User.GetUsername();
 
           var commentModel = commentDto.ToCommentFromCreate(imageId);
         

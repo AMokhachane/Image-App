@@ -20,7 +20,6 @@ namespace api.Mappers
                 UploadDate = imageModel.UploadDate,
                 Tags = imageModel.Tags.Select(c => c.ToTagDto()).ToList(),
                 Comments = imageModel.Comments.Select(c => c.ToCommentDto()).ToList()
-
             };
         }
 

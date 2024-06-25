@@ -16,6 +16,7 @@ namespace api.Mappers
             CommentId = commentModel.CommentId,
             Content = commentModel.Content,
             CreatedOn = commentModel.CreatedOn,
+           // CreatedBy = commentModel.AppUser.UserName,
             ImageId = commentModel.ImageId
 
          };

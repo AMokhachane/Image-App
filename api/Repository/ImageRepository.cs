@@ -41,7 +41,7 @@ namespace api.Repository
 
         public async Task<List<Image>> GetAllAsync(QueryObject query)
         {
-           var images = _context.Images.Include(c => c.Tags).Include(c => c.Comments).AsQueryable();
+           var images = _context.Images.Include(c => c.Tags).Include(c => c.Comments).ThenInclude(a => a.AppUser).AsQueryable();
            if(!string.IsNullOrWhiteSpace(query.Title))
            {
              images = images.Where(s => s.Title.Contains(query.Title));

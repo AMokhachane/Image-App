@@ -34,9 +34,9 @@ namespace api.Controllers
             return BadRequest(ModelState);
 
             var images = await _imageRepo.GetAllAsync(query: query);
-            var ImageDto = images.Select(s => s.ToImageDto());
+            var ImageDto = images.Select(s => s.ToImageDto()).ToList();
 
-            return Ok(images);
+            return Ok(ImageDto);
         }
 
         [HttpGet("{id:int}")]

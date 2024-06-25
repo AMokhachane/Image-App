@@ -9,6 +9,9 @@ import ForgotPassword from './ForgotPassword';
 import { Sidebar } from './components/Sidebar';
 import { Home } from './components/Home';
 import { ImageUpload } from './components/ImageUpload';
+import EmployeeList from './EmployeeList'; // Updated import statement
+
+
 
 function App() {
   const initialImages = [
@@ -28,6 +31,9 @@ function App() {
           <Switch>
             <Route exact path="/">
               <Login />
+            </Route>
+            <Route exact path="/EmployeeList">
+              <EmployeeList />
             </Route>
             <Route path="/Register">
               <Register />

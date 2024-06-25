@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,5 +15,6 @@ namespace api.Models
     public DateTime UploadDate { get; set; } = DateTime.Now;
     public List<Tag> Tags { get; set; } = new List<Tag>();
     public List<Comment> Comments {get; set; } = new List<Comment>();
+
     }
 }
