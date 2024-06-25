@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using api.Dtos.Comment;
 using api.Interfaces;
 using api.Mappers;
+using api.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -15,23 +17,31 @@ namespace api.Controllers
     {
        private readonly ICommentRepository _commentRepo;
        private readonly IImageRepository _imageRepo;
-       public CommentController(ICommentRepository commentRepo, IImageRepository imageRepo)
+       private readonly UserManager<AppUser> _userManager;
+       public CommentController(ICommentRepository commentRepo, IImageRepository imageRepo, UserManager<AppUser> userManager)
        {
          _commentRepo = commentRepo;
          _imageRepo = imageRepo;
+         _userManager = userManager;
        }
 
        [HttpGet]
        public async Task<IActionResult> GetAll()
        {
+         if (!ModelState.IsValid)
+         return BadRequest(ModelState);
+
          var comments = await _commentRepo.GetAllAsync();
          var CommentDto = comments.Select(s => s.ToCommentDto());
          return Ok(CommentDto);
        }
 
-       [HttpGet("{id}")]
+       [HttpGet("{id:int}")]
        public async Task<IActionResult> GetById([FromRoute] int id)
        {
+          if (!ModelState.IsValid)
+         return BadRequest(ModelState);
+
           var comment = await _commentRepo.GetByIdAsync(id);
             if(comment == null)
             {
@@ -41,23 +51,33 @@ namespace api.Controllers
             return Ok(comment.ToCommentDto());
        }
 
-       [HttpPost("{imageId}")]
+       [HttpPost("{imageId:int}")]
        public async Task<IActionResult> Create([FromRoute] int imageId, CreateCommentDto commentDto)
        {
+          if (!ModelState.IsValid)
+         return BadRequest(ModelState);
+
           if (!await _imageRepo.ImageExists(imageId))
           {
              return BadRequest("Image does not exist");
           }
 
+          
+         
+
           var commentModel = commentDto.ToCommentFromCreate(imageId);
+        
           await _commentRepo.CreateAsync(commentModel);
           return CreatedAtAction(nameof(GetById), new { imageId = commentModel.ImageId}, commentModel.ToCommentDto());
        }
 
        [HttpPut]
-       [Route("{id}")]
+       [Route("{id:int}")]
        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateCommentRequestDto updateDto)
        {
+          if (!ModelState.IsValid)
+         return BadRequest(ModelState);
+
             var comment = await _commentRepo.UpdateAsync(id, updateDto.ToCommentFromUpdate());
             if (comment == null)
             {
@@ -68,9 +88,12 @@ namespace api.Controllers
        }
 
        [HttpDelete]
-       [Route("{id}")]
+       [Route("{id:int}")]
        public async Task<IActionResult> Delete([FromRoute] int id)
        {
+          if (!ModelState.IsValid)
+         return BadRequest(ModelState);
+
           var commentModel = await _commentRepo.DeleteAsync(id);
           if (commentModel == null)
           {

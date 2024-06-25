@@ -47,7 +47,9 @@ namespace api.Repository
              images = images.Where(s => s.Title.Contains(query.Title));
            }
 
-         return await images.ToListAsync();
+           var skipNumber = (query.PageNumber - 1) * query.PageSize;
+
+         return await images.Skip(skipNumber).Take(query.PageSize).ToListAsync();
         
         }
 
