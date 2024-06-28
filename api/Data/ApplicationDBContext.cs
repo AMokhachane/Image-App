@@ -9,21 +9,24 @@ using Microsoft.EntityFrameworkCore;
 
 namespace api.Data
 {
-    public class ApplicationDBContext : IdentityDbContext<AppUser>
+  public class ApplicationDBContext : IdentityDbContext<AppUser>
+  {
+    public ApplicationDBContext(DbContextOptions dbContextOptions)
+    : base(dbContextOptions)
     {
-       public ApplicationDBContext(DbContextOptions dbContextOptions)
-       : base(dbContextOptions)
-       {
-        
-       }
-     public DbSet<Image> Images { get; set;}
-       public DbSet<Tag> Tags { get; set;}
-       public DbSet<Comment> Comments { get; set;}
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
 
-            List<IdentityRole> roles = new List<IdentityRole>
+    }
+    public DbSet<Image> Images { get; set; }
+    public DbSet<Tag> Tags { get; set; }
+    public DbSet<Comment> Comments { get; set; }
+    public DbSet<AppUser> AppUsers { get; set; }
+
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+      base.OnModelCreating(builder);
+
+      List<IdentityRole> roles = new List<IdentityRole>
             {
               new IdentityRole
               {
@@ -37,8 +40,8 @@ namespace api.Data
                 NormalizedName = "USER"
               },
             };
-            builder.Entity<IdentityRole>().HasData(roles);
-        }
-
+      builder.Entity<IdentityRole>().HasData(roles);
     }
+
+  }
 }

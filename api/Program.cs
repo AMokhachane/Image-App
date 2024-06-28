@@ -60,7 +60,7 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(options => {
     options.Password.RequireDigit = true;
     options.Password.RequireUppercase = true;
     options.Password.RequireLowercase = true;
-    options.Password.RequiredLength = 13;
+    options.Password.RequiredLength = 4;
 })
 .AddEntityFrameworkStores<ApplicationDBContext>();
 
@@ -91,6 +91,7 @@ builder.Services.AddScoped<IImageRepository, ImageRepository>();
 builder.Services.AddScoped<ITagRepository, TagRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+
 
 
 var app = builder.Build();
