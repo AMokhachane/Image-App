@@ -10,7 +10,7 @@ function EmployeeList() {
         refreshEmployeeList();
     }, [])
 
-    const employeeAPI = (url = 'https://localhost:44353/api/Employee/') => {
+    const employeeAPI = (url = 'http://localhost:5205/api/image') => {
         return {
             fetchAll: () => axios.get(url),
             create: newRecord => axios.post(url, newRecord),

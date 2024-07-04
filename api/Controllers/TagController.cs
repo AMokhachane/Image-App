@@ -28,7 +28,6 @@ namespace api.Controllers
             return BadRequest(ModelState);
 
          var tags = await _tagRepo.GetAllAsync();
-
          var tagDto = tags.Select(s => s.ToTagDto());
          return Ok(tagDto);
        }
@@ -66,8 +65,7 @@ namespace api.Controllers
 
        [HttpPut]
        [Route("{id:int}")]
-
-       public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateTagRequestDto updateDto)
+      public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateTagRequestDto updateDto)
        {
          if (!ModelState.IsValid)
          return BadRequest(ModelState);
@@ -79,12 +77,10 @@ namespace api.Controllers
          }
 
          return Ok(tag.ToTagDto());
-
        }
 
        [HttpDelete]
        [Route("{id:int}")]
-
        public async Task<IActionResult> Delete([FromRoute] int id)
        {
           if (!ModelState.IsValid)

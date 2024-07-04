@@ -1,11 +1,19 @@
-.sidebar{
+.sidebar {
 	position: absolute;
 	display: flex;
 	flex-direction: column;
 	background: #2188b1;
-	width: 300px;
-	height:100%;
+	width: 360px;
+	height: 100%;
 	color: aliceblue;
-}
-
-
+	height: 800px;
+  }
+  
+  .sidebar button {
+	margin-bottom: 20px; /* Adjust this value as needed */
+	width: 360px;
+  }
+  
+  .sidebar h3.logo {
+	margin-bottom: 80px; /* Adjust margin bottom to create space */
+  }

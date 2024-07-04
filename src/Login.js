@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { FaUser, FaLock } from 'react-icons/fa';
 import axios from 'axios';
-import './Login.css';
+import LoginCSS from './Login.module.css';
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -25,14 +25,12 @@ function Login() {
     })
     .then(response => {
       console.log('Response:', response.data);
-      // Assuming login is successful, redirect to home page
       history.push('/Home');
     })
     .catch(error => {
       console.error('Error:', error);
-      // Handle login errors here
       if (error.response) {
-        setError(error.response.data); // Set error message from server
+        setError(error.response.data);
       } else {
         setError('An error occurred. Please try again.');
       }
@@ -40,53 +38,57 @@ function Login() {
   };
 
   return (
-    <div className="login-container">
-      <form>
+    <div className={LoginCSS['login-container']}>
+      <div className={LoginCSS.wrapper}>
         <h2>Image Gallery App</h2>
         <h2>Log in</h2>
-        {error && <div className="error">{error.message || error}</div>}
-        <div className="form-group">
-          <label htmlFor="username">Username</label>
-          <div className="input-container">
-            <FaUser className="icon" />
-            <input
-              type="text"
-              id="username"
-              placeholder="Enter Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
+        {error && <div className={LoginCSS.error}>{error.message || error}</div>}
+        <form>
+          <div className={LoginCSS['form-group']}>
+            <label htmlFor="username" className="test">Username</label>
+            <div className={LoginCSS.inputBox}>
+              <FaUser className={LoginCSS.icon} />
+              <input
+                type="text"
+                id="username"
+                placeholder="Enter Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+              />
+            </div>
           </div>
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Password</label>
-          <div className="input-container">
-            <FaLock className="icon" />
-            <input
-              type="password"
-              id="password"
-              placeholder="Enter Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+          <div className={LoginCSS['form-group']}>
+            <label htmlFor="password">Password</label>
+            <div className={LoginCSS.inputBox}>
+              <FaLock className={LoginCSS.icon} />
+              <input
+                type="password"
+                id="password"
+                placeholder="Enter Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
           </div>
-        </div>
-        <div className="form-group">
-          <a href="/ForgotPassword" className="forgot-password-link">
-            Forgot Password?
-          </a>
-        </div>
-        <div className="form-group">
-          <button type="button" onClick={handleSubmit}>Log In</button>
-        </div>
-        <div className="form-group">
-          <a href="/Register" className="register-link">
-            New to this platform? Register Here
-          </a>
-        </div>
-      </form>
+          <div className={LoginCSS['linkContainer']}>
+            <a href="/ForgotPassword" className={LoginCSS['forgotPasswordLink']}>
+              Forgot Password?
+            </a>
+          </div>
+          <div className={LoginCSS['form-group']}>
+            <button type="button" className={`${LoginCSS['loginButton']} ${LoginCSS.loginButton}`} onClick={handleSubmit}>
+              Log In
+            </button>
+            </div>
+          <div className={LoginCSS['form-group']}>
+            <a href="/Register" className={LoginCSS['registerLink']}>
+              New to this platform? <span>Register Here</span>
+            </a>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

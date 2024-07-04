@@ -10,11 +10,9 @@ namespace api.Models
         public int CommentId { get; set; }
         public string Content { get; set; } = string.Empty;
         public DateTime CreatedOn { get; set; } = DateTime.Now;
-        //public string CreatedBy { get; set; } = string.Empty;
         public int? ImageId { get; set; }
         public Image? Image { get; set; }
-        public string AppUserId { get; set; }
-        public AppUser AppUser { get; set; }
+        
         
     }
 }

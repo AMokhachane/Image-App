@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import './Home.css';
+import HomeCSS from './Home.module.css';
+import {  FaSearch } from 'react-icons/fa';
 
 export const Home = ({ images }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -9,24 +10,27 @@ export const Home = ({ images }) => {
   );
 
   return (
-    <div className='home-page'>
-      <div className="content">
-        <input
-          type="text"
-          placeholder="Search..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="search-bar"
-        />
-        <div className="image-grid">
-          {filteredImages.map(image => (
-            <div key={image.id} className="image-item">
-              <img src={image.src} alt={image.name} />
-              <h2 className="name">{image.name}</h2>
-              <p className="description">{image.description}</p>
-            </div>
-          ))}
+    <div className={HomeCSS['home-page']}>
+      <div className={HomeCSS['form-group']}>
+        <div className={HomeCSS.inputBox}>
+          < FaSearch className={HomeCSS.icon} />
+          <input
+            type="text"
+            placeholder="Search for..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className={HomeCSS['search-bar']}
+          />
         </div>
+      </div>
+      <div className={HomeCSS['image-grid']}>
+        {filteredImages.map(image => (
+          <div key={image.id} className={HomeCSS['image-item']}>
+            <img src={image.src} alt={image.name} />
+            <h2 className={HomeCSS.name}>{image.name}</h2>
+            <p className={HomeCSS.description}>{image.description}</p>
+          </div>
+        ))}
       </div>
     </div>
   );

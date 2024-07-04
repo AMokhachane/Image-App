@@ -51,13 +51,13 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "93f5858a-2553-484f-96c3-d8312fc33b5b",
+                            Id = "6009e872-f9bf-43bd-a08b-02290b3af39e",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "fd654950-f558-4bd1-b5cf-1de929517f0e",
+                            Id = "247264ed-99df-4543-a895-8b20a88b90a4",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -242,10 +242,6 @@ namespace api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommentId"));
 
-                    b.Property<string>("AppUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -257,8 +253,6 @@ namespace api.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("CommentId");
-
-                    b.HasIndex("AppUserId");
 
                     b.HasIndex("ImageId");
 
@@ -372,17 +366,9 @@ namespace api.Migrations
 
             modelBuilder.Entity("api.Models.Comment", b =>
                 {
-                    b.HasOne("api.Models.AppUser", "AppUser")
-                        .WithMany()
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("api.Models.Image", "Image")
                         .WithMany("Comments")
                         .HasForeignKey("ImageId");
-
-                    b.Navigation("AppUser");
 
                     b.Navigation("Image");
                 });

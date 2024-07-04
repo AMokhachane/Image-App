@@ -13,7 +13,7 @@ function Navbar() {
   return (
     <nav className="navbar">
       <div className='links'>
-        <Link to="/">Login</Link>
+        <Link to="/">Logout</Link>
       </div>
     </nav>
   );

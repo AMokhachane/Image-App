@@ -8,8 +8,11 @@ import Register from './Register';
 import ForgotPassword from './ForgotPassword';
 import { Sidebar } from './components/Sidebar';
 import { Home } from './components/Home';
-import { ImageUpload } from './components/ImageUpload';
+import ImageUpload from './components/ImageUpload';
 import EmployeeList from './EmployeeList'; // Updated import statement
+import ImageList from './components/ImageList';
+import AddImage from './components/AddImage';
+import UpdateImage from './components/UpdateImage';
 
 
 
@@ -32,8 +35,17 @@ function App() {
             <Route exact path="/">
               <Login />
             </Route>
+            <Route exact path="/ImageList">
+              <ImageList />
+            </Route>
+            <Route exact path="/add">
+              <AddImage />
+            </Route>
+            <Route exact path="/update/:idd">
+              <AddImage />
+            </Route>
             <Route exact path="/EmployeeList">
-              <EmployeeList />
+              <UpdateImage />
             </Route>
             <Route path="/Register">
               <Register />

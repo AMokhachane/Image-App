@@ -1,25 +1,20 @@
+/* Navbar.css */
 .navbar {
-	display: flex;
-	align-items: center;
-	justify-content: space-between; /* This aligns the content to the space between */
-	padding: 0 20px;
-	
-  }
-  
-  .navbar h1 {
-	margin: 0;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	background-color: #333;
+	color: white;
+	padding: 20px;
   }
   
   .links {
-	display: flex;
-	gap: 20px; /* Add space between the links */
+	text-align: left; /* Align links to the left */
   }
   
   .links a {
+	color: white;
 	text-decoration: none;
-	color: #007bff; /* Example link color */
-  }
-  
-  .links a:hover {
-	text-decoration: underline;
+	margin-right: 10px; /* Add margin to the right instead of left */
   }

@@ -1,19 +1,22 @@
 .home-page{
-	margin-left: 300px;
+	margin-left: 360px;
 
 	
 }
 .search-bar {
-	margin-bottom: 20px;
-	padding: 5px 30px 5px 10px; /* Add padding on the left to accommodate the icon */
-	border: 1px solid #ccc;
-	border-radius: 5px;
-	width: 100%;
-	
-	background-size: 10px; /* Set the size of the icon */
-	background-repeat: no-repeat; /* Prevent the icon from repeating */
-	background-position: 95% center; /* Position the icon to the right side */
+width: 450px;
+height: Hug (39px)px;
+top: 130px;
+left: 438px;
+padding: 10px 0px 0px 0px;
+gap: 5px;
+border-radius: 4px 0px 0px 0px;
+opacity: 0px;
+margin-right: 800px;
+
+
   }
+
 .image-grid {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Responsive grid layout */

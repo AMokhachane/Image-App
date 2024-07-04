@@ -182,18 +182,11 @@ namespace api.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ImageId = table.Column<int>(type: "int", nullable: true),
-                    AppUserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    ImageId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Comments", x => x.CommentId);
-                    table.ForeignKey(
-                        name: "FK_Comments_AspNetUsers_AppUserId",
-                        column: x => x.AppUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Comments_Images_ImageId",
                         column: x => x.ImageId,
@@ -226,8 +219,8 @@ namespace api.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "93f5858a-2553-484f-96c3-d8312fc33b5b", null, "Admin", "ADMIN" },
-                    { "fd654950-f558-4bd1-b5cf-1de929517f0e", null, "User", "USER" }
+                    { "247264ed-99df-4543-a895-8b20a88b90a4", null, "User", "USER" },
+                    { "6009e872-f9bf-43bd-a08b-02290b3af39e", null, "Admin", "ADMIN" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -268,11 +261,6 @@ namespace api.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Comments_AppUserId",
-                table: "Comments",
-                column: "AppUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_ImageId",

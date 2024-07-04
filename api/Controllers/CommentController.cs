@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api.Dtos.Comment;
-using api.Extensions;
 using api.Interfaces;
 using api.Mappers;
-using api.Models;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -18,12 +15,10 @@ namespace api.Controllers
     {
        private readonly ICommentRepository _commentRepo;
        private readonly IImageRepository _imageRepo;
-       private readonly UserManager<AppUser> _userManager;
-       public CommentController(ICommentRepository commentRepo, IImageRepository imageRepo, UserManager<AppUser> userManager)
+       public CommentController(ICommentRepository commentRepo, IImageRepository imageRepo)
        {
          _commentRepo = commentRepo;
          _imageRepo = imageRepo;
-         _userManager = userManager;
        }
 
        [HttpGet]
@@ -40,14 +35,14 @@ namespace api.Controllers
        [HttpGet("{id:int}")]
        public async Task<IActionResult> GetById([FromRoute] int id)
        {
-          if (!ModelState.IsValid)
+         if(!ModelState.IsValid)
          return BadRequest(ModelState);
-
           var comment = await _commentRepo.GetByIdAsync(id);
-            if(comment == null)
-            {
-                return NotFound();
-            }
+
+         if(comment == null)
+         {
+            return NotFound();
+         }
 
             return Ok(comment.ToCommentDto());
        }
@@ -56,19 +51,16 @@ namespace api.Controllers
        public async Task<IActionResult> Create([FromRoute] int imageId, CreateCommentDto commentDto)
        {
           if (!ModelState.IsValid)
-         return BadRequest(ModelState);
+          return BadRequest(ModelState);
 
           if (!await _imageRepo.ImageExists(imageId))
           {
              return BadRequest("Image does not exist");
           }
 
-          var username = User.GetUsername();
-
           var commentModel = commentDto.ToCommentFromCreate(imageId);
-        
           await _commentRepo.CreateAsync(commentModel);
-          return CreatedAtAction(nameof(GetById), new { imageId = commentModel.ImageId}, commentModel.ToCommentDto());
+          return CreatedAtAction(nameof(GetById), new { imageId = commentModel}, commentModel.ToCommentDto());
        }
 
        [HttpPut]
