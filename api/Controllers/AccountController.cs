@@ -8,6 +8,7 @@ using api.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using api.EmailService;
 
 
 namespace api.Controllers
@@ -19,18 +20,14 @@ namespace api.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly ITokenService _tokenService;
         private readonly SignInManager<AppUser> _signinManager;
+        private readonly IEmailSender _emailSender;
         
-        
-        
-        //private readonly IEmailConfiguration _emailConfiguration;
-        public AccountController(UserManager<AppUser> userManager, ITokenService tokenService, SignInManager<AppUser> signInManager) //IEmailConfiguration emailConfiguration)
+        public AccountController(UserManager<AppUser> userManager, ITokenService tokenService, SignInManager<AppUser> signInManager, IEmailSender emailSender)
         {
             _userManager = userManager;
             _tokenService = tokenService;
             _signinManager = signInManager;
-            
-            
-           // _emailConfiguration = emailConfiguration;
+            _emailSender = emailSender;
         }
 
         [HttpPost("login")]
@@ -100,64 +97,19 @@ namespace api.Controllers
             }
         }
 
-        
-
-        /*[HttpPost("forgot-password")]
-        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto forgotPasswordDto)
+        [HttpPost("send")]
+        public IActionResult SendEmail([FromBody] EmailRequest request)
         {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
-
-                var user = await _userManager.FindByEmailAsync(forgotPasswordDto.Email);
-                if (user == null)
-                    return BadRequest ("Invalid Request");
-
-                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-                var resetLink = Url.Action("ResetPassword", "Account", new { token, email = forgotPasswordDto.Email }, Request.Scheme);
-
-                // Assuming you have a method to send email
-                var emailSent = await _emailConfiguration.SendEmailAsync(forgotPasswordDto.Email, "Password Reset", $"Click the following link to reset your password: {resetLink}");
-
-                if (emailSent)
-                    return Ok("Password reset link sent to your email.");
-                else
-                    return StatusCode(500, "Error sending email.");
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, e.Message);
-            }
+           var  message = new Message(new string[] { "amandamokhachane88@gmail.com" }, "Test email", "This is ThreadExceptionEventArgs content from our email.");
+            _emailSender.SendEmail(message);
+            return Ok();
         }
 
-        [HttpPost("reset-password")]
-        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto resetPasswordDto)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
-
-                var user = await _userManager.FindByEmailAsync(resetPasswordDto.Email);
-                if (user == null)
-                    return NotFound("User not found");
-
-                var resetPassResult = await _userManager.ResetPasswordAsync(user, resetPasswordDto.Token, resetPasswordDto.NewPassword);
-                if (resetPassResult.Succeeded)
-                {
-                    return Ok("Password reset successfully");
-                }
-                else
-                {
-                    return StatusCode(500, resetPassResult.Errors);
-                }
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, e.Message);
-            }
-        }*/
-
+    }
+       public class EmailRequest
+    {
+        public List<string> To { get; set; }
+        public string Subject { get; set; }
+        public string Content { get; set; }
     }
 }
