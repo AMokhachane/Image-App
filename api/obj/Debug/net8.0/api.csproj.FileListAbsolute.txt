@@ -289,3 +289,8 @@ C:\Users\AMokhachane.SINGULAR\Documents\Projects\Testing - Copy\gallery-practice
 C:\Users\AMokhachane.SINGULAR\Documents\Projects\Testing - Copy\gallery-practice\api\obj\Debug\net8.0\api.pdb
 C:\Users\AMokhachane.SINGULAR\Documents\Projects\Testing - Copy\gallery-practice\api\obj\Debug\net8.0\api.genruntimeconfig.cache
 C:\Users\AMokhachane.SINGULAR\Documents\Projects\Testing - Copy\gallery-practice\api\obj\Debug\net8.0\ref\api.dll
+C:\Users\AMokhachane.SINGULAR\Documents\Projects\Testing - Copy\gallery-practice\api\bin\Debug\net8.0\MailKit.dll
+C:\Users\AMokhachane.SINGULAR\Documents\Projects\Testing - Copy\gallery-practice\api\bin\Debug\net8.0\MimeKit.dll
+C:\Users\AMokhachane.SINGULAR\Documents\Projects\Testing - Copy\gallery-practice\api\bin\Debug\net8.0\NETCore.MailKit.dll
+C:\Users\AMokhachane.SINGULAR\Documents\Projects\Testing - Copy\gallery-practice\api\bin\Debug\net8.0\BouncyCastle.Crypto.dll
+C:\Users\AMokhachane.SINGULAR\Documents\Projects\Testing - Copy\gallery-practice\api\bin\Debug\net8.0\Microsoft.AspNet.Identity.Core.dll

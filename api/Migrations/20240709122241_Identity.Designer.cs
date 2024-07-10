@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using api.Data;
 
@@ -11,9 +12,11 @@ using api.Data;
 namespace api.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240709122241_Identity")]
+    partial class Identity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,13 +54,13 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "47f5a409-9f14-4852-99c6-633785b9a02a",
+                            Id = "2046d2d9-855d-468a-bef8-bcf2fa43b260",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "d0e13162-b357-423c-b1de-761a3461d949",
+                            Id = "5dd15d71-487c-4935-a01e-88ac9a79aad4",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -242,10 +245,6 @@ namespace api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CommentId"));
 
-                    b.Property<string>("AppUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -257,8 +256,6 @@ namespace api.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("CommentId");
-
-                    b.HasIndex("AppUserId");
 
                     b.HasIndex("ImageId");
 
@@ -372,17 +369,9 @@ namespace api.Migrations
 
             modelBuilder.Entity("api.Models.Comment", b =>
                 {
-                    b.HasOne("api.Models.AppUser", "AppUser")
-                        .WithMany()
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("api.Models.Image", "Image")
                         .WithMany("Comments")
                         .HasForeignKey("ImageId");
-
-                    b.Navigation("AppUser");
 
                     b.Navigation("Image");
                 });
