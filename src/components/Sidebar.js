@@ -25,8 +25,9 @@ export const Sidebar = () => {
             <button className='image-upload'>
               <FontAwesomeIcon icon={faImage} /> Image Upload
             </button>
+            <div className='logout'></div>
           </Link>
-          <div className='logout'></div>
+          <div className=''></div>
           <Link to='/'>
             <button className='/'>
               <FontAwesomeIcon icon={faSignOutAlt} /> Logout

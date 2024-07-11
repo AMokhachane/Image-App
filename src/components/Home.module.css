@@ -17,12 +17,12 @@
   }
   
   .search-bar {
-	width: 450px;
+	width: 400px;
 	height: 15px;
 	padding: 15px 30px;
-	border: 0cap;
+	border: 0;
 	font-size: 15px;
-	background-color: #ebe9e9;
+	background-color: #F2F2F2;
   }
   
   .icon {
@@ -33,33 +33,71 @@
   
   .image-grid {
 	display: grid;
-	grid-template-columns: repeat(3, 1fr); /* Grid layout with 2 columns */
-	gap: 20px;
+	grid-template-columns: repeat(3, 1fr); /* Grid layout with 3 columns */
+	gap: 25px;
   }
   
   .image-item {
-	
-	padding: 10px;
-	background-color: #fafafa;
+	padding: 0;
 	text-align: center; /* Center align text and images */
+	position: relative; /* Ensure relative positioning for absolute positioning inside */
   }
   
   .image-item img {
-	max-width: 10dvh;
-	max-height: 25dvh;
+	max-width: 460px; /* Adjusted to viewport width for responsive design */
+	height: 292px;
 	display: block;
-	margin: 0 auto 10px auto;
+	margin: 0 auto 0px; /* Adjust margin as needed */
+	position: relative; /* Ensure relative positioning for absolute positioning inside */
+	z-index: 1; /* Ensure image stays on top */
   }
   
-  .name {
-	font-size: 1.2em;
-	margin-bottom: 5px;
-  }
-  
-  .description {
-	font-size: 1em;
-	color: white;
-	background-color: rgb(190, 190, 190);
+  .item-details {
 	width: 100%;
-	height: 40%;
+	background-color: #838181b2;
+	color: white; /* Adjust text color for better contrast */
+	padding: 10px;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	z-index: 2; /* Ensure details are above image */
+	box-shadow: 0px -4px 4px 0px #00000040; /* Adjust shadow as needed */
+  }
+  
+  .filters {
+	height: 40px;
+	padding: 10px 30px;
+	border: 0;
+	font-size: 15px;
+	background-color: #E9F5F9;
+	margin-left: 10px;
+  }
+  
+  .pagination {
+	display: flex;
+	justify-content: center;
+	margin-top: 20px;
+  }
+  
+  .pagination button {
+	background-color: #f0f0f0;
+	color: #333;
+	border: 1px solid #ccc;
+	padding: 10px;
+	margin: 300px;
+	cursor: pointer;
+	border-radius: 50%; /* Make the button circular */
+	width: 30px; /* Ensure fixed width for circular shape */
+	height: 30px; /* Ensure fixed height for circular shape */
+  }
+  
+  .pagination button.active {
+	background-color: #909499; /* Highlight color for active page */
+	color: white;
+	border-color: #93bef5;
   }

@@ -2,11 +2,14 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserCircle, faChevronDown } from '@fortawesome/free-solid-svg-icons';
-
 import './Navbar.css';
 
-function Navbar() {
+export const Navbar = () => {
   const location = useLocation();
+
+  if (location.pathname !== '/Home' && location.pathname !== '/ImageUpload') {
+    return null;
+  }
 
   let navText = '';
   switch (location.pathname) {
