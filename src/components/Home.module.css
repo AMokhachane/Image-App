@@ -1,48 +1,65 @@
-.home-page{
-	margin-left: 360px;
-
-	
-}
-.search-bar {
-width: 450px;
-height: Hug (39px)px;
-top: 130px;
-left: 438px;
-padding: 10px 0px 0px 0px;
-gap: 5px;
-border-radius: 4px 0px 0px 0px;
-opacity: 0px;
-margin-right: 800px;
-
-
+.home-page {
+	margin-left: 360px; /* Align content with sidebar */
+	padding: 100px; /* Add some padding */
   }
-
-.image-grid {
+  
+  .form-group {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 50px;
+  }
+  
+  .inputBox {
+	position: relative;
+	display: flex;
+	align-items: center;
+  }
+  
+  .search-bar {
+	width: 450px;
+	height: 15px;
+	padding: 15px 30px;
+	border: 0cap;
+	font-size: 15px;
+	background-color: #ebe9e9;
+  }
+  
+  .icon {
+	position: absolute;
+	left: 10px;
+	color: #888;
+  }
+  
+  .image-grid {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Responsive grid layout */
-	gap: 20px; /* Gap between grid items */
-
+	grid-template-columns: repeat(3, 1fr); /* Grid layout with 2 columns */
+	gap: 20px;
   }
   
   .image-item {
-	border: 1px solid #ddd; /* Add a border around each image item */
-	border-radius: 5px; /* Add some border radius for rounded corners */
-	padding: 10px; /* Add padding inside each image item */
+	
+	padding: 10px;
 	background-color: #fafafa;
+	text-align: center; /* Center align text and images */
   }
   
   .image-item img {
-	max-width: 100%; /* Ensure images don't exceed their container width */
-	display: block; /* Remove any default inline styling */
-	margin-bottom: 10px; /* Add space between image and text */
+	max-width: 10dvh;
+	max-height: 25dvh;
+	display: block;
+	margin: 0 auto 10px auto;
   }
   
   .name {
-	font-size: 1.2em; /* Larger font size for the name */
-	margin-bottom: 5px; /* Add space between name and description */
+	font-size: 1.2em;
+	margin-bottom: 5px;
   }
   
   .description {
-	font-size: 1em; /* Normal font size for the description */
-	color: #666; /* Lighter color for the description text */
+	font-size: 1em;
+	color: white;
+	background-color: rgb(190, 190, 190);
+	width: 100%;
+	height: 40%;
   }

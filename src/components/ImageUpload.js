@@ -1,50 +1,45 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';  // Import useHistory
 import axios from 'axios';
 import './ImageUpload.css';
 
-const ImageUpload = () => {
+const ImageUploader = () => {
   const [url, setUrl] = useState('');
-  const [title, settitle] = useState('');
-  const [ImageDescription, setImageDescription] = useState('');
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
   const [error, setError] = useState(null);
 
-  const history = useHistory();  // Initialize useHistory
-
-  const handleAddImage = (event) => {
+  const handleImageUpload = async (event) => {
     event.preventDefault();
-    
-    const data = {
+
+    const imageData = {
       url: url,
-      name: title,
-      ImageDescription: ImageDescription
+      title: title,
+      description: description
     };
 
-    axios.post('http://localhost:5205/api/image', data, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-     .then(response => {
-      console.log('Response:', response.data);
-      // Assuming registration is successful, redirect to login page
-      history.push('/');
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      // Handle registration errors here
+    try {
+      const response = await axios.post('http://localhost:5205/api/images', imageData, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      console.log('Image upload successful:', response.data);
+      // Assuming you have a function to update images in the parent component
+      // For now, you can console.log(response.data) and update your state accordingly.
+    } catch (error) {
+      console.error('Error uploading image:', error);
       if (error.response) {
-        setError(error.response.data); // Set error message from server
+        setError(error.response.data);
       } else {
         setError('An error occurred. Please try again.');
       }
-    });
+    }
   };
 
   return (
-    <div className="imageUpload-page">
-      <form onSubmit={handleAddImage}>
-        {error && <div className="error"><pre>{error}</pre></div>}
+    <div className="image-upload">
+      {error && <div className="error">{error}</div>}
+      <form onSubmit={handleImageUpload}>
         <div className="form-group">
           <input
             type="text"
@@ -58,24 +53,23 @@ const ImageUpload = () => {
           <input
             type="text"
             value={title}
-            onChange={(e) => settitle(e.target.value)}
-            placeholder="Enter image name"
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Enter image title"
             required
           />
         </div>
         <div className="form-group">
-          <input
-            type="text"
-            value={ImageDescription}
-            onChange={(e) => setImageDescription(e.target.value)}
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
             placeholder="Enter image description"
             required
           />
         </div>
-        <button onClick={handleAddImage}>upload</button>
+        <button type="submit">Upload Image</button>
       </form>
     </div>
   );
 };
 
-export default ImageUpload
+export default ImageUploader;

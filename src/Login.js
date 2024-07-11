@@ -40,12 +40,12 @@ function Login() {
   return (
     <div className={LoginCSS['login-container']}>
       <div className={LoginCSS.wrapper}>
-        <h2>Image Gallery App</h2>
+        <h1>Image Gallery App</h1>
         <h2>Log in</h2>
         {error && <div className={LoginCSS.error}>{error.message || error}</div>}
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className={LoginCSS['form-group']}>
-            <label htmlFor="username" className="test">Username</label>
+            <label htmlFor="username">Username</label>
             <div className={LoginCSS.inputBox}>
               <FaUser className={LoginCSS.icon} />
               <input
@@ -73,15 +73,15 @@ function Login() {
             </div>
           </div>
           <div className={LoginCSS['linkContainer']}>
-            <a href="/ForgotPassword" className={LoginCSS['forgotPasswordLink']}>
+            <a href="/ForgotPasswordRequest" className={LoginCSS['forgotPasswordLink']}>
               Forgot Password?
             </a>
           </div>
           <div className={LoginCSS['form-group']}>
-            <button type="button" className={`${LoginCSS['loginButton']} ${LoginCSS.loginButton}`} onClick={handleSubmit}>
+            <button type="submit" className={LoginCSS['loginButton']}>
               Log In
             </button>
-            </div>
+          </div>
           <div className={LoginCSS['form-group']}>
             <a href="/Register" className={LoginCSS['registerLink']}>
               New to this platform? <span>Register Here</span>

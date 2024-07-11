@@ -1,19 +1,48 @@
 .sidebar {
-	position: absolute;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 360px; /* Fixed width */
+	height: 100vh; /* Full height */
+	background: #2188b1;
+	color: aliceblue;
+	padding: 20px; /* Padding */
+	z-index: 1000; /* Higher z-index to stay on top */
+  }
+  
+  .sidebar .logo {
+	margin: 0 350px 90px 20px; /* Adjust margin around the logo */
+	font-size: 2em;
+	
+  }
+  
+  .sidebar .menu-items {
 	display: flex;
 	flex-direction: column;
-	background: #2188b1;
-	width: 360px;
-	height: 100%;
-	color: aliceblue;
-	height: 800px;
+	gap: 30px; /* Space between menu items */
+	margin: 0.5px; /* Adjust margin for menu items */
+  }
+  
+  .sidebar .menu-items a {
+	text-decoration: none; /* Remove underline */
   }
   
   .sidebar button {
-	margin-bottom: 20px; /* Adjust this value as needed */
-	width: 360px;
+	width: 100%;
+	background: none;
+	border: none;
+	color: aliceblue;
+	font-size: 1.2em;
+	text-align: left;
+	padding: 10px 20px;
+	cursor: pointer;
+	border-radius: 4px;
   }
   
-  .sidebar h3.logo {
-	margin-bottom: 80px; /* Adjust margin bottom to create space */
+  .sidebar button:hover {
+	background: rgba(355, 355, 355, 0.5); /* Slight hover effect */
+  }
+
+  .sidebar .logout {
+	margin: 400px 0px 90px 20px; /* Adjust margin around the logo */
   }

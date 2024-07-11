@@ -1,82 +1,67 @@
 .login-container {
-	font-family: "Inter", sans-serif;
-	display:flex;
-	background-image: url("/Images/image.jfif");
+  font-family: "Inter", sans-serif;
+  display: flex;
+  justify-content: center; /* Center the wrapper horizontally */
+  align-items: center; /* Center the wrapper vertically */
+  height: 95vh; /* Full viewport height */
+  background-image: url("/Images/image.jfif");
   background-size: cover; /* Make the background image cover the entire page */
-  
+  background-position: center; /* Center the background image */
 }
 
- 
 .wrapper {
-  width: 722px;
-  height: 518px;
+  width: 500px;
+  padding: 40px;
   background: #FFFFFF;
   box-shadow: 8px 8px 16px 0 rgba(0, 0, 0, 0.2);
   border-radius: 4px;
-  margin: 160px;
-  margin-left: 500px;
   color: rgb(15, 60, 76);
-  
+  text-align: center; /* Center align text */
 }
- 
+
 .wrapper h1 {
-  width: Hug (115px) px;
-  height: Hug (68px) px;
-  top: 105px;
-  left: 303px;
   font-size: 32px;
-  text-align: center;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.wrapper h2 {
+  font-size: 24px;
   margin-bottom: 20px;
   font-weight: 600;
-  
 }
- 
-.wrapper p {
-  font-size: 12px;
-  margin: 5px 5px;
-  margin-left: 80px;
-  font-weight: 600;
-  
+
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
 }
- 
-.wrapper .inputBox {
+
+.inputBox {
   position: relative;
-  width: 400px; /* Fixed width */
-  height: 38px; /* Fixed height */
-  top: 20px;
-  padding: 0px 0 0 0;
-  gap: 5px;
-  border-radius: 4px;
-  border: 1px;
-  border-radius: 4px;
-  border: 1px solid #aaa8a8; /* Add border around the input box */
-  border-style: solid;
-  border-color: #aaa8a8; /* Adjust border color if needed */
-  opacity: 1; /* Set opacity to 1 to make it visible */
-  margin: 0 0 30px 160px; /* Margin adjusted for space between label and inputBox */
+  width: 100%; /* Full width */
   display: flex; /* Flexbox to align icon and input */
   align-items: center;
-  background: white; /* Ensure background is white */
-  
+  border: 1px solid #aaa8a8;
+  border-radius: 4px;
+  background: white;
 }
- 
+
 .inputBox input {
   width: calc(100% - 30px); /* Adjust input width considering icon and padding */
-  padding: 0 10px;
+  padding: 10px;
   border: none; /* Remove input's default border */
   outline: none;
   font-size: 14px;
   color: rgb(15, 60, 76);
-  
 }
- 
+
 .inputBox input::placeholder {
   color: grey;
   font-family: "Inter", sans-serif;
   font-weight: 400;
-  font-size: 12px;
+  font-size: 14px;
 }
- 
+
 .inputBox .icon {
   color: grey;
   margin-left: 10px; /* Space between icon and border */
@@ -84,41 +69,30 @@
 }
 
 .linkContainer {
-  display: flex;
-  justify-content: flex-end; /* Align the forgot password link to the right */
+  text-align: right; /* Align the forgot password link to the right */
   margin-top: 10px; /* Adjust the space between the input box and the link */
-  width: 400px; /* Set the same width as the login button */
-  margin-left: auto; /* Align to the end of the container */
-  margin-right: auto; /* Center the container horizontally */
-}
- 
-.wrapper .forgotPasswordLink {
-  font-size: 10px;
-  font-weight: 400;
-  text-align:left;
-  margin-top: 30px;
-  margin-left: 0px ;
-  color: #0F3C4C;
-  line-height: 12.1px;
 }
 
 .forgotPasswordLink,
 .registerLink {
   text-decoration: none;
+  color: #0F3C4C;
+  font-size: 12px;
+  display: inline-block; /* Ensures the links are displayed as block elements */
 }
 
 .registerLink {
-  font-weight: normal; /* Reset the normal weight for the entire link */
+  text-align: center; /* Centers the register link */
+  width: 100%; /* Ensures the link spans the full width */
 }
 
 .registerLink span {
   font-weight: bold; /* Set bold weight only for the span element */
 }
- 
+
 .loginButton {
-  width: 400px;
-  height: 44px;
-  margin: 30px; /* Center horizontally with auto margins */
+  width: 100%; /* Full width */
+  padding: 10px;
   border: none;
   outline: none;
   border-radius: 4px;
@@ -126,22 +100,5 @@
   font-size: 16px;
   color: white;
   background-color: #2187AB;
-
-}
- 
-.wrapper .registerLink {
-  width: 103px;
-  height: 12px;
-  font-family: Inter;
-  font-size: 10px;
-  font-weight: 500;
-  line-height: 12.1px;
-  text-align: center;
-  margin-top: 30px;
-  color: #0F3C4C;
-}
-
-label {
-	margin-right: 330px;
-	margin-top: 20px; /* Adjust this value to shift the labels down */
+  margin-top: 20px; /* Margin at the top of the button */
 }

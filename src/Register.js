@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import RegisterCSS from './Register.module.css';
+import { FcGoogle } from 'react-icons/fc';
+import { FaFacebook } from 'react-icons/fa';
 
 const Register = () => {
   const [fullName, setFullName] = useState('');
@@ -48,13 +50,13 @@ const Register = () => {
 
   return (
     <div className={RegisterCSS['register-container']}>
-      <div className={RegisterCSS.wrapper}>
+      <div className={RegisterCSS['wrapper']}>
         <div className={RegisterCSS['form-container']}>
           <form onSubmit={handleRegister} className={RegisterCSS['register-form']}>
             <h1>Register Profile</h1>
-            {error && <div className="error">{error}</div>}
-            <div className="form-group">
-              <label>FullName</label>
+            {error && <div className={RegisterCSS['error']}>{error}</div>}
+            <div className={RegisterCSS['form-group']}>
+            <label>Full Name</label>
               <input
                 type="text"
                 id="fullName"
@@ -64,8 +66,8 @@ const Register = () => {
                 required
               />
             </div>
-            <div className="form-group">
-              <label>EmailAddress</label>
+            <div className={RegisterCSS['form-group']}>
+            <label>Email Address</label>
               <input
                 type="email"
                 id="email"
@@ -75,8 +77,8 @@ const Register = () => {
                 required
               />
             </div>
-            <div className="form-group">
-              <label>Password</label>
+            <div className={RegisterCSS['form-group']}>
+            <label>Password</label>
               <input
                 type="password"
                 id="password"
@@ -86,8 +88,8 @@ const Register = () => {
                 required
               />
             </div>
-            <div className="form-group">
-              <label>ConfirmPassword</label>
+            <div className={RegisterCSS['form-group']}>
+            <label>Confirm Password</label>
               <input
                 type="password"
                 id="confirmPassword"
@@ -99,10 +101,15 @@ const Register = () => {
             </div>
             <button type="submit" className={RegisterCSS['register-btn']}>Register</button>
           </form>
+          <div className={RegisterCSS['or']}>or</div>
+          <button className={`${RegisterCSS['social-btn']} ${RegisterCSS['google-btn']}`}>
+            <FcGoogle className={RegisterCSS['icon']} /> Sign in with Google
+          </button>
+          <button className={`${RegisterCSS['social-btn']} ${RegisterCSS['facebook-btn']}`}>
+            <FaFacebook className={RegisterCSS['icon']} /> Sign in with Facebook
+          </button>
         </div>
-        <div className={RegisterCSS['register-image']}>
         </div>
-      </div>
     </div>
   );
 };

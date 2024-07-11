@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import HomeCSS from './Home.module.css';
 import {  FaSearch } from 'react-icons/fa';
+import { IoFilterSharp } from "react-icons/io5";
 
 export const Home = ({ images }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -21,6 +22,9 @@ export const Home = ({ images }) => {
             onChange={(e) => setSearchTerm(e.target.value)}
             className={HomeCSS['search-bar']}
           />
+          <button className='filter'>
+          <IoFilterSharp className='filter' /> Filters
+            </button>
         </div>
       </div>
       <div className={HomeCSS['image-grid']}>

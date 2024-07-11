@@ -1,93 +1,120 @@
 .register-container {
 	font-family: "Inter", sans-serif;
 	padding: 0px;
-	height: 917px;
+	
 	display:flex;
 	padding: 0px;
-	width: 100%;
+	
 	height: 100%;
 	background-image: url("/Images/image.jfif");
-	background-size: cover; /* Make the background image cover the entire page */
-	background-position:center; /* Center the background image */
+	background-size:133dvh; /* Make the background image cover the entire page */
+	background-position:right; /* Center the background image */
 	background-repeat: no-repeat; /* Prevent the image from repeating */
 	height: 100%; /* Ensure the background covers the full height */
 	margin: 0;
-	  
-}
-
-.wrapper {
-	min-width: 700px;
+  }
+  
+  .wrapper {
+	
+	background: #fff;
+	min-width: 600px;
 	height: 800px;
 	top: 54px;
 	left: 54px;
-	background: #FFFFFF;
-  
-	
   }
-   
+  
   .form-container {
-	width: 400px;
-	height: 35px;
-	padding-top: 70px;
-	padding-bottom: 50px;
-	padding-left: 120px;
-	padding-right: 10px;
-	
+	padding: 40px 90px;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
   }
   
-  .register h1 {
-	font-size: 30px;
-	margin-bottom: 10px;
-	color: rgb(15, 60, 76);
+  .register-form h1 {
+	font-size: 25px;
+	margin-bottom: 75px;
+	color: #0f3c4c;
+	text-align: left;  /* Aligns the text to the left */
   }
   
-  
-  .register-form input::placeholder {
-  color: grey;
-  font-family: "Inter", sans-serif;
-  font-weight: 400;
-  font-size: 12px;
-  }
-  
-  .register-form {
-	margin-bottom: 10px;
-	width: 100%;
-	max-width: 400px;
+  .register-form p {
+	font-size: 14px;
+	color: #888;
+	margin-bottom: 20px;
   }
   
   .register-form input {
-	background-color: rgb(252, 253, 253);
-	color: #0F3C4C;
-	
-	width: 400px;
-	height: 35px;
+	background-color: #fcfdfd;
+	color: #0f3c4c;
+	width: 100%;
 	padding: 10px;
-	border-radius: 4px;
-	cursor: pointer;
-	font-size: 16px;
-	margin-top: 20px;
 	margin-bottom: 20px;
-	border-color: #aaa8a8; /* Adjust border color if needed */
-	border-radius: 4px 0 0 0; /* Adjusted border-radius */
- 	border-width: 0.5px 0 0 0; /* Adjusted border */
-  	border-style: solid;
+	border: 1px solid #aaa8a8;
+	border-radius: 4px;
+	font-size: 14px;
   }
   
   .register-btn {
-	background-color: rgb(27, 139, 181);
+	background-color: #1b8bb5;
 	color: white;
 	border: none;
-	width: 400px;
-	height: 44px;
+	width: 100%;
 	padding: 10px;
 	border-radius: 4px;
 	cursor: pointer;
 	font-size: 16px;
-	margin-top: 20px;
-	margin-bottom: 20px;
+	margin-top: 40px;
+  }
+  
+  .or {
+	text-align: center;
+	margin: 20px 0;
+	font-size: 12px;
+	font-weight: 600;
+	color: #353434;
+  }
+  
+  .social-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	padding: 10px;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 16px;
+	margin-bottom: 10px;
+  }
+  
+  .google-btn {
+  background-color: white;
+  color: black;
+  border: none;  /* Removes the border */
+  box-shadow: 6px 6px 6px rgba(0.1, 0.1, 0.1, 0.1);  /* Adds a shadow */
+	
+  }
+  
+  .facebook-btn {
+  background-color: white;
+  color: black;
+  border: none;  /* Removes the border */
+  box-shadow: 6px 6px 6px rgba(0.1, 0.1, 0.1, 0.1);  /* Adds a shadow */
+  }
+  
+  .icon {
+	margin-right: 8px;
   }
   
   label{
-	margin-right: start;
-	
-  }
+	color: #0f3c4c;
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 14.52px;
+	margin: 0; /* Remove default margin */
+	padding: 0; /* Remove default padding */
+	display:flex; /* Ensure label takes up full width */
+}
+  
+ 
+  
