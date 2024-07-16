@@ -17,6 +17,11 @@ const Register = () => {
   const handleRegister = (event) => {
     event.preventDefault();
 
+    if (/\d/.test(fullName)) {
+      setError('Full Name cannot include numeric characters');
+      return;
+    }
+
     if (password !== confirmPassword) {
       setError('Passwords do not match');
       return;

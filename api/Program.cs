@@ -27,19 +27,21 @@ builder.Services.AddControllers().AddNewtonsoftJson(options => {
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 });
 
-
-builder.Services.AddIdentity<AppUser, IdentityRole>(options => {
-     options.Tokens.EmailConfirmationTokenProvider = "Default"; // Ensure this matches your setup
+builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
+{
+    options.Tokens.PasswordResetTokenProvider = TokenOptions.DefaultProvider;
     options.SignIn.RequireConfirmedEmail = false; // Disable email confirmation requirement
     options.Password.RequireDigit = true;
     options.Password.RequireUppercase = true;
     options.Password.RequireLowercase = true;
     options.Password.RequiredLength = 8;
 })
-.AddEntityFrameworkStores<ApplicationDBContext>();
+.AddEntityFrameworkStores<ApplicationDBContext>()
+.AddTokenProvider<DataProtectorTokenProvider<AppUser>>(TokenOptions.DefaultProvider); // Explicitly add the default token provider
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options => {
+    .AddJwtBearer(options =>
+    {
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
@@ -71,11 +73,11 @@ builder.Services.AddSwaggerGen(option =>
             {
                 Reference = new OpenApiReference
                 {
-                    Type=ReferenceType.SecurityScheme,
-                    Id="Bearer"
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
                 }
             },
-            new string[]{}
+            new string[] { }
         }
     });
 });

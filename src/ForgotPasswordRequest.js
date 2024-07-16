@@ -7,20 +7,24 @@ function ForgotPasswordRequest() {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
-  const handleForgotPassword = async (email) => {
+  const handleForgotPassword = async () => {
     try {
-      const response = await axios.post('http://localhost:5205/api/account/forgot-password', { email }, {
-        headers: {
-          'Content-Type': 'application/json'
+      const response = await axios.post(
+        'http://localhost:5205/api/account/forgot-password',
+        { email },
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
         }
-      });
-  
+      );
+
       console.log('Response:', response.data);
-      setMessage('Password reset link sent to your email.');
+      setMessage(response.data.message);
     } catch (error) {
       console.error('Error:', error);
       if (error.response) {
-        setError(error.response.data.message || 'Error sending password reset link.');
+        setError(error.response.data || 'Error sending password reset email.');
       } else {
         setError('An error occurred. Please try again.');
       }
@@ -31,7 +35,7 @@ function ForgotPasswordRequest() {
     <div className={ForgotPasswordRequestCSS['forgot-password-page']}>
       <div className={ForgotPasswordRequestCSS.wrapper}>
         <h2>Forgot Password</h2>
-        <form onSubmit={handleForgotPassword}>
+        <form onSubmit={(e) => { e.preventDefault(); handleForgotPassword(); }}>
           <div className={ForgotPasswordRequestCSS.inputBox}>
             <input
               type="email"
@@ -43,9 +47,8 @@ function ForgotPasswordRequest() {
           </div>
           <div className={ForgotPasswordRequestCSS['form-group']}>
             <button
-              type="button"
+              type="submit"
               className={`${ForgotPasswordRequestCSS['SendResetLinkButton']} ${ForgotPasswordRequestCSS.loginButton}`}
-              onClick={handleForgotPassword}
             >
               Send Reset Link
             </button>
@@ -56,6 +59,6 @@ function ForgotPasswordRequest() {
       </div>
     </div>
   );
-  }
-  
-  export default ForgotPasswordRequest;
+}
+
+export default ForgotPasswordRequest;

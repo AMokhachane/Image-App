@@ -41,7 +41,7 @@ function Login() {
     <div className={LoginCSS['login-container']}>
       <div className={LoginCSS.wrapper}>
         <h1>Image Gallery App</h1>
-        <h2>Log in</h2>
+        <h2>Login</h2>
         {error && <div className={LoginCSS.error}>{error.message || error}</div>}
         <form onSubmit={handleSubmit}>
           <div className={LoginCSS['form-group']}>

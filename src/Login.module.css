@@ -21,12 +21,12 @@
 
 .wrapper h1 {
   font-size: 32px;
-  margin-bottom: 10px;
+  margin-bottom: -15px;
   font-weight: 600;
 }
 
 .wrapper h2 {
-  font-size: 24px;
+  font-size: 32px;
   margin-bottom: 20px;
   font-weight: 600;
 }
