@@ -17,7 +17,7 @@ export const Navbar = () => {
       navText = 'Home >';
       break;
     case '/ImageUpload':
-      navText = 'Image Upload';
+      navText = 'Image Upload >';
       break;
     default:
       navText = '';

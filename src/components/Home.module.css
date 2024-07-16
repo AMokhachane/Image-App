@@ -1,5 +1,5 @@
 .home-page {
-	margin-left: 360px; /* Align content with sidebar */
+	margin-left: 350px; /* Align content with sidebar */
 	padding: 100px; /* Add some padding */
   }
   
@@ -14,6 +14,7 @@
 	position: relative;
 	display: flex;
 	align-items: center;
+	
   }
   
   .search-bar {
@@ -21,6 +22,7 @@
 	height: 15px;
 	padding: 15px 30px;
 	border: 0;
+	border-radius: 5px;
 	font-size: 15px;
 	background-color: #F2F2F2;
   }
@@ -44,8 +46,8 @@
   }
   
   .image-item img {
-	max-width: 460px; /* Adjusted to viewport width for responsive design */
-	height: 292px;
+	max-width: 380px; /* Adjusted to viewport width for responsive design */
+	height: 250px;
 	display: block;
 	margin: 0 auto 0px; /* Adjust margin as needed */
 	position: relative; /* Ensure relative positioning for absolute positioning inside */
@@ -73,6 +75,7 @@
 	height: 40px;
 	padding: 10px 30px;
 	border: 0;
+	border-radius: 6px;
 	font-size: 15px;
 	background-color: #E9F5F9;
 	margin-left: 10px;

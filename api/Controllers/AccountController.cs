@@ -8,7 +8,8 @@ using api.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using api.EmailService;
+using System.Text; // Add this directive for StringBuilder
+using System.Net;
 
 
 namespace api.Controllers
@@ -21,7 +22,7 @@ namespace api.Controllers
         private readonly ITokenService _tokenService;
         private readonly SignInManager<AppUser> _signinManager;
         private readonly IEmailSender _emailSender;
-        
+
         public AccountController(UserManager<AppUser> userManager, ITokenService tokenService, SignInManager<AppUser> signInManager, IEmailSender emailSender)
         {
             _userManager = userManager;
@@ -67,17 +68,27 @@ namespace api.Controllers
                 };
 
                 var createdUser = await _userManager.CreateAsync(AppUser, registerDto.Password);
+
                 if (createdUser.Succeeded)
                 {
                     var roleResult = await _userManager.AddToRoleAsync(AppUser, "User");
                     if (roleResult.Succeeded)
                     {
+                        var token = _tokenService.CreateToken(AppUser);
+
+                        var emailMessage = new StringBuilder();
+                        emailMessage.AppendLine("Welcome to our application!");
+                        emailMessage.AppendLine("Your registration was successful.");
+                        emailMessage.AppendLine($"<a href='http://localhost:3000/?token={WebUtility.UrlEncode(token)}'>Click here to log in</a>");
+
+                        await _emailSender.SendEmailAsync(AppUser.Email, "Welcome to ImageAppGallery", emailMessage.ToString());
+
                         return Ok(
                             new NewUserDto
                             {
                                 UserName = AppUser.UserName,
                                 Email = AppUser.Email,
-                                Token = _tokenService.CreateToken(AppUser)
+                                Token = token
                             }
                         );
                     }
@@ -96,20 +107,5 @@ namespace api.Controllers
                 return StatusCode(500, e);
             }
         }
-
-        [HttpPost("send")]
-        public IActionResult SendEmail([FromBody] EmailRequest request)
-        {
-           var  message = new Message(new string[] { "amandamokhachane88@gmail.com" }, "Test email", "This is ThreadExceptionEventArgs content from our email.");
-            _emailSender.SendEmail(message);
-            return Ok();
-        }
-
-    }
-       public class EmailRequest
-    {
-        public List<string> To { get; set; }
-        public string Subject { get; set; }
-        public string Content { get; set; }
     }
 }

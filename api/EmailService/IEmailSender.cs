@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace api.EmailService
+namespace api.Interfaces
 {
     public interface IEmailSender
     {
-        void SendEmail(Message message);
+        Task SendEmailAsync(string email, string subject, string message);
     }
 }

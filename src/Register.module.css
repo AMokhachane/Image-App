@@ -5,13 +5,13 @@
 	display:flex;
 	padding: 0px;
 	
-	height: 100%;
+	height: 860px;
 	background-image: url("/Images/image.jfif");
-	background-size:133dvh; /* Make the background image cover the entire page */
+	background-size:130dvh; /* Make the background image cover the entire page */
 	background-position:right; /* Center the background image */
 	background-repeat: no-repeat; /* Prevent the image from repeating */
-	height: 100%; /* Ensure the background covers the full height */
-	margin: 0;
+	
+	margin: 20px;
   }
   
   .wrapper {
@@ -34,7 +34,7 @@
   .register-form h1 {
 	font-size: 25px;
 	margin-bottom: 75px;
-	color: #0f3c4c;
+	color: #0F3C4C;
 	text-align: left;  /* Aligns the text to the left */
   }
   
@@ -46,7 +46,7 @@
   
   .register-form input {
 	background-color: #fcfdfd;
-	color: #0f3c4c;
+	color: #0F3C4C;
 	width: 100%;
 	padding: 10px;
 	margin-bottom: 20px;
@@ -56,7 +56,7 @@
   }
   
   .register-btn {
-	background-color: #1b8bb5;
+	background-color: #2187AB;
 	color: white;
 	border: none;
 	width: 100%;
@@ -107,7 +107,7 @@
   }
   
   label{
-	color: #0f3c4c;
+	color: #0F3C4C;
 	font-size: 12px;
 	font-weight: 600;
 	line-height: 14.52px;

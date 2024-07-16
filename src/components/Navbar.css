@@ -16,12 +16,10 @@
   
   .user-info {
 	display: flex;
-	align-items: center;
+	align-items:end;
 	color:rgb(3, 3, 78);
 	margin-right: 20px;
-	font-size: 15px;
-	font-weight: bold;
-  }
+	}
 
   .navbar .user-info span {
 	color:rgb(3, 3, 78);
@@ -33,7 +31,7 @@
 	font-size: 15px;
 	font-weight: bold;
 	color: rgb(3, 3, 78);
-	margin-right: 1150px; /* Pushes navText to the far left */
+	margin-right: 850px; /* Pushes navText to the far left */
   }
 
   .profile-icon{

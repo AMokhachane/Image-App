@@ -3,7 +3,7 @@
   display: flex;
   justify-content: center; /* Center the wrapper horizontally */
   align-items: center; /* Center the wrapper vertically */
-  height: 95vh; /* Full viewport height */
+  height: 100vh; /* Full viewport height */
   background-image: url("/Images/image.jfif");
   background-size: cover; /* Make the background image cover the entire page */
   background-position: center; /* Center the background image */
@@ -11,7 +11,7 @@
 
 .wrapper {
   width: 500px;
-  padding: 40px;
+  padding: 50px;
   background: #FFFFFF;
   box-shadow: 8px 8px 16px 0 rgba(0, 0, 0, 0.2);
   border-radius: 4px;

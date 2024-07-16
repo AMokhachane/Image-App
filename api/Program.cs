@@ -29,6 +29,8 @@ builder.Services.AddControllers().AddNewtonsoftJson(options => {
 
 
 builder.Services.AddIdentity<AppUser, IdentityRole>(options => {
+     options.Tokens.EmailConfirmationTokenProvider = "Default"; // Ensure this matches your setup
+    options.SignIn.RequireConfirmedEmail = false; // Disable email confirmation requirement
     options.Password.RequireDigit = true;
     options.Password.RequireUppercase = true;
     options.Password.RequireLowercase = true;
