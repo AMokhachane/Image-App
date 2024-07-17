@@ -75,13 +75,10 @@ namespace api.Controllers
                     if (roleResult.Succeeded)
                     {
                         var token = _tokenService.CreateToken(AppUser);
+                        var confirmationLink = Url.Action("ConfirmEmail", "Account", 
+                        new { userId = AppUser.Id, token = token}, Request.Scheme);
 
-                        var emailMessage = new StringBuilder();
-                        emailMessage.AppendLine("Welcome to our application!");
-                        emailMessage.AppendLine("Your registration was successful.");
-                        emailMessage.AppendLine($"<a href='http://localhost:3000/?token={WebUtility.UrlEncode(token)}'>Click here to log in</a>");
-
-                        await _emailSender.SendEmailAsync(AppUser.Email, "Welcome to ImageAppGallery", emailMessage.ToString());
+                        await _emailSender.SendEmailAsync(AppUser.Email, confirmationLink);
 
                         return Ok(
                             new NewUserDto
@@ -126,7 +123,7 @@ public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto for
         emailMessage.AppendLine("You requested a password reset.");
         emailMessage.AppendLine($"<a href='http://localhost:3000/ResetPassword?token={WebUtility.UrlEncode(token)}'>Click here to reset your password</a>");
         
-        await _emailSender.SendEmailAsync(user.Email, "Password Reset", emailMessage.ToString());
+        //await _emailSender.SendEmailAsync(user.Email, "Password Reset", emailMessage.ToString());
 
         return Ok(new { message = "Password reset email sent" });
     }
