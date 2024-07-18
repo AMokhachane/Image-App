@@ -5,13 +5,18 @@
 	display:flex;
 	padding: 0px;
 	
-	height: 860px;
+	height: 800px;
 	background-image: url("/Images/image.jfif");
 	background-size:130dvh; /* Make the background image cover the entire page */
 	background-position:right; /* Center the background image */
 	background-repeat: no-repeat; /* Prevent the image from repeating */
 	
 	margin: 20px;
+  }
+
+  .error{
+
+	color: red;
   }
   
   .wrapper {
@@ -33,7 +38,7 @@
   
   .register-form h1 {
 	font-size: 25px;
-	margin-bottom: 75px;
+	margin-bottom: 40px;
 	color: #0F3C4C;
 	text-align: left;  /* Aligns the text to the left */
   }

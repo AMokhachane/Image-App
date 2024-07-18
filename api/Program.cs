@@ -32,7 +32,7 @@ builder.Services.AddControllers().AddNewtonsoftJson(options => {
 builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
 {
     options.Tokens.PasswordResetTokenProvider = TokenOptions.DefaultProvider;
-    options.SignIn.RequireConfirmedEmail = false; // Disable email confirmation requirement
+    options.SignIn.RequireConfirmedEmail = true; // Disable email confirmation requirement
     options.Password.RequireDigit = true;
     options.Password.RequireUppercase = true;
     options.Password.RequireLowercase = true;

@@ -1,83 +1,71 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import ImageUploadCss from './ImageUpload.module.css';
-import Navbar from './Navbar'; // Import the Navbar component
+import { useDropzone } from 'react-dropzone';
+import styles from './ImageUpload.module.css'; // Import the CSS module
 
-const ImageUploader = () => {
-  const [url, setUrl] = useState('');
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [error, setError] = useState(null);
+const ImageUpload = () => {
+  const [imageTitle, setImageTitle] = useState('');
+  const [imageDescription, setImageDescription] = useState('');
+  const [file, setFile] = useState(null);
 
-  const handleImageUpload = async (event) => {
-    event.preventDefault();
+  const { getRootProps, getInputProps } = useDropzone({
+    accept: 'image/*',
+    onDrop: (acceptedFiles) => {
+      setFile(acceptedFiles[0]);
+    }
+  });
 
-    const imageData = {
-      url: url,
-      title: title,
-      description: description,
-    };
+  const handleTitleChange = (e) => {
+    setImageTitle(e.target.value);
+  };
 
-    try {
-      const response = await axios.post('http://localhost:5205/api/images', imageData, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      console.log('Image upload successful:', response.data);
-      // Assuming you have a function to update images in the parent component
-      // For now, you can console.log(response.data) and update your state accordingly.
-    } catch (error) {
-      console.error('Error uploading image:', error);
-      if (error.response) {
-        setError(error.response.data);
-      } else {
-        setError('An error occurred. Please try again.');
-      }
+  const handleDescriptionChange = (e) => {
+    setImageDescription(e.target.value);
+  };
+
+  const handleUpload = () => {
+    if (file) {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('title', imageTitle);
+      formData.append('description', imageDescription);
+
+      // Add your upload logic here
+      console.log('Uploading:', formData);
+    } else {
+      alert('Please select a file to upload.');
     }
   };
 
   return (
-    <div className={ImageUploadCss['image-upload-container']}>
-      <Navbar /> {/* Use the Navbar component */}
-      {error && <div className={ImageUploadCss.error}>{error}</div>}
-      <form onSubmit={handleImageUpload} className={ImageUploadCss['image-upload-form']}>
-        <div className={ImageUploadCss['form-group']}>
-          <label htmlFor="url">Image URL</label>
-          <input
-            type="text"
-            id="url"
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-            placeholder="Enter image URL"
-            required
-          />
-        </div>
-        <div className={ImageUploadCss['form-group']}>
-          <label htmlFor="title">Image Title</label>
-          <input
-            type="text"
-            id="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="Enter image title"
-            required
-          />
-        </div>
-        <div className={ImageUploadCss['form-group']}>
-          <label htmlFor="description">Image Description</label>
-          <textarea
-            id="description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="Enter image description"
-            required
-          />
-        </div>
-        <button type="submit" className={ImageUploadCss['upload-button']}>Upload Image</button>
-      </form>
+    <div className={styles.imageUpload}>
+      <h1>Image Upload</h1>
+      <div className={styles.formGroup}>
+        <label htmlFor="imageTitle">Image Title</label>
+        <input
+          type="text"
+          id="imageTitle"
+          value={imageTitle}
+          onChange={handleTitleChange}
+          className={styles.input}
+        />
+      </div>
+      <div className={styles.formGroup}>
+        <label htmlFor="imageDescription">Image Description</label>
+        <textarea
+          id="imageDescription"
+          value={imageDescription}
+          onChange={handleDescriptionChange}
+          className={styles.textarea}
+        />
+      </div>
+      <div {...getRootProps({ className: styles.dropzone })}>
+        <input {...getInputProps()} />
+        <p>Drag and drop files here, or click to select files</p>
+        {file && <p>Selected file: {file.name}</p>}
+      </div>
+      <button onClick={handleUpload} className={styles.button}>Upload</button>
     </div>
   );
 };
 
-export default ImageUploader;
+export default ImageUpload;

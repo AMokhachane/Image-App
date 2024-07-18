@@ -25,6 +25,15 @@ const Register = () => {
     }
 
     try {
+      // Check if the email already exists
+      const emailExistsResponse = await axios.get('http://localhost:5205/api/account/email-exists', {
+        params: { email: email }
+      });
+
+      if (emailExistsResponse.data) {
+        setError('Email already exists');
+        return;
+      }
       const response = await axios.post('http://localhost:5205/api/account/register', {
         username: fullName,
         emailAddress: email,
@@ -41,7 +50,7 @@ const Register = () => {
       if (error.response && error.response.status === 400) {
         setError('Invalid credentials. Please check your details.');
       } else {
-        setError('An error occurred. Please try again.');
+        setError('Email already exists.');
       }
     }
   };
