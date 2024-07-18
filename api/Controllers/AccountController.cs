@@ -147,60 +147,68 @@ public async Task<IActionResult> ConfirmEmail(string userId, string token)
             return Ok(false);
         }
 
-        [HttpPost("forgot-password")]
-        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto forgotPasswordDto)
+      [HttpPost("ForgotPassword")]
+public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto forgotPasswordDto)
+{
+    try
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var user = await _userManager.FindByEmailAsync(forgotPasswordDto.Email);
+        if (user == null)
         {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
-
-                var user = await _userManager.FindByEmailAsync(forgotPasswordDto.Email);
-                if (user == null)
-                    return BadRequest("Email not found");
-
-                var token = _tokenService.CreateToken(user);
-
-                var emailMessage = new StringBuilder();
-                emailMessage.AppendLine("You requested a password reset.");
-                emailMessage.AppendLine($"<a href='http://localhost:3000/ResetPassword?token={WebUtility.UrlEncode(token)}'>Click here to reset your password</a>");
-
-                //await _emailSender.SendEmailAsync(user.Email, "Password Reset", emailMessage.ToString());
-
-                return Ok(new { message = "Password reset email sent" });
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, e);
-            }
+            return Ok("If your email address is in our system, you will receive a password reset link.");
         }
 
-        [HttpPost("reset-password")]
-        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto resetPasswordDto)
-        {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
+        var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+        var resetLink = Url.Action("ResetPassword", "Account", new { token = token, email = forgotPasswordDto.Email }, Request.Scheme);
 
-                var user = await _userManager.FindByEmailAsync(resetPasswordDto.Email);
-                if (user == null)
-                    return BadRequest("Invalid token or user does not exist");
+        await _emailSender.SendResetPasswordEmailAsync(forgotPasswordDto.Email, resetLink);
 
-                var result = await _userManager.ResetPasswordAsync(user, resetPasswordDto.Token, resetPasswordDto.Password);
-                if (result.Succeeded)
-                {
-                    return Ok(new { message = "Password reset successful" });
-                }
-                else
-                {
-                    return StatusCode(500, result.Errors);
-                }
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, e);
-            }
-        }
+        return Ok("If your email address is in our system, you will receive a password reset link.");
+    }
+    catch (Exception e)
+    {
+        return StatusCode(500, e);
+    }
+}
+
+[HttpGet("ResetPassword")]
+public IActionResult ResetPassword(string token, string email)
+{
+    if (token == null || email == null)
+    {
+        // Handle invalid or missing token/email
+        return BadRequest("Token or email missing");
+    }
+
+    var model = new ResetPasswordDto { Token = token, Email = email };
+    return Ok(model); // Return the model as JSON (or however you prefer to handle it in the frontend)
+}
+
+[HttpPost("ResetPassword")]
+public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto resetPasswordDto)
+{
+    if (!ModelState.IsValid)
+    {
+        return BadRequest(ModelState);
+    }
+
+    var user = await _userManager.FindByEmailAsync(resetPasswordDto.Email);
+    if (user == null)
+    {
+        // User not found, but don't reveal this to the client
+        return Ok("Password reset successful.");
+    }
+
+    var result = await _userManager.ResetPasswordAsync(user, resetPasswordDto.Token, resetPasswordDto.Password);
+    if (result.Succeeded)
+    {
+        return Ok("Password reset successful.");
+    }
+
+    return BadRequest("Error resetting password.");
+}
     }
 }

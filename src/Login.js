@@ -73,7 +73,7 @@ function Login() {
             </div>
           </div>
           <div className={LoginCSS['linkContainer']}>
-            <a href="/ForgotPasswordRequest" className={LoginCSS['forgotPasswordLink']}>
+            <a href="/ForgotPassword" className={LoginCSS['forgotPasswordLink']}>
               Forgot Password?
             </a>
           </div>

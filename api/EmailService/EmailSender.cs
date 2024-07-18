@@ -42,5 +42,31 @@ namespace api.EmailService
                 await smtpClient.SendMailAsync(message);
             }
         }
+
+               public async Task SendResetPasswordEmailAsync(string email, string resetLink)
+        {
+            var smtpHost = _configuration["EmailConfiguration:Host"];
+            var smtpPortString = _configuration["EmailConfiguration:Port"];
+            var smtpUsername = _configuration["EmailConfiguration:Username"];
+            var smtpPassword = _configuration["EmailConfiguration:Password"];
+            var smtpFrom = _configuration["EmailConfiguration:From"];
+
+            var message = new MailMessage();
+            message.To.Add(email);
+            message.From = new MailAddress(smtpFrom);
+            message.Subject = "Reset Password for Image Gallery App";
+            message.Body = $@"<p>Hi,</p>
+                            <p>We received a request to reset your password for your Image Gallery App account.</p>
+                            <p><a href=""{resetLink}"" target='_blank' rel='noopener noreferrer'>Click here to reset your password</a></p>
+                            <p>If you did not request a password reset, please ignore this email.</p>";
+            message.IsBodyHtml = true;
+
+            using (var smtpClient = new SmtpClient(smtpHost))
+            {
+                smtpClient.Credentials = new NetworkCredential(smtpUsername, smtpPassword);
+                smtpClient.Port = 587;
+                await smtpClient.SendMailAsync(message);
+            }
+        }
     }
 }

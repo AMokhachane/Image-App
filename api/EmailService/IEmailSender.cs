@@ -8,5 +8,6 @@ namespace api.Interfaces
     public interface IEmailSender
     {
         Task SendEmailAsync(string email, string confirmationLink);
+        Task SendResetPasswordEmailAsync(string email, string resetLink);
     }
 }

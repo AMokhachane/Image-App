@@ -4,8 +4,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Login from './Login';
 import Navbar from './components/Navbar';
 import Register from './Register';
-import ForgotPasswordRequest from './ForgotPasswordRequest';
 import ResetPassword from './ResetPassword';
+import ForgotPassword from './ForgotPassword';
 import { Sidebar } from './components/Sidebar';
 import { Home } from './components/Home';
 import ImageUpload from './components/ImageUpload';
@@ -32,8 +32,8 @@ function App() {
             <Route path="/Register">
               <Register />
             </Route>
-            <Route path="/ForgotPasswordRequest">
-              <ForgotPasswordRequest />
+            <Route path="/ForgotPassword">
+              <ForgotPassword />
             </Route>
             <Route path="/ResetPassword">
               <ResetPassword />
