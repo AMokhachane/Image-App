@@ -7,6 +7,7 @@ const ImageUpload = () => {
   const [imageDescription, setImageDescription] = useState('');
   const [file, setFile] = useState(null);
 
+
   const { getRootProps, getInputProps } = useDropzone({
     accept: 'image/*',
     onDrop: (acceptedFiles) => {
@@ -22,15 +23,29 @@ const ImageUpload = () => {
     setImageDescription(e.target.value);
   };
 
-  const handleUpload = () => {
+  const handleUpload = async () => {
     if (file) {
       const formData = new FormData();
       formData.append('file', file);
       formData.append('title', imageTitle);
       formData.append('description', imageDescription);
 
-      // Add your upload logic here
-      console.log('Uploading:', formData);
+      try {
+        const response = await fetch('/api/upload', {
+          method: 'POST',
+          body: formData
+        });
+        
+        if (response.ok) {
+          const result = await response.json();
+          console.log('Upload successful:', result);
+          
+        } else {
+          console.error('Upload failed:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error uploading file:', error);
+      }
     } else {
       alert('Please select a file to upload.');
     }

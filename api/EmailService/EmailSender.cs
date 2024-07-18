@@ -29,7 +29,7 @@ namespace api.EmailService
             message.Body = $@"<p>Hi,</p>
                             <h2>WELCOME TO Image Gallery App!</h2>
                             <p>Thank you for signing up for our online gallery app.</p>
-                             <p><a href='http://localhost:3000' target='_blank' rel='noopener noreferrer'>Click here to sign in</a></p>
+                             <p><a href=""{confirmationLink}"" target='_blank' rel='noopener noreferrer'>Click here to sign in</a></p>
                             <p>Use these credentials when logging into your account:</p>
                             <p>Username: your registered Username</p>
                             <p>Password: The password you set when creating your account</p>";

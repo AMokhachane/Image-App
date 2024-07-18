@@ -87,14 +87,7 @@ public async Task<IActionResult> Login(LoginDto loginDto)
 
                         await _emailSender.SendEmailAsync(AppUser.Email, confirmationLink);
 
-                        return Ok(
-                            new NewUserDto
-                            {
-                                UserName = AppUser.UserName,
-                                Email = AppUser.Email,
-                                Token = token
-                            }
-                        );
+                        return Ok("Registered Sucessfully, Check your EMail");
                     }
                     else
                     {
@@ -133,7 +126,8 @@ public async Task<IActionResult> ConfirmEmail(string userId, string token)
     if (result.Succeeded)
     {
         // Email confirmed successfully, redirect or return appropriate response
-        return Ok("Email confirmed successfully");
+        // return Ok("Email confirmed successfully");
+        return Redirect("http://localhost:3000/");
     }
     else
     {
