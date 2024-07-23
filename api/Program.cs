@@ -24,6 +24,8 @@ var emailConfig = builder.Configuration.GetSection("EmailConfiguration")
     .Get<EmailConfiguration>();
 builder.Services.AddSingleton(emailConfig);
 builder.Services.AddScoped<IEmailSender, EmailSender>();
+builder.Services.AddScoped<IPasswordHistoryService, PasswordHistoryService>();
+
 
 builder.Services.AddControllers().AddNewtonsoftJson(options => {
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;

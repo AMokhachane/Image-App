@@ -22,13 +22,17 @@ namespace api.Controllers
         private readonly ITokenService _tokenService;
         private readonly SignInManager<AppUser> _signinManager;
         private readonly IEmailSender _emailSender;
+        private readonly IPasswordHistoryService _passwordHistoryService;
 
-        public AccountController(UserManager<AppUser> userManager, ITokenService tokenService, SignInManager<AppUser> signInManager, IEmailSender emailSender)
+
+        public AccountController(UserManager<AppUser> userManager, ITokenService tokenService, SignInManager<AppUser> signInManager, IEmailSender emailSender, IPasswordHistoryService passwordHistoryService)
         {
             _userManager = userManager;
             _tokenService = tokenService;
             _signinManager = signInManager;
             _emailSender = emailSender;
+            _passwordHistoryService = passwordHistoryService;
+
         }
 
         [HttpPost("login")]
@@ -167,7 +171,7 @@ namespace api.Controllers
 
                 await _emailSender.SendResetPasswordEmailAsync(forgotPasswordDto.Email, resetLink);
 
-                return Ok("If your email address is in our system, you will receive a password reset link.");
+                return Ok("Check your email for a password reset link.");
             }
             catch (Exception e)
             {
@@ -175,41 +179,40 @@ namespace api.Controllers
             }
         }
 
-        [HttpGet("ResetPassword")]
-        public IActionResult ResetPassword(string token, string email)
+        [HttpPost("ResetPasswordByEmail")]
+        public async Task<IActionResult> ResetPasswordByEmail([FromBody] ResetPasswordByEmailDto resetPasswordDto)
         {
-            if (token == null || email == null)
+            try
             {
-                // Handle invalid or missing token/email
-                return BadRequest("Token or email missing");
-            }
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+                    
+                var user = await _userManager.FindByEmailAsync(resetPasswordDto.Email);
+                if (user == null)
+                {
+                    return BadRequest("Invalid email address.");
+                }
 
-            var model = new ResetPasswordDto { Token = token, Email = email };
-            return Ok(model); // Return the model as JSON (or however you prefer to handle it in the frontend)
+                // Generate a new password (or you can allow the user to specify a new one)
+                var newPassword = resetPasswordDto.NewPassword;
+
+                // Update the user's password
+                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var result = await _userManager.ResetPasswordAsync(user, token, newPassword);
+
+                if (result.Succeeded)
+                {
+                    return Ok("Password has been reset successfully.");
+                }
+
+                // Collect all errors from the result
+                var errors = string.Join(", ", result.Errors.Select(e => e.Description));
+                return BadRequest($"Error resetting password: {errors}");
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, e.Message);
+            }
         }
-
-        [HttpPost("ResetPassword")]
-        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordDto resetPasswordDto)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var user = await _userManager.FindByEmailAsync(resetPasswordDto.Email);
-            if (user == null)
-            {
-                // User not found, but don't reveal this to the client
-                return Ok("Password reset successful.");
-            }
-
-            var result = await _userManager.ResetPasswordAsync(user, resetPasswordDto.Token, resetPasswordDto.Password);
-            if (result.Succeeded)
-            {
-                return Ok("Password reset successful.");
-            }
-
-            return BadRequest("Error resetting password.");
-        }
-    }
+     }
 }

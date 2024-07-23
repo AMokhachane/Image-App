@@ -5,13 +5,10 @@ using System.Threading.Tasks;
 
 namespace api.Dtos.Account
 {
-    public class ResetPasswordDto
+    public class ResetPasswordByEmailDto
     {
-   
-    public string Email { get; set; }
-    public string Token { get; set; }
+        public string Email { get; set; }
     public string NewPassword { get; set; }
-    
     
     }
 }

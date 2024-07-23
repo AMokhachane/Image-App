@@ -294,3 +294,4 @@ C:\Users\AMokhachane.SINGULAR\Documents\Projects\Testing - Copy\gallery-practice
 C:\Users\AMokhachane.SINGULAR\Documents\Projects\Testing - Copy\gallery-practice\api\bin\Debug\net8.0\NETCore.MailKit.dll
 C:\Users\AMokhachane.SINGULAR\Documents\Projects\Testing - Copy\gallery-practice\api\bin\Debug\net8.0\BouncyCastle.Crypto.dll
 C:\Users\AMokhachane.SINGULAR\Documents\Projects\Testing - Copy\gallery-practice\api\bin\Debug\net8.0\Microsoft.AspNet.Identity.Core.dll
+C:\Users\AMokhachane.SINGULAR\Documents\Projects\Testing - Copy\gallery-practice\api\bin\Debug\net8.0\BCrypt.Net-Next.dll

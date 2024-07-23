@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "25sxXIGYAyw=",
+  "dgSpecHash": "THSJAt3IbKY=",
   "success": true,
   "projectFilePath": "C:\\Users\\AMokhachane.SINGULAR\\Documents\\Projects\\Testing - Copy\\gallery-practice\\api\\api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\AMokhachane.SINGULAR\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\AMokhachane.SINGULAR\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
+    "C:\\Users\\AMokhachane.SINGULAR\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\AMokhachane.SINGULAR\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\AMokhachane.SINGULAR\\.nuget\\packages\\mailkit\\3.2.0\\mailkit.3.2.0.nupkg.sha512",
     "C:\\Users\\AMokhachane.SINGULAR\\.nuget\\packages\\microsoft.aspnet.identity.core\\2.2.4\\microsoft.aspnet.identity.core.2.2.4.nupkg.sha512",

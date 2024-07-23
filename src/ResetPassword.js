@@ -1,71 +1,61 @@
 import React, { useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
-import ResetPasswordCSS from './ResetPassword.module.css';
+import axios from 'axios';
 
-function ResetPassword() {
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const { token } = useParams();
-  const history = useHistory();
+const ResetPassword = () => {
+    const [email, setEmail] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    
+    const [message, setMessage] = useState('');
+    const [error, setError] = useState('');
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (password !== confirmPassword) {
-      alert('Passwords do not match');
-      return;
-    }
-    try {
-      const response = await fetch(`/api/reset-password/${token}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ password }),
-      });
-      if (response.ok) {
-        alert('Password reset successfully');
-        history.push('/login');
-      } else {
-        alert('Error resetting password');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      alert('Error resetting password');
-    }
-  };
+    const handleSubmit = async (event) => {
+        event.preventDefault();
 
-  return (
-    <div className={ResetPasswordCSS['reset-password-container']}>
-      <div className={ResetPasswordCSS.wrapper}>
-        <h2>Reset Password</h2>
-        <form onSubmit={handleSubmit}>
-		<div className={ResetPasswordCSS.inputBox}>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter new password"
-              required
-            />
-          </div>
-          <div className={ResetPasswordCSS.inputBox}>
-            <input
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              placeholder="Confirm new password"
-              required
-            />
-          </div>
-          <div className={ResetPasswordCSS['form-group']}>
-            <button type="button" className={`${ResetPasswordCSS['reset-button']} ${ResetPasswordCSS.resetButton}`} onClick={handleSubmit}>
-              Reset Password
-            </button>
-            </div>
-        </form>
-      </div>
-    </div>
-  );
-}
+        try {
+            const response = await axios.post('http://localhost:5205/api/account/ResetPasswordByEmail', {
+                Email: email,
+                NewPassword: newPassword
+            });
 
+            setMessage(response.data);
+            setError('');
+        } catch (err) {
+            if (err.response && err.response.data) {
+                setError(err.response.data);
+            } else {
+                setError('An error occurred. Please try again later.');
+            }
+            setMessage('');
+        }
+    };
+
+    return (
+        <div>
+            <h2>Reset Password</h2>
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <label>Email:</label>
+                    <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                    />
+                </div>
+                <div>
+                    <label>New Password:</label>
+                    <input
+                        type="password"
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
+                        required
+                    />
+                </div>
+               <button type="submit">Reset Password</button>
+            </form>
+            {message && <p style={{ color: 'green' }}>{message}</p>}
+            {error && <p style={{ color: 'red' }}>{error}</p>}
+        </div>
+    );
+};
 export default ResetPassword;
