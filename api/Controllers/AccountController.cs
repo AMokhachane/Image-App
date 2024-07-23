@@ -36,33 +36,49 @@ namespace api.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginDto loginDto)
+public async Task<IActionResult> Login(LoginDto loginDto)
+{
+    if (!ModelState.IsValid)
+        return BadRequest(ModelState);
+
+    var user = await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower());
+
+    if (user == null)
+        return Unauthorized("Username not found and/or password incorrect!");
+
+    if (!await _userManager.IsEmailConfirmedAsync(user))
+    {
+        return Unauthorized("You must confirm your email before logging in.");
+    }
+
+    if (await _userManager.IsLockedOutAsync(user))
+    {
+        return Unauthorized("Your account is locked out due to multiple failed login attempts. Please try again later.");
+    }
+
+    var result = await _signinManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
+
+    if (!result.Succeeded)
+    {
+        await _userManager.AccessFailedAsync(user);
+
+        if (await _userManager.IsLockedOutAsync(user))
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower());
-
-            if (user == null)
-                return Unauthorized("Username not found and/or password incorrect!");
-
-            if (!await _userManager.IsEmailConfirmedAsync(user))
-            {
-                return Unauthorized("You must confirm your email before logging in.");
-            }
-
-            var result = await _signinManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
-
-            if (!result.Succeeded)
-                return Unauthorized("Username not found and/or password incorrect");
-
-            return Ok(new NewUserDto
-            {
-                UserName = user.UserName,
-                Email = user.Email,
-                Token = _tokenService.CreateToken(user)
-            });
+            return Unauthorized("Your account is locked out due to multiple failed login attempts. Please try again later.");
         }
+
+        return Unauthorized("Username not found and/or password incorrect");
+    }
+
+    await _userManager.ResetAccessFailedCountAsync(user);
+
+    return Ok(new NewUserDto
+    {
+        UserName = user.UserName,
+        Email = user.Email,
+        Token = _tokenService.CreateToken(user)
+    });
+}
 
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
@@ -180,39 +196,48 @@ namespace api.Controllers
         }
 
         [HttpPost("ResetPasswordByEmail")]
-        public async Task<IActionResult> ResetPasswordByEmail([FromBody] ResetPasswordByEmailDto resetPasswordDto)
+public async Task<IActionResult> ResetPasswordByEmail([FromBody] ResetPasswordByEmailDto resetPasswordDto)
+{
+    try
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+            
+        var user = await _userManager.FindByEmailAsync(resetPasswordDto.Email);
+        if (user == null)
         {
-            try
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
-                    
-                var user = await _userManager.FindByEmailAsync(resetPasswordDto.Email);
-                if (user == null)
-                {
-                    return BadRequest("Invalid email address.");
-                }
-
-                // Generate a new password (or you can allow the user to specify a new one)
-                var newPassword = resetPasswordDto.NewPassword;
-
-                // Update the user's password
-                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-                var result = await _userManager.ResetPasswordAsync(user, token, newPassword);
-
-                if (result.Succeeded)
-                {
-                    return Ok("Password has been reset successfully.");
-                }
-
-                // Collect all errors from the result
-                var errors = string.Join(", ", result.Errors.Select(e => e.Description));
-                return BadRequest($"Error resetting password: {errors}");
-            }
-            catch (Exception e)
-            {
-                return StatusCode(500, e.Message);
-            }
+            return BadRequest("Invalid email address.");
         }
+
+        // Fetch current password from the database
+        var currentPasswordHash = user.PasswordHash;
+
+        // Compare the new password with the current password
+        var passwordVerificationResult = _userManager.PasswordHasher.VerifyHashedPassword(user, currentPasswordHash, resetPasswordDto.NewPassword);
+        if (passwordVerificationResult == PasswordVerificationResult.Success)
+        {
+            return BadRequest("New password can't be the same as the old password.");
+        }
+
+        // Generate a new password reset token
+        var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+        
+        // Update the user's password
+        var result = await _userManager.ResetPasswordAsync(user, token, resetPasswordDto.NewPassword);
+
+        if (result.Succeeded)
+        {
+            return Ok("Password has been reset successfully.");
+        }
+
+        // Collect all errors from the result
+        var errors = string.Join(", ", result.Errors.Select(e => e.Description));
+        return BadRequest($"Error resetting password: {errors}");
+    }
+    catch (Exception e)
+    {
+        return StatusCode(500, e.Message);
+    }
+}
      }
 }
