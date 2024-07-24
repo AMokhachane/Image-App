@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import styles from './ImageUpload.module.css'; // Import the CSS module
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCloudUploadAlt  } from '@fortawesome/free-solid-svg-icons';
 
 const ImageUpload = () => {
   const [imageTitle, setImageTitle] = useState('');
   const [imageDescription, setImageDescription] = useState('');
   const [file, setFile] = useState(null);
-
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: 'image/*',
@@ -39,7 +40,6 @@ const ImageUpload = () => {
         if (response.ok) {
           const result = await response.json();
           console.log('Upload successful:', result);
-          
         } else {
           console.error('Upload failed:', response.statusText);
         }
@@ -52,33 +52,42 @@ const ImageUpload = () => {
   };
 
   return (
-    <div className={styles.imageUpload}>
-      <h1>Image Upload</h1>
-      <div className={styles.formGroup}>
-        <label htmlFor="imageTitle">Image Title</label>
-        <input
-          type="text"
-          id="imageTitle"
-          value={imageTitle}
-          onChange={handleTitleChange}
-          className={styles.input}
-        />
+    <div className={styles.parentContainer}>
+      <div className={styles.wrapper}>
+        <h1>Image Upload</h1>
+        <div className={styles.formGroup}>
+          <label htmlFor="imageTitle">Image Title</label>
+          <div className={styles.inputBox}>
+            <input
+              type="text"
+              id="imageTitle"
+              
+              value={imageTitle}
+              onChange={handleTitleChange}
+              required
+            />
+          </div>
+        </div>
+        <div className={styles.formGroup}>
+          <label htmlFor="imageDescription">Image Description</label>
+          <textarea
+            id="imageDescription"
+            
+            value={imageDescription}
+            onChange={handleDescriptionChange}
+            className={styles.textarea}
+          />
+        </div>
+        <div {...getRootProps({ className: styles.uploadArea })}>
+        <FontAwesomeIcon icon={faCloudUploadAlt } className={styles.uploadIcon} />
+          <input {...getInputProps()} />
+
+          <text>Drag and drop files</text>
+          <p> or</p>
+          {file && <p>Selected file: {file.name}</p>}
+        <button onClick={handleUpload} className={styles.uploadBtn}>Upload</button>
       </div>
-      <div className={styles.formGroup}>
-        <label htmlFor="imageDescription">Image Description</label>
-        <textarea
-          id="imageDescription"
-          value={imageDescription}
-          onChange={handleDescriptionChange}
-          className={styles.textarea}
-        />
-      </div>
-      <div {...getRootProps({ className: styles.dropzone })}>
-        <input {...getInputProps()} />
-        <p>Drag and drop files here, or click to select files</p>
-        {file && <p>Selected file: {file.name}</p>}
-      </div>
-      <button onClick={handleUpload} className={styles.button}>Upload</button>
+    </div>
     </div>
   );
 };

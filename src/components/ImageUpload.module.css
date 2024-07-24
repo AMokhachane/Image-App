@@ -1,74 +1,111 @@
-.imageUpload {
-	width: 400px;
-  padding: 50px;
-  background: #FFFFFF;
-  padding-left: 590px;
-  box-shadow: 8px 8px 16px 0 rgba(0, 0, 0, 0.2);
+.parentContainer {
+    display: flex;
+    justify-content: flex-end; /* Align to the right */
+    align-items: center; /* Center vertically */
+    height: 90vh; /* Full height of the viewport */
+    margin-top: 60px;
+}
+
+/* Wrapper box styles */
+.wrapper {
+    width: 600px;
+    background: #FFFFFF;
+    box-shadow: 
+        4px 0 6px -1px rgba(0, 0, 0, 0.2), /* Right shadow */
+        -4px 0 6px -1px rgba(0, 0, 0, 0.2); /* Left shadow */
+    border-radius: 8px;
+    color: rgb(15, 60, 76);
+    text-align: center; /* Center align text */
+    padding: 90px; /* Optional: Add some padding */
+    margin-right: 220px; /* Optional: Add some right margin for spacing */
+}
+
+.wrapper h1{
+	font-size: 26px;
+  margin-bottom: 70px;
+  font-weight: 600;
+  color: #165A72;
   
-  border-radius: 4px;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .imageUpload h1 {
-	text-align: center;
-	margin-bottom: 30px;
-	color: #0056b3;
-	font-size: 25px;
-  }
-  
-  .formGroup {
-	margin-bottom: 15px;
-  }
-  
-  .formGroup label {
-	display: block;
-	margin-bottom: 5px;
-  }
-  
-  .input,
-  .textarea {
-	position: relative;
-  width: 400px;
-  height: 58px;
-  display: flex; /* Flexbox to align icon and input */
-  align-items: center;
-  border: 1px solid #aaa8a8;
-  border-radius: 4px;
-  background: white;
-  }
-  
-  .dropzone {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	
-	padding: 80px;
-	border: 2px dashed #080808;
-	border-radius: 4px;
-	text-align: center;
-	margin-bottom: 15px;
-	background-color: #e0e9f1;
-  }
-  
-  .dropzone p {
-	margin: 0;
-	font-size: 16px;
-	color: #007bff;
-  }
-  
-  .button {
-	display: block;
-	width: 100px;
-	padding: 10px;
-	background-color: #007bff;
-	color: white;
-	border: none;
-	border-radius: 4px;
-	cursor: pointer;
-	margin-top: -70px;
+}
+
+/* Form group styles */
+.formGroup {
+    margin-bottom: 20px;
+}
+
+.formGroup label{
+	font-size: 14px;
+    color: rgb(15, 60, 76);
 	margin-left: 150px;
+}
+
+/* Input box styles */
+.inputBox {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.inputBox input {
+    width: 50%;
+    padding: 10px;
+	margin-left: 150px;
+    margin-top: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.textarea{
+	width: 53%;
+	height: 79px;
+	margin-left: 20px;
+    margin-top: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+
+.uploadArea {
+    height: 250px; /* Increased height to accommodate button */
+    width: 53%;
+    margin-left: 150px;
+    border: 2px dotted #0f3c4c; /* Add a border with dotted lines */
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px; /* Optional: Add some bottom margin for spacing */
+    cursor: pointer; /* Optional: Change cursor to pointer */
+    background-color: #E9F5F9;
+}
+
+.uploadIcon {
+	font-size: 100px; /* Adjust size as needed */
+	margin-bottom: -100px; /* Adjust spacing as needed */
+	color: #2187AB;
   }
-  
-  .button:hover {
-	background-color: #0056b3;
-  }
+
+/* Button styles */
+.uploadBtn {
+    padding: 10px 20px;
+    background-color: #2596BE;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: -10px; /* Add some top margin for spacing */
+}
+
+.uploadArea p{
+	color: 0f3c4c;
+	margin-top: 90px;
+}
+
+.uploadArea text{
+	color: 0f3c4c;
+	margin-top: 120px;
+	margin-bottom: -90px;
+}
