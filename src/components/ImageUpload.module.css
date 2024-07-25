@@ -16,7 +16,7 @@
     border-radius: 8px;
     color: rgb(15, 60, 76);
     text-align: center; /* Center align text */
-    padding: 90px; /* Optional: Add some padding */
+    padding: 50px; /* Optional: Add some padding */
     margin-right: 220px; /* Optional: Add some right margin for spacing */
 }
 
@@ -67,6 +67,16 @@
     font-size: 16px;
 }
 
+.selectBox{
+    width: 53%;
+	height: 40px;
+	margin-left: 20px;
+    margin-top: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
 
 .uploadArea {
     height: 250px; /* Increased height to accommodate button */
@@ -77,18 +87,17 @@
     flex-direction: column; /* Stack items vertically */
     align-items: center;
     justify-content: center;
-    margin-bottom: 20px; /* Optional: Add some bottom margin for spacing */
+    margin-bottom: 10px; /* Optional: Add some bottom margin for spacing */
     cursor: pointer; /* Optional: Change cursor to pointer */
     background-color: #E9F5F9;
 }
 
 .uploadIcon {
-	font-size: 100px; /* Adjust size as needed */
-	margin-bottom: -100px; /* Adjust spacing as needed */
-	color: #2187AB;
-  }
+    font-size: 100px; /* Adjust size as needed */
+    color: #2187AB;
+    margin-bottom: 20px;
+}
 
-/* Button styles */
 .uploadBtn {
     padding: 10px 20px;
     background-color: #2596BE;
@@ -96,16 +105,18 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    margin-top: -10px; /* Add some top margin for spacing */
+    margin-top: -15px;
 }
 
-.uploadArea p{
-	color: 0f3c4c;
-	margin-top: 90px;
+.uploadArea p {
+    color: #0f3c4c;
+    margin-top: 5px;
 }
 
-.uploadArea text{
-	color: 0f3c4c;
-	margin-top: 120px;
-	margin-bottom: -90px;
+.uploadArea text {
+    color: #0f3c4c;
+    margin-top: 20px;
+    margin-bottom: 0px;
 }
+
+
