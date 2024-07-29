@@ -1,23 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import Login from './Login';
 import Navbar from './components/Navbar';
 import Register from './Register';
 import ResetPassword from './ResetPassword';
 import ForgotPassword from './ForgotPassword';
 import { Sidebar } from './components/Sidebar';
-import { Home } from './components/Home';
+import Home from './components/Home';
 import ImageUpload from './components/ImageUpload';
 
 function App() {
-  const initialImages = [
-    { id: 1, src: 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSMt9t3G6KLnBjK4cLvbRD70PTZG_a4vrLv-GZaVrfb_YXGRWIc', name: 'If You Cant Butterfly Your Secret', description: 'Thriller' },
-    { id: 2, src: 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSMt9t3G6KLnBjK4cLvbRD70PTZG_a4vrLv-GZaVrfb_YXGRWIc', name: 'Pinky Promise', description: 'Kids fiction' },
-    { id: 3, src: 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSMt9t3G6KLnBjK4cLvbRD70PTZG_a4vrLv-GZaVrfb_YXGRWIc', name: 'Butterfly', description: 'insects that fly and stuff'},
-  ];
+  const [images, setImages] = useState(() => {
+    const storedImages = localStorage.getItem('images');
+    return storedImages ? JSON.parse(storedImages) : []; // Load images from localStorage
+  });
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [imagePreviewUrl, setImagePreviewUrl] = useState('');
 
-  const [images, setImages] = useState(initialImages);
+  const addImage = ({ url, name }) => {
+    const newImage = {
+      id: Date.now(), // Use timestamp as a unique ID
+      src: url,
+      name: name,
+      description: 'Uploaded image',
+    };
+    const updatedImages = [...images, newImage];
+    setImages(updatedImages);
+    localStorage.setItem('images', JSON.stringify(updatedImages)); // Save to localStorage
+  };
+
+  const deleteImage = (id) => {
+    const updatedImages = images.filter((image) => image.id !== id);
+    setImages(updatedImages);
+    localStorage.setItem('images', JSON.stringify(updatedImages)); // Save updated images to localStorage
+  };
 
   return (
     <Router>
@@ -25,6 +42,9 @@ function App() {
         <Navbar />
         <Sidebar />
         <div className="content">
+          <nav>
+            <Link to="/Home">Home</Link> | <Link to="/ImageUpload">Image Upload</Link>
+          </nav>
           <Switch>
             <Route exact path="/">
               <Login />
@@ -39,10 +59,15 @@ function App() {
               <ResetPassword />
             </Route>
             <Route path="/Home">
-              <Home images={images} />
+              <Home images={images} deleteImage={deleteImage} /> {/* Pass deleteImage to Home */}
             </Route>
             <Route path="/ImageUpload">
-              <ImageUpload images={images} setImages={setImages} />
+              <ImageUpload
+                selectedImage={selectedImage}
+                setSelectedImage={setSelectedImage}
+                setImagePreviewUrl={setImagePreviewUrl}
+                addImage={addImage}
+              />
             </Route>
           </Switch>
         </div>

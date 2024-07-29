@@ -1,114 +1,63 @@
-import React, { useState, useEffect } from 'react';
-import { useDropzone } from 'react-dropzone';
-import axios from 'axios';
+import React, { useState } from 'react';
 import styles from './ImageUpload.module.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCloudUploadAlt } from '@fortawesome/free-solid-svg-icons';
 
-const ImageUpload = () => {
-  const [imageTitle, setImageTitle] = useState('');
-  const [imageDescription, setImageDescription] = useState('');
-  const [file, setFile] = useState(null);
-  const [tags, setTags] = useState([]);
-  const [selectedTag, setSelectedTag] = useState('');
+const ImageUpload = ({ selectedImage, setSelectedImage, setImagePreviewUrl, addImage }) => {
+  const [fullName, setFullName] = useState(''); // State for full name
 
-  useEffect(() => {
-    // Fetch tags from API
-    axios.get('http://localhost:5205/api/tag')
-      .then(response => {
-        setTags(response.data);
-      })
-      .catch(error => {
-        console.error('Error fetching tags:', error);
-      });
-  }, []);
-
-  const { getRootProps, getInputProps } = useDropzone({
-    accept: 'image/*',
-    onDrop: (acceptedFiles) => {
-      setFile(acceptedFiles[0]);
-    }
-  });
-
-  const handleTitleChange = (e) => {
-    setImageTitle(e.target.value);
-  };
-
-  const handleDescriptionChange = (e) => {
-    setImageDescription(e.target.value);
-  };
-
-  const handleTagChange = (e) => {
-    setSelectedTag(e.target.value);
-  };
-
-  const handleUpload = async () => {
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
     if (file) {
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('title', imageTitle);
-      formData.append('description', imageDescription);
-      formData.append('tagId', selectedTag);
-
-      try {
-        const response = await axios.post('/api/upload', formData);
-        
-        if (response.status === 201) {
-          console.log('Upload successful:', response.data);
-        } else {
-          console.error('Upload failed:', response.statusText);
-        }
-      } catch (error) {
-        console.error('Error uploading file:', error);
+      // Validate that the file is an image
+      if (!file.type.startsWith('image/')) {
+        alert('Please upload a valid image file.');
+        return;
       }
+  
+      setSelectedImage(file);
+  
+      // Create a URL for the image to display a preview
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreviewUrl(reader.result);
+      };
+      reader.readAsDataURL(file); // Read the image file as a base64 encoded string
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (selectedImage && fullName) {
+      // Create a FileReader to read the file as a base64 string
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        addImage({ url: reader.result, name: fullName }); // Use the base64 string
+        setSelectedImage(null); // Clear the selected image after upload
+        setImagePreviewUrl(''); // Clear the preview URL
+        setFullName(''); // Clear the full name input after upload
+      };
+      reader.readAsDataURL(selectedImage); // Read the selected image
     } else {
-      alert('Please select a file to upload.');
+      alert('Please select an image and enter a name.');
     }
   };
 
   return (
     <div className={styles.parentContainer}>
-      <div className={styles.wrapper}>
-        <h1>Image Upload</h1>
-        <div className={styles.formGroup}>
-          <label htmlFor="imageTitle">Image Title</label>
-          <div className={styles.inputBox}>
-            <input
-              type="text"
-              id="imageTitle"
-              value={imageTitle}
-              onChange={handleTitleChange}
-              required
-            />
-          </div>
-        </div>
-        <div className={styles.formGroup}>
-          <label htmlFor="tagSelect">Image Category</label>
-          <select id="tagSelect" value={selectedTag} onChange={handleTagChange} className={styles.selectBox}>
-            <option value=""></option>
-            {tags.map(tag => (
-              <option key={tag.tagId} value={tag.tagId}>{tag.tagName}</option>
-            ))}
-          </select>
-        </div>
-        <div className={styles.formGroup}>
-          <label htmlFor="imageDescription">Image Description</label>
-          <textarea
-            id="imageDescription"
-            value={imageDescription}
-            onChange={handleDescriptionChange}
-            className={styles.textarea}
-          />
-        </div>
-        <div {...getRootProps({ className: styles.uploadArea })}>
-          <FontAwesomeIcon icon={faCloudUploadAlt} className={styles.uploadIcon} />
-          <input {...getInputProps()} />
-          <text>Drag and drop files</text>
-          <p> or</p>
-          {file && <p>Selected file: {file.name}</p>}
-          <button onClick={handleUpload} className={styles.uploadBtn}>Upload</button>
-        </div>
-      </div>
+      <form onSubmit={handleSubmit}>
+        <input 
+          type="text" 
+          placeholder="Enter Name" 
+          value={fullName} 
+          onChange={(e) => setFullName(e.target.value)} // Update full name state
+          className={styles.nameInput} // Optional: add appropriate styling class
+        />
+        <input 
+          type="file" 
+          onChange={handleImageChange} 
+          className={styles.fileInput} 
+        />
+        <button type="submit" className={styles.uploadButton}>Upload Image</button>
+      </form>
     </div>
   );
 };

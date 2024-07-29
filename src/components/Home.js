@@ -4,22 +4,22 @@ import { FaSearch } from 'react-icons/fa';
 import { IoFilterSharp } from 'react-icons/io5';
 import Navbar from './Navbar'; // Import the Navbar component
 
-export const Home = ({ images }) => {
+export const Home = ({ images, imagePreviewUrl, deleteImage }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 9; // Number of items per page
+  const imagesPerPage = 7; // Number of images per page
 
   // Logic to calculate paginated items
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = images.slice(indexOfFirstItem, indexOfLastItem);
+  const indexOfLastItem = currentPage * imagesPerPage;
+  const indexOfFirstItem = indexOfLastItem - imagesPerPage;
+  const currentItems = (images || []).slice(indexOfFirstItem, indexOfLastItem);
 
-  const filteredImages = currentItems.filter(image =>
-    image.name.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredImages = currentItems.filter((image) =>
+    image.name && image.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   // Logic to handle pagination click
-  const paginate = pageNumber => setCurrentPage(pageNumber);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div className={HomeCSS['home-page']}>
@@ -46,20 +46,23 @@ export const Home = ({ images }) => {
             <div className={HomeCSS["item-details"]}>
               <h4 className="name">{image.name}</h4>
               <p className="description">{image.description}</p>
+              <button onClick={() => deleteImage(image.id)} className={HomeCSS.deleteButton}>
+                Delete
+              </button>
             </div>
           </div>
         ))}
       </div>
       {/* Pagination */}
       <div className={HomeCSS.pagination}>
-  {[...Array(Math.ceil(images.length / itemsPerPage)).keys()].map(page => (
-    <button
-      key={page + 1}
-      onClick={() => paginate(page + 1)}
-      className={currentPage === page + 1 ? HomeCSS.active : ''}
-    >
-      {page + 1}
-    </button>
+        {[...Array(Math.ceil(images.length / imagesPerPage)).keys()].map(page => (
+          <button
+            key={page + 1}
+            onClick={() => paginate(page + 1)}
+            className={currentPage === page + 1 ? HomeCSS.active : ''}
+          >
+            {page + 1}
+          </button>
         ))}
       </div>
     </div>

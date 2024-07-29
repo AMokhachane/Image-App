@@ -104,3 +104,16 @@
 	color: white;
 	border-color: #93bef5;
   }
+
+  .homeContainer {
+	text-align: center;
+	padding: 20px;
+  }
+  
+  .imagePreview {
+	margin-top: 20px;
+	border: 1px solid #ddd;
+	padding: 5px;
+	border-radius: 4px;
+	width: 300px;
+  }
