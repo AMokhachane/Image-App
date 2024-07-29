@@ -2,15 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using api.Interfaces;
-using Microsoft.AspNetCore.Mvc;
-using api.Models;
-using api.Mappers;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authorization;
-using api.Dtos.Image;
 using api.Data;
-using api.Helpers;
+using api.Dtos.Image;
+using api.Interfaces;
+using api.Mappers;
+using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
 {
@@ -27,17 +23,16 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        [Authorize]
-        public async Task<IActionResult> GetAll([FromQuery] QueryObject query)
-        {
-            if (!ModelState.IsValid)
-            return BadRequest(ModelState);
+        public async Task<IActionResult> GetAll()
+{
+    if (!ModelState.IsValid)
+        return BadRequest(ModelState);
 
-            var images = await _imageRepo.GetAllAsync(query: query);
-            var ImageDto = images.Select(s => s.ToImageDto()).ToList();
+    var images = await _imageRepo.GetAllAsync();
+    var ImageDto = images.Select(s => s.ToImageDto()).ToList();
 
-            return Ok(ImageDto);
-        }
+    return Ok(ImageDto);
+}
 
         [HttpGet("{id:int}")]
        public async Task<IActionResult> GetById([FromRoute] int id)

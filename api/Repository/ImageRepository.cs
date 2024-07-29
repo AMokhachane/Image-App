@@ -39,17 +39,9 @@ namespace api.Repository
            return imageModel; 
         }
 
-        public async Task<List<Image>> GetAllAsync(QueryObject query)
+        public async Task<List<Image>> GetAllAsync()
         {
-           var images = _context.Images.Include(c => c.Tags).Include(c => c.Comments).AsQueryable();
-           if(!string.IsNullOrWhiteSpace(query.Title))
-           {
-             images = images.Where(s => s.Title.Contains(query.Title));
-           }
-
-           var skipNumber = (query.PageNumber - 1) * query.PageSize;
-
-         return await images.Skip(skipNumber).Take(query.PageSize).ToListAsync();
+           return await _context.Images.ToListAsync();
         
         }
 
