@@ -18,12 +18,12 @@ function App() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [imagePreviewUrl, setImagePreviewUrl] = useState('');
 
-  const addImage = ({ url, name }) => {
+  const addImage = ({ url, name, description }) => { // Accept description as a parameter
     const newImage = {
       id: Date.now(), // Use timestamp as a unique ID
       src: url,
       name: name,
-      description: 'Uploaded image',
+      description: description, // Store the description
     };
     const updatedImages = [...images, newImage];
     setImages(updatedImages);

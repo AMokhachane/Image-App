@@ -7,7 +7,7 @@ import Navbar from './Navbar'; // Import the Navbar component
 export const Home = ({ images, imagePreviewUrl, deleteImage }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const imagesPerPage = 7; // Number of images per page
+  const imagesPerPage = 6; // Number of images per page
 
   // Logic to calculate paginated items
   const indexOfLastItem = currentPage * imagesPerPage;

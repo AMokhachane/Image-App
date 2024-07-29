@@ -3,6 +3,7 @@ import styles from './ImageUpload.module.css';
 
 const ImageUpload = ({ selectedImage, setSelectedImage, setImagePreviewUrl, addImage }) => {
   const [fullName, setFullName] = useState(''); // State for full name
+  const [description, setDescription] = useState(''); // State for description
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -12,9 +13,9 @@ const ImageUpload = ({ selectedImage, setSelectedImage, setImagePreviewUrl, addI
         alert('Please upload a valid image file.');
         return;
       }
-  
+
       setSelectedImage(file);
-  
+
       // Create a URL for the image to display a preview
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -26,18 +27,19 @@ const ImageUpload = ({ selectedImage, setSelectedImage, setImagePreviewUrl, addI
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (selectedImage && fullName) {
+    if (selectedImage && fullName && description) {
       // Create a FileReader to read the file as a base64 string
       const reader = new FileReader();
       reader.onloadend = () => {
-        addImage({ url: reader.result, name: fullName }); // Use the base64 string
+        addImage({ url: reader.result, name: fullName, description }); // Include description
         setSelectedImage(null); // Clear the selected image after upload
         setImagePreviewUrl(''); // Clear the preview URL
         setFullName(''); // Clear the full name input after upload
+        setDescription(''); // Clear the description input after upload
       };
       reader.readAsDataURL(selectedImage); // Read the selected image
     } else {
-      alert('Please select an image and enter a name.');
+      alert('Please select an image, enter a name, and provide a description.');
     }
   };
 
@@ -50,6 +52,13 @@ const ImageUpload = ({ selectedImage, setSelectedImage, setImagePreviewUrl, addI
           value={fullName} 
           onChange={(e) => setFullName(e.target.value)} // Update full name state
           className={styles.nameInput} // Optional: add appropriate styling class
+        />
+        <input 
+          type="text" 
+          placeholder="Enter Description" 
+          value={description} 
+          onChange={(e) => setDescription(e.target.value)} // Update description state
+          className={styles.descriptionInput} // Optional: add appropriate styling class
         />
         <input 
           type="file" 
