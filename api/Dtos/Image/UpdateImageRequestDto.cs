@@ -15,7 +15,7 @@ namespace api.Dtos.Image
     public string Title { get; set; } = string.Empty;
         [Required]
         [MinLength(2, ErrorMessage = "Image description must be at least 2 characters")]
-        [MaxLength(200, ErrorMessage = "Image description cannot be over 200 characters")]
+        [MaxLength(20000000, ErrorMessage = "Image description cannot be over 20000 characters")]
 
     public string ImageDescription { get; set; } = string.Empty;
         [Required(ErrorMessage = "The URL is required.")]

@@ -31,6 +31,7 @@
 	position: absolute;
 	left: 10px;
 	color: #888;
+	
   }
   
   .image-grid {
@@ -41,7 +42,7 @@
   
   .image-item {
 	padding: 0;
-	text-align: center; /* Center align text and images */
+	text-align: start; /* Center align text and images */
 	position: relative; /* Ensure relative positioning for absolute positioning inside */
   }
   
@@ -92,7 +93,7 @@
 	color: #333;
 	border: 1px solid #ccc;
 	padding: 10px;
-	margin: 300px;
+	margin: 70px;
 	cursor: pointer;
 	border-radius: 50%; /* Make the button circular */
 	width: 30px; /* Ensure fixed width for circular shape */

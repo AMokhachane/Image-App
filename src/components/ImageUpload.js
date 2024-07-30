@@ -10,7 +10,7 @@ const ImageUpload = () => {
         imageDescription: '',
         url: '',
         uploadDate: new Date().toISOString().slice(0, 10),
-        selectedTagId: '', // State for selected tag
+        selectedTagId: '', // Updated to selectedTagId
     });
 
     const [tags, setTags] = useState([]);
@@ -54,54 +54,62 @@ const ImageUpload = () => {
 
     return (
         <div className={styles.parentContainer}>
-            <form onSubmit={createImage}>
-                <input
-                    className={styles.fileInput}
-                    type="text"
-                    placeholder="Title"
-                    value={newImage.title}
-                    onChange={(e) => setNewImage({ ...newImage, title: e.target.value })}
-                    required
-                />
-                <input
-                    className={styles.fileInput}
-                    type="text"
-                    placeholder="Description"
-                    value={newImage.imageDescription}
-                    onChange={(e) => setNewImage({ ...newImage, imageDescription: e.target.value })}
-                    required
-                />
-                <input
-                    className={styles.fileInput}
-                    type="url"
-                    placeholder="URL"
-                    value={newImage.url}
-                    onChange={(e) => setNewImage({ ...newImage, url: e.target.value })}
-                    required
-                />
-                <input
-                    className={styles.fileInput}
-                    type="date"
-                    value={newImage.uploadDate}
-                    onChange={(e) => setNewImage({ ...newImage, uploadDate: e.target.value })}
-                    required
-                />
-                <label htmlFor="tagSelect">Select Tag:</label>
-                <select
-                    id="tagSelect"
-                    value={newImage.selectedTagId}
-                    onChange={(e) => setNewImage({ ...newImage, selectedTagId: e.target.value })}
-                    required
-                >
-                    <option value="">Select a tag</option>
-                    {tags.map(tag => (
-                        <option key={tag.tagId} value={tag.tagId}>
-                            {tag.tagName}
-                        </option>
-                    ))}
-                </select>
-                <button className={styles.uploadButton} type="submit">Add Image</button>
-            </form>
+            <div className={styles.box}>
+                <h2 className={styles.heading}>Image Upload</h2>
+                <form onSubmit={createImage}>
+                    <p className={styles.label}>Image Title</p>
+                    <input
+                        className={styles.fileInput}
+                        type="text"
+                        value={newImage.title}
+                        onChange={(e) => setNewImage({ ...newImage, title: e.target.value })}
+                        required
+                    />
+                    <p className={styles.label}>Image Category</p>
+                    <select
+                        className={styles.fileInput}
+                        id="tagSelect"
+                        value={newImage.selectedTagId}
+                        onChange={(e) => setNewImage({ ...newImage, selectedTagId: e.target.value })}
+                        required
+                    >
+                        <option value=""></option>
+                        {tags.map(tag => (
+                            <option key={tag.tagId} value={tag.tagId}>
+                                {tag.tagName}
+                            </option>
+                        ))}
+                    </select>
+                    <p className={styles.label}>Image Description</p>
+                    <input
+                        className={styles.fileDescription}
+                        type="text"
+                        placeholder=""
+                        value={newImage.imageDescription}
+                        onChange={(e) => setNewImage({ ...newImage, imageDescription: e.target.value })}
+                        required
+                    />
+                    <p className={styles.label}>Image Url</p>
+                    <input
+                        className={styles.fileUrl}
+                        type="url"
+                        placeholder="Paste image URL here"
+                        value={newImage.url}
+                        onChange={(e) => setNewImage({ ...newImage, url: e.target.value })}
+                        required
+                    />
+                    <p className={styles.label}>Upload Date</p>
+                    <input
+                        className={styles.fileInput}
+                        type="date"
+                        value={newImage.uploadDate}
+                        onChange={(e) => setNewImage({ ...newImage, uploadDate: e.target.value })}
+                        required
+                    />
+                    
+                    <button className={styles.uploadButton} type="submit">Add Image</button>
+                </form>
+            </div>
         </div>
     );
 };
