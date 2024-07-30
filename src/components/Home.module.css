@@ -117,3 +117,16 @@
 	border-radius: 4px;
 	width: 300px;
   }
+
+  .tags {
+    margin-top: 5px;
+}
+
+.tag {
+    display: inline-block;
+    background-color: #e0e0e0; /* Light gray background */
+    border-radius: 5px;
+    padding: 5px 10px;
+    margin-right: 5px;
+    font-size: 14px;
+}
