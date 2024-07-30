@@ -1,23 +1,22 @@
 .parentContainer {
-    display: flex;
-    justify-content: flex-end; /* Align to the right */
-    align-items: center; /* Center vertically */
-    height: 90vh; /* Full height of the viewport */
-    margin-top: 60px;
+  display: flex;
+  justify-content: flex-end; /* Align to the right */
+  align-items: center; /* Center vertically */
+  height: 90vh; /* Full height of the viewport */
+  margin-top: 60px;
 }
 
 .fileInput {
-    margin: 10px;
-  }
-  
-  .uploadButton {
-    margin-top: 10px;
-    padding: 10px 20px;
-    background-color: #61dafb;
-    border: none;
-    border-radius: 4px;
-    color: white;
-    cursor: pointer;
-  }
+  margin: 10px;
+}
 
+.uploadButton {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #61dafb;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+}
 
