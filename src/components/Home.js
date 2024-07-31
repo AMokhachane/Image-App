@@ -9,9 +9,11 @@ export const Home = () => {
   const [images, setImages] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [tags, setTags] = useState([]); // State for tags
+  const [selectedTag, setSelectedTag] = useState(''); // State for selected tag
   const imagesPerPage = 6; // Number of images per page
 
-  // Fetch the uploaded images from the backend when the component mounts
+  // Fetch the uploaded images and tags from the backend when the component mounts
   useEffect(() => {
     const fetchImages = async () => {
       try {
@@ -22,7 +24,17 @@ export const Home = () => {
       }
     };
 
+    const fetchTags = async () => {
+      try {
+        const response = await axios.get("http://localhost:5205/api/tag");
+        setTags(response.data); // Update state with fetched tags
+      } catch (error) {
+        console.error("An error occurred while fetching tags", error);
+      }
+    };
+
     fetchImages();
+    fetchTags();
   }, []);
 
   // Logic to calculate paginated items
@@ -31,7 +43,8 @@ export const Home = () => {
   const currentItems = (images || []).slice(indexOfFirstItem, indexOfLastItem);
 
   const filteredImages = currentItems.filter((image) =>
-    image.title && image.title.toLowerCase().includes(searchTerm.toLowerCase())
+    (image.title && image.title.toLowerCase().includes(searchTerm.toLowerCase())) &&
+    (selectedTag === '' || image.tagId === selectedTag)
   );
 
   // Logic to handle pagination click
@@ -61,9 +74,18 @@ export const Home = () => {
             onChange={(e) => setSearchTerm(e.target.value)}
             className={HomeCSS['search-bar']}
           />
-          <button className={HomeCSS.filters}>
-            <IoFilterSharp className='filter' /> Filters
-          </button>
+          <select
+            className={HomeCSS.filters}
+            value={selectedTag}
+            onChange={(e) => setSelectedTag(e.target.value)}
+          >
+            <option value="">All Categories</option>
+            {tags.map(tag => (
+              <option key={tag.tagId} value={tag.tagId}>
+                {tag.tagName}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
       <div className={HomeCSS['image-grid']}>
@@ -96,4 +118,4 @@ export const Home = () => {
   );
 };
 
-export default Home;
+export default Home; //fine code till category dropdown
