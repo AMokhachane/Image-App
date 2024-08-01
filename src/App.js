@@ -9,6 +9,7 @@ import ForgotPassword from './ForgotPassword';
 import { Sidebar } from './components/Sidebar';
 import Home from './components/Home';
 import ImageUpload from './components/ImageUpload';
+import ImageDetails from './components/ImageDetails'; // Import the new component
 
 function App() {
   const [images, setImages] = useState(() => {
@@ -68,6 +69,9 @@ function App() {
                 setImagePreviewUrl={setImagePreviewUrl}
                 addImage={addImage}
               />
+            </Route>
+            <Route path="/image/:id">
+              <ImageDetails /> {/* Route for ImageDetails */}
             </Route>
           </Switch>
         </div>

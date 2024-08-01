@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 import HomeCSS from './Home.module.css';
-import { FaSearch } from 'react-icons/fa';
-import { IoFilterSharp } from 'react-icons/io5';
+import { FaSearch, FaThumbsUp, FaComment } from 'react-icons/fa'; // Import icons
 import Navbar from './Navbar'; // Import the Navbar component
 
 export const Home = () => {
@@ -11,6 +11,7 @@ export const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [tags, setTags] = useState([]); // State for tags
   const [selectedTag, setSelectedTag] = useState(''); // State for selected tag
+  const history = useHistory(); // For navigation
   const imagesPerPage = 6; // Number of images per page
 
   // Fetch the uploaded images and tags from the backend when the component mounts
@@ -50,15 +51,16 @@ export const Home = () => {
   // Logic to handle pagination click
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  // Function to delete an image
-  const deleteImage = async (id) => {
-    try {
-      await axios.delete(`http://localhost:5205/api/image/${id}`);
-      // Remove the deleted image from state
-      setImages(images.filter(image => image.imageId !== id));
-    } catch (error) {
-      console.error("An error occurred while deleting the image", error);
-    }
+  // Function to handle image click
+  const handleImageClick = (image) => {
+    // Find the tag name for the selected image
+    const tagName = tags.find(tag => tag.tagId === image.tagId)?.tagName;
+    
+    // Navigate to the ImageDetails page with the image and tag name
+    history.push({
+      pathname: `/image/${image.imageId}`,
+      state: { image: { ...image, tagName } }
+    });
   };
 
   return (
@@ -79,7 +81,7 @@ export const Home = () => {
             value={selectedTag}
             onChange={(e) => setSelectedTag(e.target.value)}
           >
-            <option value="">All Categories</option>
+            <option value="">Filter</option>
             {tags.map(tag => (
               <option key={tag.tagId} value={tag.tagId}>
                 {tag.tagName}
@@ -90,14 +92,19 @@ export const Home = () => {
       </div>
       <div className={HomeCSS['image-grid']}>
         {filteredImages.map(image => (
-          <div key={image.imageId} className={HomeCSS['image-item']}>
+          <div 
+            key={image.imageId} 
+            className={HomeCSS['image-item']}
+            onClick={() => handleImageClick(image)} // Handle click event
+          >
             <img src={image.url} alt={image.title} /> {/* Using 'url' */}
             <div className={HomeCSS["item-details"]}>
               <h4 className="name">{image.title}</h4> {/* Using 'title' */}
               <p className="description">{image.imageDescription}</p> {/* Using 'imageDescription' */}
-              <button onClick={() => deleteImage(image.imageId)} className={HomeCSS.deleteButton}>
-                Delete
-              </button>
+              <div className={HomeCSS.icons}>
+                <FaThumbsUp className={HomeCSS.iconSmall} />
+                <FaComment className={HomeCSS.iconSmall} />
+              </div>
             </div>
           </div>
         ))}
@@ -118,4 +125,4 @@ export const Home = () => {
   );
 };
 
-export default Home; //fine code till category dropdown
+export default Home;
