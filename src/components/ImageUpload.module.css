@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 90vh;
+  height: 80vh;
   margin-top: 60px;
 }
 
@@ -14,21 +14,19 @@
   margin-left: 390px;
   background-color: #fff;
   width: 800px;
-  padding-left: 400px; /* Added padding to move content right */
+  padding-left: 40px; /* Added padding to move content right */
 }
 
 .heading {
   font-family: "Inter", sans-serif;
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 70px;
   color: #165A72;
   font-size: 24px;
 }
 
 .label {
-  font-weight: 600px;
-  font: sans-serif;
-  font-size: 14px;
+  font-size: 15px;
   color: #0F3C4C;
   margin-bottom: 0px;
   margin-left: 200px;
@@ -40,10 +38,12 @@
   max-width: 400px; /* Set a max width for the input fields */
   height: 38px;
   margin-left: 200px; /* Add left margin to move input fields right */
+  border-radius: 6px;
 }
 
 .fileDescription {
   height: 79px;
+  border-radius: 6px;
 }
 
 .fileUrl {
@@ -55,23 +55,17 @@
   border: 2px dotted #111111; /* Dotted border */
   border-radius: 4px; /* Rounded corners */
   padding-left: 30px; /* Add padding to avoid text overlap with the icon */
-  background-image: url('https://www.shareicon.net/data/512x512/2015/09/04/95833_cloud_512x512.png'); /* Path to your image */
-  background-repeat: no-repeat; /* Do not repeat the image */
-  background-position: 100px center; /* Position the image to the left */
-  background-size: 190px; /* Size of the icon */
-}
-
-.fileUrl::placeholder {
-  color: #aaa; /* Change the color of the placeholder */
-  padding: 90px;
-  
 }
 
 .uploadButton {
-  width: 105px;
+  width: 110px;
   height: 34px;
-  padding: 8px 20px;
-  border-radius: 4px;
+  border-radius: 6px;
+  margin-top: 20px;
+  margin-left: 350px;
+  background-color: #2596BE; /* Blue background color */
+  color: white; /* White text color */
+  border: none; /* Remove border */
 }
 
 .icon {
@@ -83,8 +77,56 @@
   font-size: 18px; /* Adjust the size as needed */
 }
 
-.rightAlign {
+.dropzone {
+  width: 50%;
+  height: 300px;
+  border: 2px dashed #ccc;
+  border-radius: 4px;
   display: flex;
-  justify-content: flex-end;
-  padding-right: 390px; /* Optional: Add some padding to the right */
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  cursor: pointer;
+  background-color: #e6f7ff;
+  position: relative;
+  margin-left: 200px; /* Add left margin to move input fields right */
+}
+
+.dropzoneText {
+  position: absolute;
+  bottom: 100px;
+  font-size: 14px;
+  color: #2596BE;
+}
+
+.dropzoneOr {
+  position: absolute;
+  bottom: 75px;
+  font-size: 14px;
+  color: #333;
+}
+
+.hiddenInput{
+  margin-top: 200px;
+}
+
+.dropzoneIcon {
+  position: absolute;
+  right: 135px; /* Move icon to the right */
+  top: 30%; /* Center vertically */
+  transform: translateY(-50%); /* Center icon vertically */
+  font-size: 110px; /* Make the icon bigger */
+  color: #2596BE; /* Blue color */
+}
+
+.successMessage {
+  color: green; /* Set the text color to green */
+  margin-bottom: 5px; /* Add some space below the message */
+  margin-left: 300px;
+}
+
+.errorMessage {
+  color: red; /* Set the text color to green */
+  margin-bottom: 5px; /* Add some space below the message */
+  margin-left: 250px;
 }
