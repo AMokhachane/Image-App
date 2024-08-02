@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import HomeCSS from './Home.module.css';
 import { FaSearch, FaThumbsUp, FaComment } from 'react-icons/fa'; // Import icons
 import Navbar from './Navbar'; // Import the Navbar component
+import {Image} from 'cloudinary-react'
 
 export const Home = () => {
   const [images, setImages] = useState([]);
@@ -91,6 +92,8 @@ export const Home = () => {
         </div>
       </div>
       <div className={HomeCSS['image-grid']}>
+
+        <Image cloudName="drgxphf5l" publicId="https://res.cloudinary.com/drgxphf5l/image/upload/v1722592306/qzgosxxhfbgmvgfcscjn.jpg"/>
         {filteredImages.map(image => (
           <div 
             key={image.imageId} 

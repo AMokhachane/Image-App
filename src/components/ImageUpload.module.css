@@ -82,3 +82,9 @@
   color: #999; /* Icon color */
   font-size: 18px; /* Adjust the size as needed */
 }
+
+.rightAlign {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 390px; /* Optional: Add some padding to the right */
+}
