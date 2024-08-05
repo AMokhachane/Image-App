@@ -7,22 +7,26 @@ import './Navbar.css';
 export const Navbar = () => {
   const location = useLocation();
 
-  if (location.pathname !== '/Home' && location.pathname !== '/ImageUpload') {
-    return null;
-  }
+   // Check if the current path is either '/Home', '/ImageUpload', or any image detail page
+   const isVisible = location.pathname === '/Home' || 
+   location.pathname === '/ImageUpload' ||
+   location.pathname === '/MyLibrary' || 
+   /^\/image\/\d+$/.test(location.pathname);
 
-  let navText = '';
-  switch (location.pathname) {
-    case '/Home':
-      navText = 'Home >';
-      break;
-    case '/ImageUpload':
-      navText = 'Image Upload >';
-      break;
-    default:
-      navText = '';
-      break;
-  }
+if (!isVisible) {
+return null;
+}
+
+let navText = '';
+if (location.pathname === '/Home') {
+  navText = 'Home >';
+} else if (location.pathname === '/ImageUpload') {
+  navText = 'Image Upload >';
+} else if (location.pathname === '/MyLibrary') {
+  navText = 'MyLibrary >';
+} else if (/^\/image\/\d+$/.test(location.pathname)) { // Check for any image detail page
+  navText = 'Home >';
+}
 
   return (
     <nav className="navbar">

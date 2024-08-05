@@ -2,6 +2,14 @@
 	margin-left: 350px; /* Align content with sidebar */
 	padding: 100px; /* Add some padding */
   }
+
+  .library-title {
+	text-align: center; 
+	color: #165A72; 
+	margin: 0px 0;
+	margin-left: 500px;
+	font: Poppins;
+  }
   
 .form-group {
 	display: flex;
@@ -124,3 +132,4 @@
 	opacity: 0.5; /* Make it semi-transparent */
 	cursor: not-allowed; /* Change cursor to indicate it's disabled */
   }
+

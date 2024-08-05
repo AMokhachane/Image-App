@@ -10,6 +10,7 @@ import { Sidebar } from './components/Sidebar';
 import Home from './components/Home';
 import ImageUpload from './components/ImageUpload';
 import ImageDetails from './components/ImageDetails'; // Import the new component
+import MyLibrary from './MyLibrary';
 
 function App() {
   const [images, setImages] = useState(() => {
@@ -52,6 +53,9 @@ function App() {
             </Route>
             <Route path="/Register">
               <Register />
+            </Route>
+            <Route path="/MyLibrary">
+              <MyLibrary />
             </Route>
             <Route path="/ForgotPassword">
               <ForgotPassword />

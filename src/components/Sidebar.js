@@ -1,20 +1,25 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faImage, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faCamera, faImage, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import './Sidebar.css';
 
 export const Sidebar = () => {
   const location = useLocation();
 
-  if (location.pathname !== '/Home' && location.pathname !== '/ImageUpload') {
+  const isVisible = location.pathname === '/Home' || 
+  location.pathname === '/ImageUpload' ||
+  location.pathname === '/MyLibrary' || 
+  /^\/image\/\d+$/.test(location.pathname);
+
+  if (!isVisible) {
     return null;
   }
 
   return (
     <nav className='sidebar'>
       <div>
-        <h3 className='logo'>Logo</h3>
+        <img src="https://res.cloudinary.com/drgxphf5l/image/upload/v1722849771/dm9gzqkhxa6q8qzpwklp.png" className='logo-image' />
         <div className='menu-items'>
           <Link to='/Home'>
             <button className='home'>
@@ -23,13 +28,16 @@ export const Sidebar = () => {
           </Link>
           <Link to='/ImageUpload'>
             <button className='image-upload'>
-              <FontAwesomeIcon icon={faImage} /> Image Upload
+              <FontAwesomeIcon icon={faCamera} /> Image Upload
             </button>
-            <div className='logout'></div>
           </Link>
-          <div className=''></div>
+          <Link to='/MyLibrary'>
+            <button className='image-upload'>
+              <FontAwesomeIcon icon={faImage} /> My Library
+            </button>
+          </Link>
           <Link to='/'>
-            <button className='/'>
+            <button className='logout-button'>
               <FontAwesomeIcon icon={faSignOutAlt} /> Logout
             </button>
           </Link>
@@ -38,3 +46,5 @@ export const Sidebar = () => {
     </nav>
   );
 };
+
+export default Sidebar;

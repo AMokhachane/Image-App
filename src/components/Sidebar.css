@@ -46,3 +46,14 @@
   .sidebar .logout {
 	margin: 0 500px 500px 10px;
   }
+
+  .logo-image {
+	width: 100px; /* Set your desired width */
+	height: auto; /* Maintain aspect ratio */
+	display: block; /* Ensure it behaves as a block element */
+	margin: 15px; /* Center the image */
+  }
+
+  .logout-button {
+	margin-top: 480px; /* Move it up */
+  }
