@@ -25,13 +25,13 @@
   
   .details {
 	position: absolute; /* Position details on top of the image */
-	bottom: 0; /* Align to bottom of the box */
+	bottom: 0; /* Align to top of the box */
 	left: 0; /* Align to left */
 	right: 0; /* Align to right */
 	background-color: rgba(131, 129, 129, 0.7); /* Grey transparent background */
 	color: white; /* Text color */
 	padding: 10px; /* Padding for details */
-	text-align: center;
+	text-align: left; /* Align text to the start (left) */
   }
   
   .backButton {
