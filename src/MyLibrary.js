@@ -63,7 +63,7 @@ export const MyLibrary = () => {
 	  
 	  // Navigate to the ImageDetails page with the image and tag name
 	  history.push({
-		pathname: `/image/${image.imageId}`,
+		pathname: `/management/${image.imageId}`,
 		state: { image: { ...image, tagName } }
 	  });
 	};
@@ -131,4 +131,4 @@ export const MyLibrary = () => {
   );
 };
   
-  export default MyLibrary;
+  export default MyLibrary; //original

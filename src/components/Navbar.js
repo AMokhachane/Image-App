@@ -7,15 +7,17 @@ import './Navbar.css';
 export const Navbar = () => {
   const location = useLocation();
 
-   // Check if the current path is either '/Home', '/ImageUpload', or any image detail page
-   const isVisible = location.pathname === '/Home' || 
-   location.pathname === '/ImageUpload' ||
-   location.pathname === '/MyLibrary' || 
-   /^\/image\/\d+$/.test(location.pathname);
+  // Check if the current path is one of the specified routes
+  const isVisible = 
+    location.pathname === '/Home' || 
+    location.pathname === '/ImageUpload' || 
+    location.pathname === '/MyLibrary' || 
+    /^\/image\/\d+$/.test(location.pathname) || 
+    /^\/management\/\d+$/.test(location.pathname); // Now included in isVisible
 
-if (!isVisible) {
-return null;
-}
+  if (!isVisible) {
+    return null;
+  }
 
 let navText = '';
 if (location.pathname === '/Home') {
@@ -26,6 +28,8 @@ if (location.pathname === '/Home') {
   navText = 'MyLibrary >';
 } else if (/^\/image\/\d+$/.test(location.pathname)) { // Check for any image detail page
   navText = 'Home >';
+} else if (/^\/management\/\d+$/.test(location.pathname)) { // Check for any image detail page
+  navText = 'MyLibrary >';
 }
 
   return (

@@ -7,10 +7,12 @@ import './Sidebar.css';
 export const Sidebar = () => {
   const location = useLocation();
 
-  const isVisible = location.pathname === '/Home' || 
-  location.pathname === '/ImageUpload' ||
+  const isVisible = 
+  location.pathname === '/Home' || 
+  location.pathname === '/ImageUpload' || 
   location.pathname === '/MyLibrary' || 
-  /^\/image\/\d+$/.test(location.pathname);
+  /^\/image\/\d+$/.test(location.pathname) || 
+  /^\/management\/\d+$/.test(location.pathname);
 
   if (!isVisible) {
     return null;

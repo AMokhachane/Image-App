@@ -11,6 +11,8 @@ import Home from './components/Home';
 import ImageUpload from './components/ImageUpload';
 import ImageDetails from './components/ImageDetails'; // Import the new component
 import MyLibrary from './MyLibrary';
+import Management from './Management';
+
 
 function App() {
   const [images, setImages] = useState(() => {
@@ -76,6 +78,9 @@ function App() {
             </Route>
             <Route path="/image/:id">
               <ImageDetails /> {/* Route for ImageDetails */}
+            </Route>
+            <Route path="/management/:id">
+              <Management /> {/* Route for ImageDetails */}
             </Route>
           </Switch>
         </div>

@@ -70,6 +70,108 @@ export const Home = () => {
     });
   };
 
+  // Generate pagination items
+  const generatePagination = () => {
+    const pageNumbers = [];
+    const totalPages = Math.ceil(images.length / imagesPerPage);
+
+    if (totalPages <= 1) return pageNumbers;
+
+    pageNumbers.push(
+      <button
+        key="prev"
+        onClick={() => paginate(currentPage - 1)}
+        disabled={currentPage === 1}
+        className={currentPage === 1 ? HomeCSS.disabled : ""}
+      >
+        <FontAwesomeIcon icon={faArrowLeft} />
+      </button>
+    );
+
+    if (currentPage > 2) {
+      pageNumbers.push(
+        <button
+          key={1}
+          onClick={() => paginate(1)}
+          className={currentPage === 1 ? HomeCSS.active : ""}
+        >
+          1
+        </button>
+      );
+
+      if (currentPage > 3) {
+        pageNumbers.push(
+          <button key="dots1" className={HomeCSS.dots}>
+            ...
+          </button>
+        );
+      }
+    }
+
+    if (currentPage > 1) {
+      pageNumbers.push(
+        <button
+          key={currentPage - 1}
+          onClick={() => paginate(currentPage - 1)}
+          className={HomeCSS.pageNumber}
+        >
+          {currentPage - 1}
+        </button>
+      );
+    }
+
+    pageNumbers.push(
+      <button key={currentPage} className={HomeCSS.active}>
+        {currentPage}
+      </button>
+    );
+
+    if (currentPage < totalPages) {
+      pageNumbers.push(
+        <button
+          key={currentPage + 1}
+          onClick={() => paginate(currentPage + 1)}
+          className={HomeCSS.pageNumber}
+        >
+          {currentPage + 1}
+        </button>
+      );
+    }
+
+    if (currentPage < totalPages - 1) {
+      if (currentPage < totalPages - 2) {
+        pageNumbers.push(
+          <button key="dots2" className={HomeCSS.dots}>
+            ...
+          </button>
+        );
+      }
+
+      pageNumbers.push(
+        <button
+          key={totalPages}
+          onClick={() => paginate(totalPages)}
+          className={currentPage === totalPages ? HomeCSS.active : ""}
+        >
+          {totalPages}
+        </button>
+      );
+    }
+
+    pageNumbers.push(
+      <button
+        key="next"
+        onClick={() => paginate(currentPage + 1)}
+        disabled={currentPage === totalPages}
+        className={currentPage === totalPages ? HomeCSS.disabled : ""}
+      >
+        <FontAwesomeIcon icon={faArrowRight} />
+      </button>
+    );
+
+    return pageNumbers;
+  };
+
   return (
     <div className={HomeCSS["home-page"]}>
       <Navbar /> {/* Use the Navbar component */}
@@ -125,39 +227,7 @@ export const Home = () => {
         ))}
       </div>
       {/* Pagination */}
-      <div className={HomeCSS.pagination}>
-        <button
-          onClick={() => paginate(currentPage - 1)}
-          disabled={currentPage === 1} // Disable if on the first page
-          className={currentPage === 1 ? HomeCSS.disabled : ""}
-        >
-          <FontAwesomeIcon icon={faArrowLeft} />
-        </button>
-
-        {[...Array(Math.ceil(images.length / imagesPerPage)).keys()].map(
-          (page) => (
-            <button
-              key={page + 1}
-              onClick={() => paginate(page + 1)}
-              className={currentPage === page + 1 ? HomeCSS.active : ""}
-            >
-              {page + 1}
-            </button>
-          )
-        )}
-
-        <button
-          onClick={() => paginate(currentPage + 1)}
-          disabled={currentPage === Math.ceil(images.length / imagesPerPage)} // Disable if on the last page
-          className={
-            currentPage === Math.ceil(images.length / imagesPerPage)
-              ? HomeCSS.disabled
-              : ""
-          }
-        >
-          <FontAwesomeIcon icon={faArrowRight} />
-        </button>
-      </div>
+      <div className={HomeCSS.pagination}>{generatePagination()}</div>
     </div>
   );
 };
