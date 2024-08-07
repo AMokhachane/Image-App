@@ -1,82 +1,107 @@
-import React, {useState }from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
-import axios from 'axios';
-import ManagementCSS from './Management.module.css';
+import React, { useState } from "react";
+import { useHistory, useLocation } from "react-router-dom";
+import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
+import ManagementCSS from "./Management.module.css";
 
 const Management = () => {
   const history = useHistory();
   const location = useLocation();
   const { image } = location.state;
+
+  const [title, setTitle] = useState(image.title);
+  const [description, setDescription] = useState(image.imageDescription);
+  const [url, setUrl] = useState(image.url);
+  const [uploadDate, setUploadDate] = useState(image.uploadDate);
   const [isEditing, setIsEditing] = useState(false);
-const [editTitle, setEditTitle] = useState(image.title);
-const [editDescription, setEditDescription] = useState(image.imageDescription || '');
 
   const deleteImage = async (id) => {
     try {
       await axios.delete(`http://localhost:5205/api/image/${id}`);
-      history.push('/MyLibrary');
+      history.push("/MyLibrary");
     } catch (error) {
       console.error("An error occurred while deleting the image", error);
     }
   };
 
-  const editImage = async (id) => {
+  const updateImage = async (id) => {
     try {
-      await axios.put(`http://localhost:5205/api/image/${id}`);
-      history.push('/MyLibrary');
+      const updatedImage = {
+        title: title,
+        imageDescription: description,
+        url: url,
+        uploadDate: uploadDate,
+      };
+      await axios.put(`http://localhost:5205/api/image/${id}`, updatedImage);
+      history.push("/MyLibrary");
     } catch (error) {
-      console.error("An error occurred while deleting the image", error);
+      console.error("An error occurred while updating the image", error);
     }
-  };
-
-  const handleEditSubmit = (e) => {
-    e.preventDefault();
-    // Update the image state with new values
-    image.title = editTitle;
-    image.imageDescription = editDescription;
-    setIsEditing(false);
   };
 
   return (
-    <div className={ManagementCSS['image-details-page']}>
-      <div className={ManagementCSS['image-details-box']}>
-      <button onClick={() => history.goBack()} className={ManagementCSS.backButton}>X</button>
-        <div className={ManagementCSS['image-details']}>
-          <img src={image.url} alt={image.title} className={ManagementCSS.image} />
-          <div className={ManagementCSS['details']}>
-            {isEditing ? (
-              <form onSubmit={handleEditSubmit} className={ManagementCSS.editForm}>
-                <div>
-                  <label>Title</label>
+    <div className={ManagementCSS["image-details-page"]}>
+      <div className={ManagementCSS["image-details-box"]}>
+        <button
+          onClick={() => history.goBack()}
+          className={ManagementCSS.backButton}
+        >
+          X
+        </button>
+        <div className={ManagementCSS["image-details"]}>
+          <img
+            src={image.url}
+            alt={image.title}
+            className={ManagementCSS.image}
+          />
+          <div className={ManagementCSS["details"]}>
+            <div className={ManagementCSS["editContainer"]}>
+              {isEditing ? (
+                <>
                   <input
                     type="text"
-                    value={editTitle}
-                    onChange={(e) => setEditTitle(e.target.value)}
-                    required
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    className={ManagementCSS.inputField}
+                    placeholder="Title"
                   />
-                </div>
-                <div>
-                  <label>Description</label>
                   <textarea
-                    value={editDescription}
-                    onChange={(e) => setEditDescription(e.target.value)}
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    className={ManagementCSS.textareaField}
+                    placeholder="Description"
                   />
-                </div>
-                <button type="submit" className={ManagementCSS.saveButton}>Save</button>
-                <button type="button" onClick={() => setIsEditing(false)} className={ManagementCSS.cancelButton}>Cancel</button>
-              </form>
-            ) : (
-              <>
-                <h4 className="name">{image.title}</h4>
-                <p className="description">{image.imageDescription}</p>
-                <button onClick={() => setIsEditing(true)} className={ManagementCSS.editButton}>Edit</button>
-              </>
-            )}
-            <button onClick={() => deleteImage(image.imageId)} className={ManagementCSS.deleteButton}>
+                  
+                  <button
+                    onClick={() => updateImage(image.imageId)}
+                    className={ManagementCSS.updateButton}
+                  >
+                    Update
+                  </button>
+                </>
+              ) : (
+                <>
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <h2 className={ManagementCSS.title}>{title}</h2>
+                    <FontAwesomeIcon
+                      icon={faPen}
+                      onClick={() => setIsEditing(!isEditing)}
+                      className={ManagementCSS.penIcon}
+                    />
+                    <div><p className={ManagementCSS.description}>{description}</p></div>
+                  </div>
+                  
+                </>
+              )}
+            </div>
+            
+
+            <button
+              onClick={() => deleteImage(image.imageId)}
+              className={ManagementCSS.deleteButton}
+            >
               Delete
-            </button>
-			<button onClick={() => editImage(image.imageId)} className={ManagementCSS.deleteButton}>
-              Edit
             </button>
           </div>
         </div>
@@ -84,4 +109,5 @@ const [editDescription, setEditDescription] = useState(image.imageDescription ||
     </div>
   );
 };
+
 export default Management;

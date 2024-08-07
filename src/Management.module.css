@@ -1,4 +1,66 @@
-.image-details-page {
+.editContainer {
+	display: flex;
+	align-items: flex-start; /* Align items at the top */
+	justify-content: space-between;
+	margin-bottom: 10px; /* Add some space below the container */
+  }
+  
+  .title {
+	font-size: 24px; /* Adjust as needed */
+	margin-bottom: 10px; /* Space below the title */
+  }
+  
+  .description {
+	font-size: 16px; /* Adjust as needed */
+	margin-top: 50px; /* Add space above the description */
+	max-width: 700px; /* Set a max width for the description */
+  }
+  
+  .penIcon {
+	cursor: pointer;
+	color: #555;
+	margin-left: 8px; /* Add some space to the left of the icon */
+  }
+  
+  .penIcon:hover {
+	color: #000;
+  }
+  
+  
+  .inputField {
+	width: 100%;
+	padding: 8px;
+	margin-right: 8px;
+	margin-bottom: 8px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	font-size: 16px;
+  }
+  
+  .textareaField {
+	width: 100%;
+	padding: 8px;
+	margin-right: 8px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	font-size: 16px;
+  }
+  
+  .updateButton {
+	background-color: #4CAF50;
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	cursor: pointer;
+	border-radius: 5px;
+	margin-top: 10px;
+  }
+  
+  .updateButton:hover {
+	background-color: #45a049;
+  }
+  
+  .image-details-page {
 	padding: 20px;
 	display: flex;
 	justify-content: center; /* Center content horizontally */
@@ -25,7 +87,7 @@
   
   .details {
 	position: absolute; /* Position details on top of the image */
-	bottom: 0; /* Align to top of the box */
+	bottom: 0px; /* Align to top of the box */
 	left: 0; /* Align to left */
 	right: 0; /* Align to right */
 	background-color: rgba(131, 129, 129, 0.7); /* Grey transparent background */
@@ -58,14 +120,9 @@
 	padding: 10px 20px;
 	cursor: pointer;
 	border-radius: 5px;
+	margin-left: 850px;
   }
   
   .deleteButton:hover {
 	background-color: #ff1a1a;
-  }
-
-  .tag {
-	margin-top: 4px; /* Adjust this value as needed */
-	margin-left: 4px; /* Optional: adds space between title and tag icon */
-	vertical-align: middle; /* Aligns the icon with the text */
   }
