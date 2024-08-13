@@ -30,6 +30,17 @@ namespace api.Data
     {
       base.OnModelCreating(builder);
 
+       builder.Entity<AppUser>()
+                .Property(u => u.Id)
+                .HasColumnName("AppUserId");
+
+                 builder.Entity<Image>()
+                .HasOne(i => i.AppUser)
+                .WithMany(u => u.Images)
+                .HasForeignKey(i => i.AppUserId);
+
+                 
+
       List<IdentityRole> roles = new List<IdentityRole>
             {
               new IdentityRole

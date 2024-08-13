@@ -6,7 +6,6 @@ import { FaSearch } from "react-icons/fa"; // Import only FaSearch
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as OutlineHeart } from "@fortawesome/free-regular-svg-icons"; // Import outlined heart icon
 import { faComment as OutlineComment } from "@fortawesome/free-regular-svg-icons"; // Import outlined comment icon
-import { faTag } from "@fortawesome/free-solid-svg-icons"; // Use the solid tag icon
 import Navbar from "./Navbar"; // Import the Navbar component
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
@@ -210,7 +209,7 @@ export const Home = () => {
             <div className={HomeCSS["item-details"]}>
               <h4 className="name">
                 {image.title}
-                <FontAwesomeIcon icon={faTag} className={HomeCSS.tag} />
+                
               </h4>
               <div className={HomeCSS.icons}>
                 <FontAwesomeIcon

@@ -2,24 +2,21 @@ import React, { useState, useEffect } from 'react';
 import LibraryCSS from './MyLibrary.module.css';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
-import { FaSearch } from 'react-icons/fa'; // Import only FaSearch
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart as OutlineHeart } from '@fortawesome/free-regular-svg-icons'; // Import outlined heart icon
-import { faComment as OutlineComment } from '@fortawesome/free-regular-svg-icons'; // Import outlined comment icon
-import { faTag } from '@fortawesome/free-solid-svg-icons'; // Use the solid tag icon
+import { faHeart as OutlineHeart } from '@fortawesome/free-regular-svg-icons'; 
+import { faComment as OutlineComment } from '@fortawesome/free-regular-svg-icons'; 
 import Navbar from './components/Navbar';
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 export const MyLibrary = () => {
 	const [images, setImages] = useState([]);
-	const [searchTerm, setSearchTerm] = useState('');
+	const [searchTerm] = useState('');
 	const [currentPage, setCurrentPage] = useState(1);
-	const [tags, setTags] = useState([]); // State for tags
-	const [selectedTag, setSelectedTag] = useState(''); // State for selected tag
-	const history = useHistory(); // For navigation
-	const imagesPerPage = 6; // Number of images per page
+	const [tags, setTags] = useState([]); 
+	const [selectedTag] = useState(''); 
+	const history = useHistory(); 
+	const imagesPerPage = 6;
   
-	// Fetch the uploaded images and tags from the backend when the component mounts
 	useEffect(() => {
 	  const fetchImages = async () => {
 		try {
@@ -53,15 +50,10 @@ export const MyLibrary = () => {
 	  (selectedTag === '' || image.tagId === selectedTag)
 	);
   
-	// Logic to handle pagination click
 	const paginate = (pageNumber) => setCurrentPage(pageNumber);
   
-	// Function to handle image click
 	const handleImageClick = (image) => {
-	  // Find the tag name for the selected image
 	  const tagName = tags.find(tag => tag.tagId === image.tagId)?.tagName;
-	  
-	  // Navigate to the ImageDetails page with the image and tag name
 	  history.push({
 		pathname: `/management/${image.imageId}`,
 		state: { image: { ...image, tagName } }
@@ -70,21 +62,20 @@ export const MyLibrary = () => {
   
 	return (
 	  <div className={LibraryCSS['home-page']}>
-		<Navbar /> {/* Use the Navbar component */}
+		<Navbar />
 		<div className={LibraryCSS['form-group']}>
-      <h2 className={LibraryCSS['library-title']}>My Library</h2> {/* Add a class for styling */}
+      <h2 className={LibraryCSS['library-title']}>My Library</h2> 
     </div>
 		<div className={LibraryCSS['image-grid']}>
 		  {filteredImages.map(image => (
 			<div 
 			  key={image.imageId} 
 			  className={LibraryCSS['image-item']}
-			  onClick={() => handleImageClick(image)} // Handle click event
+			  onClick={() => handleImageClick(image)}
 			>
 			  <img src={image.url} alt={image.title} /> 
 			  <div className={LibraryCSS["item-details"]}>
-				<h4 className="name">{image.title}
-				  <FontAwesomeIcon icon={faTag} className={LibraryCSS.tag} /></h4>
+				<h4 className="name">{image.title}</h4>
 				<div className={LibraryCSS.icons}>
 				  <FontAwesomeIcon icon={OutlineHeart} className={LibraryCSS.iconSmall} />
 				  <FontAwesomeIcon icon={OutlineComment} className={LibraryCSS.iconSmall} />
@@ -97,7 +88,7 @@ export const MyLibrary = () => {
 			  <div className={LibraryCSS.pagination}>
         <button
           onClick={() => paginate(currentPage - 1)}
-          disabled={currentPage === 1} // Disable if on the first page
+          disabled={currentPage === 1}
           className={currentPage === 1 ? LibraryCSS.disabled : ""}
         >
           <FontAwesomeIcon icon={faArrowLeft} />
@@ -117,7 +108,7 @@ export const MyLibrary = () => {
 
         <button
           onClick={() => paginate(currentPage + 1)}
-          disabled={currentPage === Math.ceil(images.length / imagesPerPage)} // Disable if on the last page
+          disabled={currentPage === Math.ceil(images.length / imagesPerPage)} 
           className={
             currentPage === Math.ceil(images.length / imagesPerPage)
               ? LibraryCSS.disabled

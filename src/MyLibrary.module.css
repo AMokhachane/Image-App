@@ -1,6 +1,6 @@
 .home-page {
-	margin-left: 350px; /* Align content with sidebar */
-	padding: 100px; /* Add some padding */
+	margin-left: 350px;
+	padding: 100px;
   }
 
   .library-title {
@@ -36,30 +36,30 @@
   
 .image-grid {
 	display: grid;
-	grid-template-columns: repeat(3, 1fr); /* Grid layout with 3 columns */
+	grid-template-columns: repeat(3, 1fr);
 	gap: 25px;
   }
   
 .image-item {
 	padding: 0;
-	text-align: start; /* Center align text and images */
-	position: relative; /* Ensure relative positioning for absolute positioning inside */
+	text-align: start;
+	position: relative;
   }
   
 .image-item img {
-	max-width: 360px; /* Adjusted to viewport width for responsive design */
+	max-width: 360px; 
 	height: 250px;
 	display: block;
-	margin: 0 auto 0px; /* Adjust margin as needed */
-	position: relative; /* Ensure relative positioning for absolute positioning inside */
-	z-index: 1; /* Ensure image stays on top */
+	margin: 0 auto 0px;
+	position: relative; 
+	z-index: 1;
   }
 
  
 .item-details {
 	width: 100%;
 	height: 0px;
-	color: white; /* Adjust text color for better contrast */
+	color: white; 
 	padding: 10px;
 	box-sizing: border-box;
 	display: flex;
@@ -69,7 +69,7 @@
 	position: absolute;
 	bottom: 0;
 	left: 0;
-	z-index: 2; /* Ensure details are above image */
+	z-index: 2; 
   }
 
   .item-details  .iconSmall {
@@ -106,21 +106,21 @@
 	margin: 5px;
 	margin-top: 30px;
 	cursor: pointer;
-	border-radius: 50%; /* Make the button circular */
-	width: 30px; /* Ensure fixed width for circular shape */
-	height: 30px; /* Ensure fixed height for circular shape */
+	border-radius: 50%;
+	width: 30px; 
+	height: 30px;
   }
   
   .pagination button.active {
-	background-color: #909499; /* Highlight color for active page */
+	background-color: #909499; 
 	color: white;
 	border-color: #93bef5;
   }
 
 .tag {
-	margin-top: 4px; /* Adjust this value as needed */
-	margin-left: 4px; /* Optional: adds space between title and tag icon */
-	vertical-align: middle; /* Aligns the icon with the text */
+	margin-top: 4px; 
+	margin-left: 4px; 
+	vertical-align: middle; 
   }
 
   .tag:hover,
@@ -129,7 +129,7 @@
   }
 
   .disabled {
-	opacity: 0.5; /* Make it semi-transparent */
-	cursor: not-allowed; /* Change cursor to indicate it's disabled */
+	opacity: 0.5; 
+	cursor: not-allowed; 
   }
 

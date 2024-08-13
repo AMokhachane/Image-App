@@ -4,8 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.Data;
 using api.Dtos.Image;
+using api.Extensions;
 using api.Interfaces;
 using api.Mappers;
+using api.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -16,10 +20,14 @@ namespace api.Controllers
     {
         private readonly IImageRepository _imageRepo;
         private readonly ApplicationDBContext _context;
-        public ImageController(IImageRepository imageRepo, ApplicationDBContext context)
+         private readonly SignInManager<AppUser> _signInManager;
+        private readonly UserManager<AppUser> _userManager;
+        public ImageController(IImageRepository imageRepo, ApplicationDBContext context, UserManager<AppUser> userManager,SignInManager<AppUser> signInManager)
         {
             _imageRepo = imageRepo;
             _context = context;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         [HttpGet]
@@ -51,14 +59,26 @@ namespace api.Controllers
        }
 
        [HttpPost]
+       //[Authorize]
        public async Task<IActionResult> Create([FromBody] CreateImageRequestDto imageDto)
        {
             if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
+            var email = User.GetUserEmail();
+            if (string.IsNullOrEmpty(email))
+                return Unauthorized("User name not found in claims.");
+
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+                return NotFound("User not found.");
+
             var imageModel = imageDto.ToImageFromCreateDTO();
-            await _imageRepo.CreateAsync(imageModel);
-            return CreatedAtAction(nameof(GetById), new {id = imageModel.ImageId }, imageModel.ToImageDto());
+
+            
+            await _imageRepo.CreateAsync(imageModel, user);
+            //return CreatedAtAction(nameof(GetById), new {id = imageModel.ImageId }, imageModel.ToImageDto());
+            return Ok("Image successfully uploaded.");
        }
 
        [HttpPut]

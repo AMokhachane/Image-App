@@ -19,9 +19,21 @@ namespace api.Repository
             _context = context;
         }
 
-        public async Task<Image> CreateAsync(Image imageModel)
+        public async Task<Image> CreateAsync(Image imageModel, AppUser user)
         {
-           await _context.Images.AddAsync(imageModel);
+
+            var image = new Image
+            {
+                AppUserId = user.Id,
+                Title = imageModel.Title,
+                ImageDescription = imageModel.ImageDescription,
+                Url = imageModel.Url,
+                UploadDate = DateTime.Now 
+            };
+
+
+
+           await _context.Images.AddAsync(image);
            await _context.SaveChangesAsync();
            return imageModel;
         }

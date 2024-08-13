@@ -12,7 +12,7 @@ namespace api.Interfaces
     {
        Task<List<Image>> GetAllAsync();
        Task<Image?> GetByIdAsync(int id);
-       Task<Image> CreateAsync(Image imageModel);
+       Task<Image> CreateAsync(Image imageModel, AppUser user);
        Task<Image?> UpdateAsync(int id, UpdateImageRequestDto imageDto);
        Task<Image?> DeleteAsync(int id);
        Task<bool> ImageExists(int id);

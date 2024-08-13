@@ -11,11 +11,13 @@ const ImageUpload = () => {
     const [selectedTagId, setSelectedTagId] = useState("");
     const [tags, setTags] = useState([]);
     const [successMessage, setSuccessMessage] = useState("");
-    const [titleError, setTitleError] = useState(""); // New state for title error message
+    const [titleError, setTitleError] = useState(""); 
     const [categoryError, setCategoryError] = useState("");
     const [descriptionError, setDescriptionError] = useState("");
-    const [imageSelectedError, setImageSelectedError] = useState(""); // New state for category error message
+    const [imageSelectedError, setImageSelectedError] = useState(""); 
     const fileInputRef = useRef(null);
+
+    var user = JSON.parse(localStorage.getItem('user'));
 
     const fetchTags = async () => {
         try {
@@ -45,8 +47,8 @@ const ImageUpload = () => {
     };
 
     const uploadImage = async () => {
-        setTitleError(""); // Clear errors before validation
-        setCategoryError(""); // Clear errors before validation
+        setTitleError(""); 
+        setCategoryError(""); 
         setDescriptionError("");
         setImageSelectedError("");
 
@@ -84,12 +86,17 @@ const ImageUpload = () => {
                 tagId: selectedTagId,
             };
 
-            await axios.post("http://localhost:5205/api/image", imagePayload);
+            await axios.post("http://localhost:5205/api/image", imagePayload,
+                {
+                    headers: {
+                        'Authorization': `Bearer ${user.token}`
+                    }
+                }
+            );
             console.log('Image data sent to API successfully');
 
             // Set success message
             setSuccessMessage("Image uploaded successfully!");
-            // Clear the input fields after successful upload
             setTitle("");
             setDescription("");
             setSelectedTagId("");
@@ -104,9 +111,9 @@ const ImageUpload = () => {
         <div className={styles.parentContainer}>
             <div className={styles.box}>
                 <h2 className={styles.heading}>Image Upload</h2>
-                {successMessage && <p className={styles.successMessage}>{successMessage}</p>} {/* Display success message */}
+                {successMessage && <p className={styles.successMessage}>{successMessage}</p>} 
                 <p className={styles.label}>Image Title</p>
-                {titleError && <p className={styles.errorMessage}>{titleError}</p>} {/* Display title error message */}
+                {titleError && <p className={styles.errorMessage}>{titleError}</p>} 
                 <input
                     type="text"
                     className={styles.fileInput}
@@ -114,7 +121,7 @@ const ImageUpload = () => {
                     onChange={(e) => setTitle(e.target.value)}
                 />
                 <p className={styles.label}>Image Category</p>
-                {categoryError && <p className={styles.errorMessage}>{categoryError}</p>} {/* Display category error message */}
+                {categoryError && <p className={styles.errorMessage}>{categoryError}</p>} 
                 <select
                     value={selectedTagId}
                     onChange={(e) => setSelectedTagId(e.target.value)}
@@ -128,13 +135,13 @@ const ImageUpload = () => {
                     ))}
                 </select>
                 <p className={styles.label}>Image Description</p>
-                {descriptionError && <p className={styles.errorMessage}>{descriptionError}</p>} {/* Display category error message */}
+                {descriptionError && <p className={styles.errorMessage}>{descriptionError}</p>} 
                 <textarea
                     className={`${styles.fileInput} ${styles.fileDescription}`}
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                 />
-                {imageSelectedError && <p className={styles.errorMessage}>{imageSelectedError}</p>} {/* Display category error message */}
+                {imageSelectedError && <p className={styles.errorMessage}>{imageSelectedError}</p>}
                 <div
                     className={styles.dropzone}
                     onDragOver={handleDragOver}

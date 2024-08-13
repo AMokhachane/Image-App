@@ -14,7 +14,7 @@
   margin-left: 390px;
   background-color: #fff;
   width: 800px;
-  padding-left: 40px; /* Added padding to move content right */
+  padding-left: 40px;
 }
 
 .heading {
@@ -33,11 +33,11 @@
 }
 
 .fileInput, .fileDescription {
-  margin: 5px 0; /* Vertical margin to control space between elements */
-  width: 100%; /* Make input fields full width */
-  max-width: 400px; /* Set a max width for the input fields */
+  margin: 5px 0; 
+  width: 100%; 
+  max-width: 400px; 
   height: 38px;
-  margin-left: 200px; /* Add left margin to move input fields right */
+  margin-left: 200px; 
   border-radius: 6px;
 }
 
@@ -47,14 +47,14 @@
 }
 
 .fileUrl {
-  margin: 5px 0; /* Vertical margin */
-  width: 100%; /* Full width */
-  max-width: 370px; /* Set a max width */
+  margin: 5px 0;
+  width: 100%; 
+  max-width: 370px;
   margin-left: 200px;
-  height: 200px; /* Height of the input */
-  border: 2px dotted #111111; /* Dotted border */
-  border-radius: 4px; /* Rounded corners */
-  padding-left: 30px; /* Add padding to avoid text overlap with the icon */
+  height: 200px; 
+  border: 2px dotted #111111; 
+  border-radius: 4px; 
+  padding-left: 30px; 
 }
 
 .uploadButton {
@@ -63,18 +63,18 @@
   border-radius: 6px;
   margin-top: 20px;
   margin-left: 350px;
-  background-color: #2596BE; /* Blue background color */
-  color: white; /* White text color */
-  border: none; /* Remove border */
+  background-color: #2596BE; 
+  color: white; 
+  border: none; 
 }
 
 .icon {
   position: absolute;
-  left: 10px; /* Adjust icon position */
-  top: 50%; /* Center vertically */
-  transform: translateY(-50%); /* Center icon vertically */
-  color: #999; /* Icon color */
-  font-size: 18px; /* Adjust the size as needed */
+  left: 10px; 
+  top: 50%; 
+  transform: translateY(-50%); 
+  color: #999; 
+  font-size: 18px; 
 }
 
 .dropzone {
@@ -89,7 +89,7 @@
   cursor: pointer;
   background-color: #e6f7ff;
   position: relative;
-  margin-left: 200px; /* Add left margin to move input fields right */
+  margin-left: 200px; 
 }
 
 .dropzoneText {
@@ -112,21 +112,21 @@
 
 .dropzoneIcon {
   position: absolute;
-  right: 135px; /* Move icon to the right */
-  top: 30%; /* Center vertically */
-  transform: translateY(-50%); /* Center icon vertically */
-  font-size: 110px; /* Make the icon bigger */
-  color: #2596BE; /* Blue color */
+  right: 135px; 
+  top: 30%; 
+  transform: translateY(-50%); 
+  font-size: 110px; 
+  color: #2596BE; 
 }
 
 .successMessage {
-  color: green; /* Set the text color to green */
-  margin-bottom: 5px; /* Add some space below the message */
+  color: green; 
+  margin-bottom: 5px; 
   margin-left: 300px;
 }
 
 .errorMessage {
-  color: red; /* Set the text color to green */
-  margin-bottom: 5px; /* Add some space below the message */
+  color: red; 
+  margin-bottom: 5px;
   margin-left: 250px;
 }

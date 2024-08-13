@@ -1,6 +1,6 @@
 .home-page {
-	margin-left: 350px; /* Align content with sidebar */
-	padding: 100px; /* Add some padding */
+	margin-left: 350px;
+	padding: 100px;
   }
   
 .form-group {
@@ -28,7 +28,7 @@
   
 .image-grid {
 	display: grid;
-	grid-template-columns: repeat(3, 1fr); /* Grid layout with 3 columns */
+	grid-template-columns: repeat(3, 1fr); 
 	gap: 25px;
   }
   

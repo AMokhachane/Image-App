@@ -51,13 +51,13 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "1afa9632-5c9e-4fcd-8a5b-9cf905b561db",
+                            Id = "ac38f2c5-19a7-4663-ba2e-56a918b60736",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "3a05c339-7f70-4e1f-9a02-a70d1b1212a4",
+                            Id = "bf0f58c9-5870-4be0-9183-5fff5215ab3b",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -172,7 +172,8 @@ namespace api.Migrations
             modelBuilder.Entity("api.Models.AppUser", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("AppUserId");
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
@@ -273,6 +274,10 @@ namespace api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ImageId"));
 
+                    b.Property<string>("AppUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("ImageDescription")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -290,7 +295,33 @@ namespace api.Migrations
 
                     b.HasKey("ImageId");
 
+                    b.HasIndex("AppUserId");
+
                     b.ToTable("Images");
+                });
+
+            modelBuilder.Entity("api.Models.PasswordHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("passwordHistories");
                 });
 
             modelBuilder.Entity("api.Models.Tag", b =>
@@ -373,7 +404,7 @@ namespace api.Migrations
             modelBuilder.Entity("api.Models.Comment", b =>
                 {
                     b.HasOne("api.Models.AppUser", "AppUser")
-                        .WithMany()
+                        .WithMany("Comments")
                         .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -387,6 +418,17 @@ namespace api.Migrations
                     b.Navigation("Image");
                 });
 
+            modelBuilder.Entity("api.Models.Image", b =>
+                {
+                    b.HasOne("api.Models.AppUser", "AppUser")
+                        .WithMany("Images")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+                });
+
             modelBuilder.Entity("api.Models.Tag", b =>
                 {
                     b.HasOne("api.Models.Image", "Image")
@@ -394,6 +436,13 @@ namespace api.Migrations
                         .HasForeignKey("ImageId");
 
                     b.Navigation("Image");
+                });
+
+            modelBuilder.Entity("api.Models.AppUser", b =>
+                {
+                    b.Navigation("Comments");
+
+                    b.Navigation("Images");
                 });
 
             modelBuilder.Entity("api.Models.Image", b =>

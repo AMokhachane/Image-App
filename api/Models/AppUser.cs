@@ -8,6 +8,7 @@ namespace api.Models
 {
     public class AppUser : IdentityUser
     {
-        
+       public List<Image> Images { get; set; } = new List<Image>();
+       public List<Comment> Comments { get; set; } = new List<Comment>();
     }
 }

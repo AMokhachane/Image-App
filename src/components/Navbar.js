@@ -13,7 +13,7 @@ export const Navbar = () => {
     location.pathname === '/ImageUpload' || 
     location.pathname === '/MyLibrary' || 
     /^\/image\/\d+$/.test(location.pathname) || 
-    /^\/management\/\d+$/.test(location.pathname); // Now included in isVisible
+    /^\/management\/\d+$/.test(location.pathname); 
 
   if (!isVisible) {
     return null;
@@ -26,9 +26,9 @@ if (location.pathname === '/Home') {
   navText = 'Image Upload >';
 } else if (location.pathname === '/MyLibrary') {
   navText = 'MyLibrary >';
-} else if (/^\/image\/\d+$/.test(location.pathname)) { // Check for any image detail page
+} else if (/^\/image\/\d+$/.test(location.pathname)) { 
   navText = 'Home >';
-} else if (/^\/management\/\d+$/.test(location.pathname)) { // Check for any image detail page
+} else if (/^\/management\/\d+$/.test(location.pathname)) { 
   navText = 'MyLibrary >';
 }
 
@@ -45,7 +45,7 @@ if (location.pathname === '/Home') {
           <button className="dropbtn">
             <FontAwesomeIcon icon={faChevronDown} />
           </button>
-          {/* Dropdown content here */}
+
         </div>
       </div>
      </nav>

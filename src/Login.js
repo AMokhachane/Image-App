@@ -25,6 +25,8 @@ function Login() {
     })
     .then(response => {
       console.log('Response:', response.data);
+      const { AppUserId, userName, token } = response.data;
+      localStorage.setItem('user', JSON.stringify({ AppUserId, userName, token }));
       history.push('/Home');
     })
     .catch(error => {
