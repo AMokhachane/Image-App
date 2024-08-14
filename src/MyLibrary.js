@@ -9,83 +9,102 @@ import Navbar from './components/Navbar';
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 export const MyLibrary = () => {
-	const [images, setImages] = useState([]);
-	const [searchTerm] = useState('');
-	const [currentPage, setCurrentPage] = useState(1);
-	const [tags, setTags] = useState([]); 
-	const [selectedTag] = useState(''); 
-	const history = useHistory(); 
-	const imagesPerPage = 6;
-  
-	useEffect(() => {
-	  const fetchImages = async () => {
-		try {
-		  const response = await axios.get("http://localhost:5205/api/image");
-		  setImages(response.data); // Update state with fetched images
-		} catch (error) {
-		  console.error("An error occurred while fetching images", error);
-		}
-	  };
-  
-	  const fetchTags = async () => {
-		try {
-		  const response = await axios.get("http://localhost:5205/api/tag");
-		  setTags(response.data); // Update state with fetched tags
-		} catch (error) {
-		  console.error("An error occurred while fetching tags", error);
-		}
-	  };
-  
-	  fetchImages();
-	  fetchTags();
-	}, []);
-  
-	// Logic to calculate paginated items
-	const indexOfLastItem = currentPage * imagesPerPage;
-	const indexOfFirstItem = indexOfLastItem - imagesPerPage;
-	const currentItems = (images || []).slice(indexOfFirstItem, indexOfLastItem);
-  
-	const filteredImages = currentItems.filter((image) =>
-	  (image.title && image.title.toLowerCase().includes(searchTerm.toLowerCase())) &&
-	  (selectedTag === '' || image.tagId === selectedTag)
-	);
-  
-	const paginate = (pageNumber) => setCurrentPage(pageNumber);
-  
-	const handleImageClick = (image) => {
-	  const tagName = tags.find(tag => tag.tagId === image.tagId)?.tagName;
-	  history.push({
-		pathname: `/management/${image.imageId}`,
-		state: { image: { ...image, tagName } }
-	  });
-	};
-  
-	return (
-	  <div className={LibraryCSS['home-page']}>
-		<Navbar />
-		<div className={LibraryCSS['form-group']}>
-      <h2 className={LibraryCSS['library-title']}>My Library</h2> 
-    </div>
-		<div className={LibraryCSS['image-grid']}>
-		  {filteredImages.map(image => (
-			<div 
-			  key={image.imageId} 
-			  className={LibraryCSS['image-item']}
-			  onClick={() => handleImageClick(image)}
-			>
-			  <img src={image.url} alt={image.title} /> 
-			  <div className={LibraryCSS["item-details"]}>
-				<h4 className="name">{image.title}</h4>
-				<div className={LibraryCSS.icons}>
-				  <FontAwesomeIcon icon={OutlineHeart} className={LibraryCSS.iconSmall} />
-				  <FontAwesomeIcon icon={OutlineComment} className={LibraryCSS.iconSmall} />
-				</div>
-			  </div>
-			</div>
-		  ))}
-		</div>
-		      {/* Pagination */}
-			  <div className={LibraryCSS.pagination}>
+  const [images, setImages] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [tags, setTags] = useState([]); 
+  const [selectedTag, setSelectedTag] = useState(''); 
+  const [appUserId, setAppUserId] = useState(''); // New state for AppUserId
+  const history = useHistory(); 
+  const imagesPerPage = 6;
+
+  const fetchImages = async (appUserId) => {
+    try {
+      const response = await axios.get(`http://localhost:5205/api/image/user/${appUserId}`);
+      setImages(response.data); // Update state with fetched images
+    } catch (error) {
+      console.error("An error occurred while fetching images", error);
+    }
+  };
+
+  const fetchTags = async () => {
+    try {
+      const response = await axios.get("http://localhost:5205/api/tag");
+      setTags(response.data); // Update state with fetched tags
+    } catch (error) {
+      console.error("An error occurred while fetching tags", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchTags();
+  }, []);
+
+  const handleSearch = () => {
+    if (appUserId) {
+      fetchImages(appUserId); // Fetch images by AppUserId
+    }
+  };
+
+  // Logic to calculate paginated items
+  const indexOfLastItem = currentPage * imagesPerPage;
+  const indexOfFirstItem = indexOfLastItem - imagesPerPage;
+  const currentItems = (images || []).slice(indexOfFirstItem, indexOfLastItem);
+
+  const filteredImages = currentItems.filter((image) =>
+    (image.title && image.title.toLowerCase().includes(searchTerm.toLowerCase())) &&
+    (selectedTag === '' || image.tagId === selectedTag)
+  );
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const handleImageClick = (image) => {
+    const tagName = tags.find(tag => tag.tagId === image.tagId)?.tagName;
+    history.push({
+      pathname: `/management/${image.imageId}`,
+      state: { image: { ...image, tagName } }
+    });
+  };
+
+  return (
+    <div className={LibraryCSS['home-page']}>
+      <Navbar />
+      <div className={LibraryCSS['form-group']}>
+        <h2 className={LibraryCSS['library-title']}>My Library</h2> 
+
+        <div className={LibraryCSS['search-container']}>
+          <input
+            type="text"
+            placeholder="Enter AppUserId"
+            value={appUserId}
+            onChange={(e) => setAppUserId(e.target.value)}
+            className={LibraryCSS['search-input']}
+          />
+          <button onClick={handleSearch} className={LibraryCSS['search-button']}>
+            Search
+          </button>
+        </div>
+      </div>
+      <div className={LibraryCSS['image-grid']}>
+        {filteredImages.map(image => (
+          <div 
+            key={image.imageId} 
+            className={LibraryCSS['image-item']}
+            onClick={() => handleImageClick(image)}
+          >
+            <img src={image.url} alt={image.title} /> 
+            <div className={LibraryCSS["item-details"]}>
+              <h4 className="name">{image.title}</h4>
+              <div className={LibraryCSS.icons}>
+                <FontAwesomeIcon icon={OutlineHeart} className={LibraryCSS.iconSmall} />
+                <FontAwesomeIcon icon={OutlineComment} className={LibraryCSS.iconSmall} />
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+      {/* Pagination */}
+      <div className={LibraryCSS.pagination}>
         <button
           onClick={() => paginate(currentPage - 1)}
           disabled={currentPage === 1}
@@ -121,5 +140,5 @@ export const MyLibrary = () => {
     </div>
   );
 };
-  
-  export default MyLibrary; //original
+
+export default MyLibrary;

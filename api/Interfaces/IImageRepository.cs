@@ -16,5 +16,6 @@ namespace api.Interfaces
        Task<Image?> UpdateAsync(int id, UpdateImageRequestDto imageDto);
        Task<Image?> DeleteAsync(int id);
        Task<bool> ImageExists(int id);
+       Task<IEnumerable<Image>> GetByAppUserIdAsync(string appUserId);
     }
 }

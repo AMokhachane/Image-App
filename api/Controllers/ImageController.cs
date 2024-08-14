@@ -58,6 +58,24 @@ namespace api.Controllers
            return Ok(image.ToImageDto());
        }
 
+       [HttpGet("user/{appUserId}")]
+public async Task<IActionResult> GetByAppUserId([FromRoute] string appUserId)
+{
+    if (!ModelState.IsValid)
+        return BadRequest(ModelState);
+
+    var images = await _imageRepo.GetByAppUserIdAsync(appUserId);
+
+    if (images == null || !images.Any())
+    {
+        return NotFound("No images found for this user.");
+    }
+
+    var imageDtos = images.Select(s => s.ToImageDto()).ToList();
+
+    return Ok(imageDtos);
+}
+
        [HttpPost]
        //[Authorize]
        public async Task<IActionResult> Create([FromBody] CreateImageRequestDto imageDto)
