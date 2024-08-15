@@ -25,8 +25,5 @@ namespace api.Dtos.Image
         [Required(ErrorMessage = "The upload date is required.")]
      public DateTime UploadDate { get; set; } = DateTime.Now;
 
-     
-       
-
     }
 }

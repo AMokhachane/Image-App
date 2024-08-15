@@ -24,6 +24,7 @@ export const Home = () => {
       try {
         const response = await axios.get("http://localhost:5205/api/image");
         setImages(response.data); // Update state with fetched images
+        console.log(response.data);
       } catch (error) {
         console.error("An error occurred while fetching images", error);
       }
@@ -219,7 +220,9 @@ export const Home = () => {
                 <FontAwesomeIcon
                   icon={OutlineComment}
                   className={HomeCSS.iconSmall}
+                  
                 />
+                
               </div>
             </div>
           </div>

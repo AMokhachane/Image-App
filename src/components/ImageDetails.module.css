@@ -14,58 +14,60 @@
 	height: 600px; 
 	position: relative; 
 	overflow: hidden; 
+	display: flex; /* Enable flexbox layout */
+	flex-direction: column; /* Stack children vertically */
+	justify-content: space-between; /* Space between items */
 	margin-left: 400px;
   }
   
   .image {
 	width: 100%; 
-	height: 100%; 
+	height: 400px; /* Adjust the height of the image */
 	object-fit: cover; 
   }
   
   .details {
-	position: absolute; 
-	bottom: 0; 
-	left: 0; 
-	right: 0; 
 	background-color: rgba(131, 129, 129, 0.7); 
 	color: white; 
 	padding: 10px; 
-	text-align: left; 
+	text-align: left;
+	flex-shrink: 0; /* Prevent shrinking */
   }
   
   .backButton {
 	position: absolute;
-	margin-left: 655px; 
-	margin-top: 10px; 
+	top: 10px; 
+	right: 10px; 
 	font-weight: bold; 
-	font-size: 15px; 
-	position: absolute;
-	margin-left: 920px; 
-	margin-top: 10px;
+	font-size: 20px; 
 	background: none; 
 	border: none; 
 	cursor: pointer; 
-	font-size: 20px; 
 	color: rgb(5, 5, 5); 
   }
   
-  .deleteButton {
-	margin-top: 20px;
-	background-color: #ff4d4d;
-	color: white;
-	border: none;
-	padding: 10px 20px;
-	cursor: pointer;
-	border-radius: 5px;
+  .comment-section {
+	
+	
   }
   
-  .deleteButton:hover {
-	background-color: #ff1a1a;
+  .commentInput {
+	width: 100%; /* Full width */
+	padding: 8px; /* Padding for input */
+	margin-bottom: 10px; /* Space below input */
+	border: 1px solid #ccc; /* Border for input */
+	border-radius: 4px; /* Round corners */
   }
-
-  .tag {
-	margin-top: 4px; 
-	margin-left: 4px; 
-	vertical-align: middle; 
+  
+  .commentButton {
+	padding: 8px 12px; /* Button padding */
+	background-color: #007bff; /* Button color */
+	color: white; /* Text color */
+	border: none; /* No border */
+	border-radius: 4px; /* Round corners */
+	cursor: pointer; /* Pointer cursor on hover */
+  }
+  
+  .comments-list {
+	margin-top: 10px; /* Space above comments list */
   }

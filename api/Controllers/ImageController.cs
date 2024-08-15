@@ -32,72 +32,72 @@ namespace api.Controllers
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
-{
-    if (!ModelState.IsValid)
-        return BadRequest(ModelState);
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-    var images = await _imageRepo.GetAllAsync();
-    var ImageDto = images.Select(s => s.ToImageDto()).ToList();
+            var images = await _imageRepo.GetAllAsync();
+            var ImageDto = images.Select(s => s.ToImageDto()).ToList();
 
-    return Ok(ImageDto);
-}
+            return Ok(ImageDto);
+        }
 
         [HttpGet("{id:int}")]
-       public async Task<IActionResult> GetById([FromRoute] int id)
-       {
-            if (!ModelState.IsValid)
-            return BadRequest(ModelState);
+        public async Task<IActionResult> GetById([FromRoute] int id)
+        {
+                if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-           var image = await _imageRepo.GetByIdAsync(id);
+            var image = await _imageRepo.GetByIdAsync(id);
 
-           if(image == null)
-           {
-                return NotFound(); 
-           }
+            if(image == null)
+            {
+                    return NotFound(); 
+            }
 
-           return Ok(image.ToImageDto());
-       }
+            return Ok(image.ToImageDto());
+        }
 
        [HttpGet("user/{appUserId}")]
-public async Task<IActionResult> GetByAppUserId([FromRoute] string appUserId)
-{
-    if (!ModelState.IsValid)
-        return BadRequest(ModelState);
+        public async Task<IActionResult> GetByAppUserId([FromRoute] string appUserId)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-    var images = await _imageRepo.GetByAppUserIdAsync(appUserId);
+            var images = await _imageRepo.GetByAppUserIdAsync(appUserId);
 
-    if (images == null || !images.Any())
-    {
-        return NotFound("No images found for this user.");
-    }
+            if (images == null || !images.Any())
+            {
+                return NotFound("No images found for this user.");
+            }
 
-    var imageDtos = images.Select(s => s.ToImageDto()).ToList();
+            var imageDtos = images.Select(s => s.ToImageDto()).ToList();
 
-    return Ok(imageDtos);
-}
+            return Ok(imageDtos);
+        }
 
        [HttpPost]
        //[Authorize]
-       public async Task<IActionResult> Create([FromBody] CreateImageRequestDto imageDto)
-       {
-            if (!ModelState.IsValid)
-            return BadRequest(ModelState);
+        public async Task<IActionResult> Create([FromBody] CreateImageRequestDto imageDto)
+        {
+                if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-            var email = User.GetUserEmail();
-            if (string.IsNullOrEmpty(email))
-                return Unauthorized("User name not found in claims.");
+                var email = User.GetUserEmail();
+                if (string.IsNullOrEmpty(email))
+                    return Unauthorized("User name not found in claims.");
 
-            var user = await _userManager.FindByEmailAsync(email);
-            if (user == null)
-                return NotFound("User not found.");
+                var user = await _userManager.FindByEmailAsync(email);
+                if (user == null)
+                    return NotFound("User not found.");
 
-            var imageModel = imageDto.ToImageFromCreateDTO();
+                var imageModel = imageDto.ToImageFromCreateDTO();
 
-            
-            await _imageRepo.CreateAsync(imageModel, user);
-            //return CreatedAtAction(nameof(GetById), new {id = imageModel.ImageId }, imageModel.ToImageDto());
-            return Ok("Image successfully uploaded.");
-       }
+                
+                await _imageRepo.CreateAsync(imageModel, user);
+                //return CreatedAtAction(nameof(GetById), new {id = imageModel.ImageId }, imageModel.ToImageDto());
+                return Ok("Image successfully uploaded.");
+        }
 
        [HttpPut]
        [Route("{id:int}")]

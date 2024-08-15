@@ -16,10 +16,6 @@ namespace api.Dtos.Image
     public List<TagDto> Tags { get; set; }
     public List<CommentDto> Comments { get; set; }
      public string AppUserId { get; set; }
-        
-
-
-
-        
+      
     }
 }
