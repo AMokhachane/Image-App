@@ -57,16 +57,18 @@ namespace api.Repository
         
         }
 
-        public async Task<IEnumerable<Image>> GetByAppUserIdAsync(string appUserId)
-        {
-           return await _context.Images
-                         .Where(img => img.AppUserId == appUserId)
-                         .ToListAsync();
-        }
+        
 
         public async Task<Image?> GetByIdAsync(int id)
         {
             return await _context.Images.Include(c => c.Tags).Include(c => c.Comments).FirstOrDefaultAsync(i => i.ImageId == id);
+        }
+
+        public async Task<IEnumerable<Image>> GetByUserNameAsync(string userName)
+        {
+            return await _context.Images
+                         .Where(img => img.AppUser.UserName == userName)
+                         .ToListAsync();
         }
 
         public Task<bool> ImageExists(int id)

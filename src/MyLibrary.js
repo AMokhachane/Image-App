@@ -14,13 +14,13 @@ export const MyLibrary = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [tags, setTags] = useState([]); 
   const [selectedTag, setSelectedTag] = useState(''); 
-  const [appUserId, setAppUserId] = useState(''); // New state for AppUserId
+  const [userName, setUserName] = useState(''); // Changed state to store username
   const history = useHistory(); 
   const imagesPerPage = 6;
 
-  const fetchImages = async (appUserId) => {
+  const fetchImages = async (userName) => {
     try {
-      const response = await axios.get(`http://localhost:5205/api/image/user/${appUserId}`);
+      const response = await axios.get(`http://localhost:5205/api/image/user/${userName}`);
       setImages(response.data); // Update state with fetched images
     } catch (error) {
       console.error("An error occurred while fetching images", error);
@@ -41,8 +41,8 @@ export const MyLibrary = () => {
   }, []);
 
   const handleSearch = () => {
-    if (appUserId) {
-      fetchImages(appUserId); // Fetch images by AppUserId
+    if (userName) {
+      fetchImages(userName); // Fetch images by username
     }
   };
 
@@ -75,9 +75,9 @@ export const MyLibrary = () => {
         <div className={LibraryCSS['search-container']}>
           <input
             type="text"
-            placeholder="Enter AppUserId"
-            value={appUserId}
-            onChange={(e) => setAppUserId(e.target.value)}
+            placeholder="Enter Username" // Changed placeholder to reflect username
+            value={userName} // Updated state variable
+            onChange={(e) => setUserName(e.target.value)} // Updated event handler
             className={LibraryCSS['search-input']}
           />
           <button onClick={handleSearch} className={LibraryCSS['search-button']}>
