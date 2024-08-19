@@ -1,161 +1,104 @@
-import React, { useState, useEffect } from 'react';
-import LibraryCSS from './MyLibrary.module.css';
-import axios from 'axios';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart as OutlineHeart, faComment as OutlineComment } from '@fortawesome/free-regular-svg-icons'; 
-import Navbar from './components/Navbar';
-import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { FaUser, FaLock } from 'react-icons/fa';
+import axios from 'axios';
+import LoginCSS from './Login.module.css';
 
-export const MyLibrary = () => {
-  const [images, setImages] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
-  const [tags, setTags] = useState([]); 
-  const [selectedTag, setSelectedTag] = useState(''); 
-  const history = useHistory(); 
-  const imagesPerPage = 6;
+function Login() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem('user'));
-    const username = storedUser?.userName;
-    const token = storedUser?.token;
+  const history = useHistory();
 
-    if (username && token) {
-      fetchImages(username, token);
-    }
-    fetchTags(token);
-  }, []);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = {
+      username: username,
+      password: password
+    };
 
-  const fetchImages = async (username, token) => {
-    try {
-      const response = await axios.get(`http://localhost:5205/api/image/user`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        },
-        params: {
-          username: username
-        }
-      });
-      setImages(response.data); 
-    } catch (error) {
-      console.error("An error occurred while fetching images", error);
-    }
-  };
+    axios.post('http://localhost:5205/api/account/login', data, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => {
+      console.log('Response:', response.data);
+      
+      // Assuming the response contains user data (e.g., userID, userName, token)
+      const { userID, userName, token } = response.data;
 
-  const fetchTags = async (token) => {
-    try {
-      const response = await axios.get("http://localhost:5205/api/tag", {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-      setTags(response.data); 
-    } catch (error) {
-      console.error("An error occurred while fetching tags", error);
-    }
-  };
+      // Store the user data in localStorage
+      localStorage.setItem('user', JSON.stringify({ userID, userName, token }));
 
-  const handleSearch = () => {
-    const storedUser = JSON.parse(localStorage.getItem('user'));
-    const username = storedUser?.userName;
-    const token = storedUser?.token;
-    if (username && token) {
-      fetchImages(username, token);
-    }
-  };
-
-  const indexOfLastItem = currentPage * imagesPerPage;
-  const indexOfFirstItem = indexOfLastItem - imagesPerPage;
-  const currentItems = (images || []).slice(indexOfFirstItem, indexOfLastItem);
-
-  const filteredImages = currentItems.filter((image) =>
-    (image.title && image.title.toLowerCase().includes(searchTerm.toLowerCase())) &&
-    (selectedTag === '' || image.tagId === selectedTag)
-  );
-
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
-  const handleImageClick = (image) => {
-    const tagName = tags.find(tag => tag.tagId === image.tagId)?.tagName;
-    history.push({
-      pathname: `/management/${image.imageId}`,
-      state: { image: { ...image, tagName } }
+      // Redirect to Home page after successful login
+      history.push('/Home');
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      if (error.response) {
+        setError(error.response.data);
+      } else {
+        setError('An error occurred. Please try again.');
+      }
     });
   };
 
   return (
-    <div className={LibraryCSS['home-page']}>
-      <Navbar />
-      <div className={LibraryCSS['form-group']}>
-        <h2 className={LibraryCSS['library-title']}>My Library</h2> 
-
-        <div className={LibraryCSS['search-container']}>
-          <input
-            type="text"
-            placeholder="Search by title"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className={LibraryCSS['search-input']}
-          />
-          <button onClick={handleSearch} className={LibraryCSS['search-button']}>
-            Search
-          </button>
-        </div>
-      </div>
-      <div className={LibraryCSS['image-grid']}>
-        {filteredImages.map(image => (
-          <div 
-            key={image.imageId} 
-            className={LibraryCSS['image-item']}
-            onClick={() => handleImageClick(image)}
-          >
-            <img src={image.url} alt={image.title} /> 
-            <div className={LibraryCSS["item-details"]}>
-              <h4 className="name">{image.title}</h4>
-              <div className={LibraryCSS.icons}>
-                <FontAwesomeIcon icon={OutlineHeart} className={LibraryCSS.iconSmall} />
-                <FontAwesomeIcon icon={OutlineComment} className={LibraryCSS.iconSmall} />
-              </div>
+    <div className={LoginCSS['login-container']}>
+      <div className={LoginCSS.wrapper}>
+        <h1>Image Gallery App</h1>
+        <h2>Login</h2>
+        {error && <div className={LoginCSS.error}>{error.message || error}</div>}
+        <form onSubmit={handleSubmit}>
+          <div className={LoginCSS['form-group']}>
+            <label htmlFor="username">Username</label>
+            <div className={LoginCSS.inputBox}>
+              <FaUser className={LoginCSS.icon} />
+              <input
+                type="text"
+                id="username"
+                placeholder="Enter Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+              />
             </div>
           </div>
-        ))}
-      </div>
-      <div className={LibraryCSS.pagination}>
-        <button
-          onClick={() => paginate(currentPage - 1)}
-          disabled={currentPage === 1}
-          className={currentPage === 1 ? LibraryCSS.disabled : ""}
-        >
-          <FontAwesomeIcon icon={faArrowLeft} />
-        </button>
-
-        {[...Array(Math.ceil(images.length / imagesPerPage)).keys()].map(
-          (page) => (
-            <button
-              key={page + 1}
-              onClick={() => paginate(page + 1)}
-              className={currentPage === page + 1 ? LibraryCSS.active : ""}
-            >
-              {page + 1}
+          <div className={LoginCSS['form-group']}>
+            <label htmlFor="password">Password</label>
+            <div className={LoginCSS.inputBox}>
+              <FaLock className={LoginCSS.icon} />
+              <input
+                type="password"
+                id="password"
+                placeholder="Enter Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+          </div>
+          <div className={LoginCSS['linkContainer']}>
+            <a href="/ForgotPassword" className={LoginCSS['forgotPasswordLink']}>
+              Forgot Password?
+            </a>
+          </div>
+          <div className={LoginCSS['form-group']}>
+            <button type="submit" className={LoginCSS['loginButton']}>
+              Log In
             </button>
-          )
-        )}
-
-        <button
-          onClick={() => paginate(currentPage + 1)}
-          disabled={currentPage === Math.ceil(images.length / imagesPerPage)} 
-          className={
-            currentPage === Math.ceil(images.length / imagesPerPage)
-              ? LibraryCSS.disabled
-              : ""
-          }
-        >
-          <FontAwesomeIcon icon={faArrowRight} />
-        </button>
+          </div>
+          <div className={LoginCSS['form-group']}>
+            <a href="/Register" className={LoginCSS['registerLink']}>
+              New to this platform? <span>Register Here</span>
+            </a>
+          </div>
+        </form>
       </div>
     </div>
   );
-};
+}
 
-export default MyLibrary;
+export default Login;
