@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
+import axios from 'axios';
 import ImageDetailsCSS from './ImageDetails.module.css';
 
 const ImageDetails = () => {
@@ -7,20 +8,22 @@ const ImageDetails = () => {
   const location = useLocation();
   const { image } = location.state;
 
-  // State for comments
   const [comments, setComments] = useState([]);
-  const [currentComment, setCurrentComment] = useState('');
 
-  const handleCommentChange = (e) => {
-    setCurrentComment(e.target.value);
-  };
+  // Fetch comments when the component mounts
+  useEffect(() => {
+    const fetchComments = async () => {
+      if (!image.imageId) return;  // Ensure imageId exists before making the request
+      try {
+        const response = await axios.get(`http://localhost:5205/api/comment/by-image/${image.imageId}`);
+        setComments(response.data);
+      } catch (error) {
+        console.error('Error fetching comments:', error);
+      }
+    };
 
-  const handleCommentSubmit = () => {
-    if (currentComment.trim() !== '') {
-      setComments([...comments, currentComment]);
-      setCurrentComment(''); // Clear the input after submitting
-    }
-  };
+    fetchComments();
+  }, [image.imageId]);
 
   return (
     <div className={ImageDetailsCSS['image-details-page']}>
@@ -33,29 +36,21 @@ const ImageDetails = () => {
             <p className="description">{image.imageDescription}</p>
           </div>
         </div>
-        
-        
-        <div className={ImageDetailsCSS['comment-section']}>
-          <input
-            type="text"
-            value={currentComment}
-            onChange={handleCommentChange}
-            placeholder="Add a comment..."
-            className={ImageDetailsCSS.commentInput}
-          />
-          <button onClick={handleCommentSubmit} className={ImageDetailsCSS.commentButton}>
-            Submit
-          </button>
-          <div>
-            <h4>Comments:</h4>
-            {comments.length > 0 ? (
-              comments.map((comment, index) => (
-                <p key={index}>{comment}</p>
-              ))
-            ) : (
-              <p>No comments yet.</p>
-            )}
-          </div>
+
+        {/* Comments section */}
+        <div className={ImageDetailsCSS['comments-section']}>
+          <h4>Comments</h4>
+          {comments.length > 0 ? (
+            <ul>
+              {comments.map(comment => (
+                <li key={comment.id}>
+                  <strong>{comment.userName}</strong>: {comment.content}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>No comments yet.</p>
+          )}
         </div>
       </div>
     </div>

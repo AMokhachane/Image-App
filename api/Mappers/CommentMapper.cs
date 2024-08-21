@@ -27,7 +27,8 @@ namespace api.Mappers
          {
            
             Content = commentDto.Content,
-            ImageId = imageId
+            ImageId = imageId,
+             AppUserId = commentDto.AppUserId // Ensure this line is mapping correctly
 
          };
        } 

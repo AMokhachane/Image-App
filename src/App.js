@@ -12,6 +12,7 @@ import ImageUpload from './components/ImageUpload';
 import ImageDetails from './components/ImageDetails'; // Import the new component
 import MyLibrary from './MyLibrary';
 import Management from './Management';
+import Comments from './components/Comments';
 
 
 function App() {
@@ -61,6 +62,9 @@ function App() {
             </Route>
             <Route path="/ForgotPassword">
               <ForgotPassword />
+            </Route>
+            <Route path="/Comments">
+              <Comments />
             </Route>
             <Route path="/ResetPassword">
               <ResetPassword />

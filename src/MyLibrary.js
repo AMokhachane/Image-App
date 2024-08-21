@@ -54,11 +54,11 @@ export const MyLibrary = () => {
     }
   }, []);
 
-  const handleSearch = () => {
-    if (userName) {
-      fetchImages(userName); // Fetch images by username
-    }
-  };
+  // const handleSearch = () => {
+  //   if (userName) {
+  //     fetchImages(userName); // Fetch images by username
+  //   }
+  // };
 
   // Logic to calculate paginated items
   const indexOfLastItem = currentPage * imagesPerPage;

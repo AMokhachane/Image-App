@@ -47,6 +47,11 @@ namespace api.Repository
             return await _context.Comments.FindAsync(id);
         }
 
+        public async Task<IEnumerable<Comment>> GetByImageIdAsync(int imageId)
+        {
+            return await _context.Comments.Where(c => c.ImageId == imageId).ToListAsync();
+        }
+
         public Task<bool> ImageExists(int id)
         {
             return _context.Images.AnyAsync(S => S.ImageId == id);

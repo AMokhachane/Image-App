@@ -14,6 +14,8 @@ namespace api.Interfaces
        Task<Comment?> UpdateAsync(int id, Comment commentModel);
        Task<Comment?> DeleteAsync(int id);
        Task<bool> ImageExists(int id);
+       Task<IEnumerable<Comment>> GetByImageIdAsync(int imageId);
+       
 
     }
 }
