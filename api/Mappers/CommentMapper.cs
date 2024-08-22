@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.Dtos.Comment;
 using api.Models;
+using Azure.Identity;
 
 namespace api.Mappers
 {
