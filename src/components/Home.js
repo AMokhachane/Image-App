@@ -15,6 +15,10 @@ export const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [tags, setTags] = useState([]);
   const [selectedTag, setSelectedTag] = useState("");
+  const [commentingImageId, setCommentingImageId] = useState(null);
+  const [currentComment, setCurrentComment] = useState('');
+  const [appUserId, setAppUserId] = useState('');
+  const [commentInputPosition, setCommentInputPosition] = useState({});
   const history = useHistory();
   const imagesPerPage = 6;
 
@@ -54,22 +58,31 @@ export const Home = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  // Handle image click
   const handleImageClick = (image) => {
     const tagName = tags.find((tag) => tag.tagId === image.tagId)?.tagName;
     history.push({
       pathname: `/image/${image.imageId}`,
-      state: { image: { ...image, tagName } }, // Passing the whole image object including imageId
+      state: { image: { ...image, tagName } },
     });
   };
 
-  // Handle comment icon click
   const handleCommentClick = (imageId, event) => {
     event.stopPropagation(); // Prevent the image click event
-    history.push({
-      pathname: '/comments',
-      state: { imageId } // Pass the imageId to the Comments component
-    });
+    setCommentingImageId(imageId); // Set the current image ID for commenting
+  };
+
+  const handleCommentSubmit = async (event) => {
+    event.stopPropagation(); // Prevent the image click event
+    try {
+      await axios.post(`http://localhost:5205/api/comment/${commentingImageId}`, {
+        content: currentComment,
+        appUserId: appUserId
+      });
+      setCommentingImageId(null); // Hide the comment input after submission
+      setCurrentComment(''); // Clear the comment input
+    } catch (error) {
+      console.error("An error occurred while posting", error);
+    }
   };
 
   const generatePagination = () => {
@@ -205,9 +218,9 @@ export const Home = () => {
           <div
             key={image.imageId}
             className={HomeCSS["image-item"]}
-            onClick={() => handleImageClick(image)}
+            // onClick={() => handleImageClick(image)}
           >
-            <img src={image.url} alt={image.title} />
+            <img src={image.url} alt={image.title} onClick={() => handleImageClick(image)} />
             <div className={HomeCSS["item-details"]}>
               <h4 className="name">{image.title}</h4>
               <div className={HomeCSS.icons}>
@@ -218,15 +231,43 @@ export const Home = () => {
                 <FontAwesomeIcon
                   icon={OutlineComment}
                   className={HomeCSS.iconSmall}
-                  onClick={(event) => handleCommentClick(image.imageId, event)} // Add click handler
+                  onClick={(event) => handleCommentClick(image.imageId, event)}
                 />
               </div>
-            </div>
-          </div>
-        ))}
-      </div>
-      <div className={HomeCSS.pagination}>{generatePagination()}</div>
-    </div>
+            </div> 
+            {commentingImageId === image.imageId && (
+              <div
+                className={HomeCSS["comment-input-container"]}
+                style={{
+                  top: `${commentInputPosition.top}px`,
+                  left: `${commentInputPosition.left}px`,
+                }}
+              >
+                <input
+                  type="text"
+                  value={currentComment}
+                  onChange={(e) => setCurrentComment(e.target.value)}
+                  placeholder="Add a comment..."
+                  className={HomeCSS["comment-input"]}
+                />
+                <input
+                  type="text"
+                  value={appUserId}
+                  onChange={(e) => setAppUserId(e.target.value)}
+                  placeholder="Enter AppUser ID..."
+                  className={HomeCSS["appUserId-input"]}
+                />
+                <button onClick={handleCommentSubmit}
+className={HomeCSS["submit-button"]}>
+Submit
+</button>
+</div>
+)}
+</div>
+))}
+</div>
+<div className={HomeCSS.pagination}>{generatePagination()}</div>
+</div>
   );
 };
 
