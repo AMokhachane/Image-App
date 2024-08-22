@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api.Dtos.Comment;
+using api.Extensions;
 using api.Interfaces;
 using api.Mappers;
+using api.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -15,11 +18,13 @@ namespace api.Controllers
     {
         private readonly ICommentRepository _commentRepo;
         private readonly IImageRepository _imageRepo;
+        private readonly UserManager<AppUser> _userManager;
 
-        public CommentController(ICommentRepository commentRepo, IImageRepository imageRepo)
+        public CommentController(ICommentRepository commentRepo, IImageRepository imageRepo, UserManager<AppUser> userManager)
         {
             _commentRepo = commentRepo;
             _imageRepo = imageRepo;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -69,12 +74,14 @@ public async Task<IActionResult> GetByImageId([FromRoute] int imageId)
          }
 
          var commentModel = commentDto.ToCommentFromCreate(imageId);
+         var UserName = User.GetUsername();
+         var user = await _userManager.FindByNameAsync(UserName);
 
          // Ensure the AppUserId is set
-         commentModel.AppUserId = commentDto.AppUserId;
+         commentModel.AppUserId = user.Id;
 
          await _commentRepo.CreateAsync(commentModel);
-         return CreatedAtAction(nameof(GetById), new { id = commentModel.CommentId }, commentModel.ToCommentDto());
+         return CreatedAtAction(nameof(GetById), new { id = user.Id }, commentModel.ToCommentDto());
       }
 
       [HttpPut("{id:int}")]

@@ -16,11 +16,12 @@ export const Home = () => {
   const [tags, setTags] = useState([]);
   const [selectedTag, setSelectedTag] = useState("");
   const [commentingImageId, setCommentingImageId] = useState(null);
-  const [currentComment, setCurrentComment] = useState('');
-  const [appUserId, setAppUserId] = useState('');
-  const [commentInputPosition, setCommentInputPosition] = useState({});
+  const [currentComment, setCurrentComment] = useState("");
+  const [commentInputPosition] = useState({});
   const history = useHistory();
   const imagesPerPage = 6;
+
+  const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -72,14 +73,24 @@ export const Home = () => {
   };
 
   const handleCommentSubmit = async (event) => {
-    event.stopPropagation(); // Prevent the image click event
+    event.stopPropagation();
+
     try {
-      await axios.post(`http://localhost:5205/api/comment/${commentingImageId}`, {
-        content: currentComment,
-        appUserId: appUserId
-      });
-      setCommentingImageId(null); // Hide the comment input after submission
-      setCurrentComment(''); // Clear the comment input
+      await axios.post(
+        `http://localhost:5205/api/comment/${commentingImageId}`,
+        {
+          content: currentComment,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`, // Add the Bearer token to the Authorization header
+          },
+        }
+      );
+      history.push(`/image/${commentingImageId}`);
+
+      setCommentingImageId(null);
+      setCurrentComment("");
     } catch (error) {
       console.error("An error occurred while posting", error);
     }
@@ -220,7 +231,11 @@ export const Home = () => {
             className={HomeCSS["image-item"]}
             // onClick={() => handleImageClick(image)}
           >
-            <img src={image.url} alt={image.title} onClick={() => handleImageClick(image)} />
+            <img
+              src={image.url}
+              alt={image.title}
+              onClick={() => handleImageClick(image)}
+            />
             <div className={HomeCSS["item-details"]}>
               <h4 className="name">{image.title}</h4>
               <div className={HomeCSS.icons}>
@@ -234,7 +249,7 @@ export const Home = () => {
                   onClick={(event) => handleCommentClick(image.imageId, event)}
                 />
               </div>
-            </div> 
+            </div>
             {commentingImageId === image.imageId && (
               <div
                 className={HomeCSS["comment-input-container"]}
@@ -250,24 +265,20 @@ export const Home = () => {
                   placeholder="Add a comment..."
                   className={HomeCSS["comment-input"]}
                 />
-                <input
-                  type="text"
-                  value={appUserId}
-                  onChange={(e) => setAppUserId(e.target.value)}
-                  placeholder="Enter AppUser ID..."
-                  className={HomeCSS["appUserId-input"]}
-                />
-                <button onClick={handleCommentSubmit}
-className={HomeCSS["submit-button"]}>
-Submit
-</button>
-</div>
-)}
-</div>
-))}
-</div>
-<div className={HomeCSS.pagination}>{generatePagination()}</div>
-</div>
+               
+                <button
+                  onClick={handleCommentSubmit}
+                  className={HomeCSS["submit-button"]}
+                >
+                  Submit
+                </button>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+      <div className={HomeCSS.pagination}>{generatePagination()}</div>
+    </div>
   );
 };
 
