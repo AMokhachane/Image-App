@@ -49,7 +49,7 @@ namespace api.Repository
 
         public async Task<IEnumerable<Comment>> GetByImageIdAsync(int imageId)
         {
-            return await _context.Comments.Where(c => c.ImageId == imageId).ToListAsync();
+            return await _context.Comments.Where(c => c.ImageId == imageId).Include(c => c.AppUser).ToListAsync();
         }
 
         public Task<bool> ImageExists(int id)
