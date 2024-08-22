@@ -16,10 +16,7 @@ const ImageDetails = () => {
   const user = JSON.parse(localStorage.getItem('user'));
   const userName = user ? user.userName : 'Unknown User';
 
-  // Retrieve the username from local storage
-  const user = JSON.parse(localStorage.getItem('user'));
-  const userName = user ? user.userName : 'Unknown User';
-
+  
   const fetchComments = async (pageNum) => {
     if (!image.imageId || loading) return;
     setLoading(true);
