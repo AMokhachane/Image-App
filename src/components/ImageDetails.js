@@ -12,6 +12,10 @@ const ImageDetails = () => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
 
+  // Retrieve the username from local storage
+  const user = JSON.parse(localStorage.getItem('user'));
+  const userName = user ? user.userName : 'Unknown User';
+
   const fetchComments = async (pageNum) => {
     if (!image.imageId || loading) return;
     setLoading(true);
@@ -65,7 +69,7 @@ const ImageDetails = () => {
             <ul>
               {comments.map((comment) => (
                 <li key={comment.id}>
-                  <strong>{comment.userName}</strong>
+                  <strong>{userName}</strong> {/* Display the username from local storage */}
                   <p>{comment.content}</p>
                 </li>
               ))}
