@@ -69,7 +69,7 @@ const ImageDetails = () => {
             <ul>
               {comments.map((comment) => (
                 <li key={comment.id}>
-                  <strong>{userName}</strong> {/* Display the username from local storage */}
+                  <strong>{comment.createdBy}</strong> {/* Display the username from local storage */}
                   <p>{comment.content}</p>
                 </li>
               ))}
