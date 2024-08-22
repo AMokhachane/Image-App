@@ -23,7 +23,6 @@ export const Home = () => {
       try {
         const response = await axios.get("http://localhost:5205/api/image");
         setImages(response.data);
-        console.log(response.data);
       } catch (error) {
         console.error("An error occurred while fetching images", error);
       }
@@ -65,9 +64,12 @@ export const Home = () => {
   };
 
   // Handle comment icon click
-  const handleCommentClick = (event) => {
+  const handleCommentClick = (imageId, event) => {
     event.stopPropagation(); // Prevent the image click event
-    history.push('/comments');
+    history.push({
+      pathname: '/comments',
+      state: { imageId } // Pass the imageId to the Comments component
+    });
   };
 
   const generatePagination = () => {
@@ -207,9 +209,7 @@ export const Home = () => {
           >
             <img src={image.url} alt={image.title} />
             <div className={HomeCSS["item-details"]}>
-              <h4 className="name">
-                {image.title}
-              </h4>
+              <h4 className="name">{image.title}</h4>
               <div className={HomeCSS.icons}>
                 <FontAwesomeIcon
                   icon={OutlineHeart}
@@ -218,7 +218,7 @@ export const Home = () => {
                 <FontAwesomeIcon
                   icon={OutlineComment}
                   className={HomeCSS.iconSmall}
-                  onClick={handleCommentClick} // Add click handler
+                  onClick={(event) => handleCommentClick(image.imageId, event)} // Add click handler
                 />
               </div>
             </div>

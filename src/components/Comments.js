@@ -1,13 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CommentsCSS from './Comments.module.css';
 import axios from 'axios';
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 const Comments = () => {
   const [currentComment, setCurrentComment] = useState('');
   const [imageId, setImageId] = useState('');
   const [appUserId, setAppUserId] = useState('');
   const history = useHistory();
+  const location = useLocation();
+
+  useEffect(() => {
+    // Extract imageId from location state (assuming it's passed in state)
+    const { imageId } = location.state || {};
+    if (imageId) {
+      setImageId(imageId);
+    }
+  }, [location.state]);
 
   const handleCommentSubmit = async () => {
     try {
@@ -26,8 +35,7 @@ const Comments = () => {
       <input
         type="text"
         value={imageId}
-        onChange={(e) => setImageId(e.target.value)}
-        placeholder="Enter Image ID..."
+        readOnly
         className={CommentsCSS.imageIdInput}
       />
       <input

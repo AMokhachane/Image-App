@@ -9,21 +9,39 @@ const ImageDetails = () => {
   const { image } = location.state;
 
   const [comments, setComments] = useState([]);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
 
-  // Fetch comments when the component mounts
+  const fetchComments = async (pageNum) => {
+    if (!image.imageId || loading) return;
+    setLoading(true);
+    try {
+      const response = await axios.get(`http://localhost:5205/api/comment/by-image/${image.imageId}?page=${pageNum}`);
+      setComments((prevComments) => {
+        // Filter out any duplicate comments
+        const newComments = response.data.filter(
+          (newComment) => !prevComments.some((comment) => comment.id === newComment.id)
+        );
+        return [...prevComments, ...newComments];
+      });
+      setPage(pageNum + 1);
+    } catch (error) {
+      console.error('Error fetching comments:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchComments = async () => {
-      if (!image.imageId) return;  // Ensure imageId exists before making the request
-      try {
-        const response = await axios.get(`http://localhost:5205/api/comment/by-image/${image.imageId}`);
-        setComments(response.data);
-      } catch (error) {
-        console.error('Error fetching comments:', error);
-      }
-    };
-
-    fetchComments();
+    fetchComments(page);
   }, [image.imageId]);
+
+  const handleScroll = (e) => {
+    const bottom = e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+    if (bottom) {
+      fetchComments(page);
+    }
+  };
 
   return (
     <div className={ImageDetailsCSS['image-details-page']}>
@@ -37,20 +55,25 @@ const ImageDetails = () => {
           </div>
         </div>
 
-        {/* Comments section */}
-        <div className={ImageDetailsCSS['comments-section']}>
+        <div
+          className={ImageDetailsCSS['comments-section']}
+          onScroll={handleScroll}
+          style={{ overflowY: 'auto', maxHeight: '300px' }}
+        >
           <h4>Comments</h4>
           {comments.length > 0 ? (
             <ul>
-              {comments.map(comment => (
+              {comments.map((comment) => (
                 <li key={comment.id}>
-                  <strong>{comment.userName}</strong>: {comment.content}
+                  <strong>{comment.userName}</strong>
+                  <p>{comment.content}</p>
                 </li>
               ))}
             </ul>
           ) : (
-            <p>No comments yet.</p>
+            <p className={ImageDetailsCSS['no-comments']}>No comments yet.</p>
           )}
+          {loading && <p>Loading more comments...</p>}
         </div>
       </div>
     </div>
