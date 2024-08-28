@@ -17,7 +17,9 @@ export const Sidebar = () => {
   if (!isVisible) {
     return null;
   }
-
+ const handleLogout = ()=> {
+  localStorage.removeItem('token');
+ }
   return (
     <nav className='sidebar'>
       <div>
@@ -39,7 +41,7 @@ export const Sidebar = () => {
             </button>
           </Link>
           <Link to='/'>
-            <button className='logout-button'>
+            <button className='logout-button' onClick={handleLogout}>
               <FontAwesomeIcon icon={faSignOutAlt} /> Logout
             </button>
           </Link>
