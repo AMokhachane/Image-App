@@ -84,13 +84,13 @@ public async Task<IActionResult> GetByImageId([FromRoute] int imageId)
          return CreatedAtAction(nameof(GetById), new { id = user.Id }, commentModel.ToCommentDto());
       }
 
-      [HttpPut("{id:int}")]
-        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateCommentRequestDto updateDto)
+      [HttpPut("{commentId:int}")]
+        public async Task<IActionResult> Update([FromRoute] int commentId, [FromBody] UpdateCommentRequestDto updateDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var comment = await _commentRepo.UpdateAsync(id, updateDto.ToCommentFromUpdate());
+            var comment = await _commentRepo.UpdateAsync(commentId, updateDto.ToCommentFromUpdate());
 
             if (comment == null)
             {
