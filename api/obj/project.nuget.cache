@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "THSJAt3IbKY=",
+  "dgSpecHash": "ra8UfYuNU4E=",
   "success": true,
-  "projectFilePath": "C:\\Users\\AMokhachane.SINGULAR\\Documents\\Projects\\Testing - Copy\\gallery-practice\\api\\api.csproj",
+  "projectFilePath": "C:\\Users\\AMokhachane.SINGULAR\\Documents\\Projects\\Image-App\\api\\api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\AMokhachane.SINGULAR\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\AMokhachane.SINGULAR\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
