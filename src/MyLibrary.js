@@ -99,10 +99,10 @@ export const MyLibrary = () => {
             <div className={LibraryCSS["item-details"]}>
               <h4 className="name">{image.title}</h4>
               <div className={LibraryCSS.icons}>
-                <FontAwesomeIcon
+                {/* <FontAwesomeIcon
                   icon={OutlineHeart}
                   className={LibraryCSS.iconSmall}
-                />
+                /> */}
                 <FontAwesomeIcon
                   icon={OutlineComment}
                   className={LibraryCSS.iconSmall}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import Login from './Login';
@@ -69,6 +69,7 @@ function App() {
             <Route path="/ResetPassword">
               <ResetPassword />
             </Route>
+            
             <Route path="/Home">
               <Home images={images} deleteImage={deleteImage} /> {/* Pass deleteImage to Home */}
             </Route>

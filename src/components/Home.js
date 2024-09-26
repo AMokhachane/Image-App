@@ -239,10 +239,10 @@ export const Home = () => {
             <div className={HomeCSS["item-details"]}>
               <h4 className="name">{image.title}</h4>
               <div className={HomeCSS.icons}>
-                <FontAwesomeIcon
+                {/* <FontAwesomeIcon
                   icon={OutlineHeart}
                   className={HomeCSS.iconSmall}
-                />
+                /> */}
                 <FontAwesomeIcon
                   icon={OutlineComment}
                   className={HomeCSS.iconSmall}

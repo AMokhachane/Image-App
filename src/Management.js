@@ -13,10 +13,14 @@ const Management = () => {
   const [title, setTitle] = useState(image.title);
   const [description, setDescription] = useState(image.imageDescription);
   const [url, setUrl] = useState(image.url);
-  const [uploadDate, setUploadDate] = useState(image.uploadDate);
+  
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [comments, setComments] = useState([]);
+  const [isEditing, setIsEditing] = useState(false);
+  const [currentCommentId, setCurrentCommentId] = useState(null);
+  const [editContent, setEditContent] = useState("");
+  const [uploadDate, setUploadDate] = useState(image.uploadDate);
 
   const user = JSON.parse(localStorage.getItem("user"));
 
@@ -72,6 +76,44 @@ const Management = () => {
     }
   };
 
+  const startEditing = (commentId, content) => {
+    setCurrentCommentId(commentId);
+    setEditContent(content);
+    setIsEditing(true);
+  };
+
+  const handleEditChange = (e) => {
+    setEditContent(e.target.value);
+  };
+
+  const saveEdit = async () => {
+    try {
+      await axios.put(`http://localhost:5205/api/comment/${currentCommentId}`, {
+        content: editContent,
+      });
+      setIsEditing(false);
+      setEditContent("");
+      fetchComments(page); // Refresh comments after update
+    } catch (error) {
+      console.error("An error occurred while updating the comment", error);
+    }
+  };
+
+  const updateImage = async (id) => {
+    try {
+      const updatedImage = {
+        title: title,
+        imageDescription: description,
+        url: url,
+        uploadDate: uploadDate,
+      };
+      await axios.put(`http://localhost:5205/api/image/${id}`, updatedImage);
+      history.push("/MyLibrary");
+    } catch (error) {
+      console.error("An error occurred while updating the image", error);
+    }
+  };
+
   return (
     <div className={ManagementCSS["image-details-page"]}>
       <div className={ManagementCSS["image-details-box"]}>
@@ -89,13 +131,45 @@ const Management = () => {
           />
           <div className={ManagementCSS["details"]}>
             <div className={ManagementCSS["editContainer"]}>
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <h2 className={ManagementCSS.title}>{title}</h2>
-                <div>
-                  <p className={ManagementCSS.description}>{description}</p>
-                </div>
-              </div>
+            {isEditing ? (
+                <>
+                  <input
+                    type="text"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    className={ManagementCSS.inputField}
+                    placeholder="Title"
+                  />
+                  <textarea
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    className={ManagementCSS.textareaField}
+                    placeholder="Description"
+                  />
+                  
+                  <button
+                    onClick={() => updateImage(image.imageId)}
+                    className={ManagementCSS.updateButton}
+                  >
+                    Update
+                  </button>
+                </>
+              ) : (
+                <>
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <h2 className={ManagementCSS.title}>{title}</h2>
+                    <FontAwesomeIcon
+                      icon={faPen}
+                      onClick={() => setIsEditing(!isEditing)}
+                      className={ManagementCSS.penIcon}
+                    />
+                    <div><p className={ManagementCSS.description}>{description}</p></div>
+                  </div>
+                  
+                </>
+              )}
             </div>
+
 
             {/* Comment Section */}
             <div
@@ -107,18 +181,46 @@ const Management = () => {
               {comments.length > 0 ? (
                 <ul>
                   {comments.map((comment) => {
-                    console.log("Rendering comment:", comment); // Log each comment as it's rendered
+                    console.log("Rendering comment:", comment);
                     return (
-                      <li key={comment.commentId} className={ManagementCSS.commentItem}>
+                      <li
+                        key={comment.commentId}
+                        className={ManagementCSS.commentItem}
+                      >
                         <strong>{comment.createdBy}</strong>
-                        <p>{comment.content}</p>
-                        <div className={ManagementCSS.commentActions}>
-                          <FontAwesomeIcon
-                            icon={faTrash}
-                            onClick={() => deleteComment(comment.commentId)}
-                            className={ManagementCSS.deleteIcon}
-                          />
-                        </div>
+                        {isEditing && comment.commentId === currentCommentId ? (
+                          <div>
+                            <textarea
+                              value={editContent}
+                              onChange={handleEditChange}
+                            />
+                            <button onClick={saveEdit}>Save</button>
+                            <button onClick={() => setIsEditing(false)}>
+                              Cancel
+                            </button>
+                          </div>
+                        ) : (
+                          <>
+                            <p>{comment.content}</p>
+                            <div className={ManagementCSS.commentActions}>
+                              <FontAwesomeIcon
+                                icon={faPen}
+                                onClick={() =>
+                                  startEditing(
+                                    comment.commentId,
+                                    comment.content
+                                  )
+                                }
+                                className={ManagementCSS.editIcon}
+                              />
+                              <FontAwesomeIcon
+                                icon={faTrash}
+                                onClick={() => deleteComment(comment.commentId)}
+                                className={ManagementCSS.deleteIcon}
+                              />
+                            </div>
+                          </>
+                        )}
                       </li>
                     );
                   })}
@@ -127,8 +229,9 @@ const Management = () => {
                 <p className={ManagementCSS["no-comments"]}>No comments yet.</p>
               )}
               {loading && <p>Loading more comments...</p>}
-            </div>
 
+              </div>
+            
 
             <button
               onClick={() => deleteImage(image.imageId)}
@@ -140,7 +243,8 @@ const Management = () => {
         </div>
       </div>
     </div>
+    
   );
 };
 
-export default Management; 
+export default Management;
