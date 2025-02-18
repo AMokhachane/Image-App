@@ -1,70 +1,40 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Image Gallery Application
+Project Overview
+The Image Gallery Application is a web-based platform that allows users to upload images, manage them, and view a gallery of uploaded images. The application includes a backend API for handling image storage and metadata management, while the frontend provides a user-friendly interface for uploading, editing and viewing images.
+Technical Design Document
+Project Architecture
+•	Frontend: React.js
+•	Backend: ASP.NET Core API
+•	Database: SQL Server (for storing image metadata)
+•	Cloud Storage: Cloudinary
+With five models including AppUser, Comments, Images, Passwords and Category
+App Use
+•	Home Page: Displays a gallery of all uploaded images.
+•	Upload Page: Users can drag and drop images or select files from their local storage to upload.
+•	Image Details Page: Users can view image details, including title, description, and comments. They can also edit these details and manage comments pictures uploaded by that specific user who is logged in.
+•	Management Page: Provides a view for managing all uploaded images, including editing and deleting.
+How the App Runs
+Backend (ASP.NET Core API)
+1.	Image Upload: Handles image uploads, storing the image in cloud storage and saving metadata in the database.
+2.	Image Management: Provides endpoints for CRUD operations (Create, Read, Update, Delete) on images and associated metadata.
+3.	Comment Management: Manages comments associated with each image, including adding, updating, and deleting comments.
+4.	Authentication: Manages user authentication during login.
+Frontend (React.js)
+1.	Image Upload Component: Allows users to upload images, which are then processed by the backend API.
+2.	Image Display: Fetches and displays images from the backend, providing an interactive gallery.
+3.	Comments Section: Enables users to post and manage comments on images.
+4.	User Interface: Provides a responsive and intuitive interface for easy navigation and interaction.
+App Features
+•	Image Upload: Drag-and-drop functionality and file explorer upload.
+•	Image Gallery: Displays all uploaded images with titles and descriptions.
+•	Image Management: Edit and delete image details.
+•	Comments: Add, edit, and delete comments associated with images.
+•	Authentication: Secure login with JWT token.
+•	Error Handling: Displays user-friendly error messages for validation and upload errors.
+•	Success Feedback: Notifies users of successful uploads and operations.
+Technologies
+•	Frontend: React.js, Axios (for API communication)
+•	Backend: ASP.NET Core API, C#, Entity Framework Core (for database interaction)
+•	Database: SQL Server
+•	Cloud Storage: (Cloudinary)
+•	Authentication: JWT token
